@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="IStyleSheet:common/ckeditor5.css">172d6b00-5590-4774-894c-ed03b82c1a7d</entry>
+<entry key="IStyleSheet:common/ckeditor5-content.css">7e795c16-9e04-4861-9685-1faddd944efe</entry>
+<entry key="IStyleSheet:common/ckeditor5-editor.css">05380a2f-f214-405d-9547-659e200cd313</entry>
+<entry key="IStyleSheet:common/normalize.css">da9d75db-8b71-4c71-9888-95cca1ad94f6</entry>
+<entry key="IStyleSheet:common/normalize.min.css">80dd06b4-c892-4ca3-992c-85b9c9f98e51</entry>
+<entry key="IStyleSheet:sofime/common.css">b0f2ff91-d6dd-4d76-bd78-a65f09031dec</entry>
+<entry key="IStyleSheet:sofime/home.css">87be99e1-5b77-49fc-a6f1-e67a7e81753c</entry>
+<entry key="IStyleSheet:sofime/palette.css">8d6f9a71-fb11-4ac9-b561-214302a9b8fa</entry>
+<entry key="IStyleSheet:sofime/signon.css">0150383f-22ce-4edf-b4f3-9c143789b2dc</entry>
+<entry key="ITemplateFile:forgot1.ftl">b22b89b4-0e82-447b-a33f-ab07d2183e45</entry>
+<entry key="ITemplateFile:forgot2.ftl">a9e2259b-9bc9-4cb5-a654-6f573f7a531e</entry>
+<entry key="ITemplateFile:home.ftl">5ab40311-5b64-4fa4-af8f-f16c49272237</entry>
+<entry key="ITemplateFile:signon.ftl">e67f9f14-9775-4ce3-8b98-e47cf28d6beb</entry>
+</properties>

@@ -1,0 +1,32 @@
+podman run -d --name postgres \
+  -e POSTGRES_PASSWORD=not24get \
+  -e POSTGRES_DB=data \
+  -e FAKETIME_SHM_DISABLE=1 \
+  -e LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1 \
+  -e FAKETIME="2025-09-19 14:00:00" \
+  -p 5433:5432 \
+  -v sofime_db:/var/lib/postgresql/data \
+  -v /dev/shm:/dev/shm \
+  postgres
+  
+---- Clean 
+  
+  select
+  table_name,
+  pg_size_pretty(pg_total_relation_size(quote_ident(table_name))),
+  pg_total_relation_size(quote_ident(table_name))
+from information_schema.tables
+where table_schema = 'application'
+order by 3 desc;
+
+update expat_document set file_data = null;
+truncate expat_document_tracking;
+
+vacuum full expat_document;
+vacuum full expat_document_tracking;
+
+
+-- podman checkpointing
+podman volume export pgdata |  bzip2  -c > postgres-data-$(date +%Y%m%d).tar
+podman run --rm -v pgdata:/data alpine sh -c "rm -rf /data/*"
+volume import pgdata postgres-data-20250919.tar

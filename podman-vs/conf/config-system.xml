@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="server.hostname">0.0.0.0</entry>
+<entry key="server.path">/relocation</entry>
+<entry key="server.port">9170</entry>
+<entry key="server.protocol">http</entry>
+<entry key="server.session-timeout">1800</entry>
+<entry key="server.signal.uri-enabled">false</entry>
+<entry key="server.using-session-cookies">true</entry>
+</properties>
