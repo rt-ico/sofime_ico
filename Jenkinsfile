@@ -16,8 +16,8 @@ pipeline {
                 # Stopper l'ancien conteneur s'il existe
                 podman stop $PG_CONTAINER_NAME 2>/dev/null || true
 
-                podman run --rm -v pgdata:/data alpine sh -c "rm -rf /data/*"
-                podman volume import pgdata /mnt/dump/sofime/postgres-data-20250919.tar
+                podman run --rm -v pg_sofime_ico:/data alpine sh -c "rm -rf /data/*"
+                podman volume import pg_sofime_ico /mnt/dump/sofime/postgres-data-20250919.tar
 
                 # Lancer le conteneur initial avec date par défaut
                 podman run -d --rm \
@@ -28,7 +28,7 @@ pipeline {
                     -e LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1 \
                     -e FAKETIME="2025-09-19 14:00:00" \
                     -p 5433:5432 \
-                    -v pgdata:/var/lib/postgresql/data \
+                    -v pg_sofime_ico:/var/lib/postgresql/data \
                     -v /dev/shm:/dev/shm \
                     $POSTGRES_IMAGE
                 """
@@ -100,7 +100,7 @@ pipeline {
                     -e LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1 \
                     -e FAKETIME="2025-09-19 14:00:00" \
                     -p 5433:5432 \
-                    -v pgdata:/var/lib/postgresql/data \
+                    -v pg_sofime_ico:/var/lib/postgresql/data \
                     -v /dev/shm:/dev/shm \
                     $POSTGRES_IMAGE
                 """
