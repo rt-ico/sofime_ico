@@ -35,7 +35,7 @@ RUN chown $user:$group /home/vsh/logs/
 COPY --chown="$user:$group" conf/ /home/vsh/conf/
 COPY --chown="$user:$group" plugins/ /home/vsh/plugins/
 COPY --chown="$user:$group" sdk/ /opt/sdk/
-COPY --chown="$user:$group" themes/ /home/vsh/themes/
+COPY --chown="$user:$group" assets/ /home/vsh/assets/
 
 WORKDIR "/home/$user"
 
