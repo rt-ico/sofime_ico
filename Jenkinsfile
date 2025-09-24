@@ -12,12 +12,13 @@ pipeline {
 
         stage('Lancer le conteneur PostgreSQL') {
             steps {
+            dir("sofime_reloc") {
                 sh """
                 # Stopper l'ancien conteneur s'il existe
                 podman stop $PG_CONTAINER_NAME 2>/dev/null || true
 
                 podman run --rm -v pg_sofime_ico:/data alpine sh -c "rm -rf /data/*"
-                podman volume import pg_sofime_ico /mnt/dump/sofime/postgres-data-20250919.tar
+                podman volume import pg_sofime_ico sofime_scenario_001.tar
 
                 # Lancer le conteneur initial avec date par défaut
                 podman run -d --rm \
@@ -32,6 +33,7 @@ pipeline {
                     -v /dev/shm:/dev/shm \
                     $POSTGRES_IMAGE
                 """
+            }
             }
         }
 
