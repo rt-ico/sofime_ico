@@ -15,7 +15,7 @@ pipeline {
             script {
                     // Vérifie si l’image existe
                     def imageExists = sh(
-                        script: "podman image exists ${IMAGE_NAME} && echo true || echo false",
+                        script: "podman image exists ${PG_IMAGE} && echo true || echo false",
                         returnStdout: true
                     ).trim()
 
