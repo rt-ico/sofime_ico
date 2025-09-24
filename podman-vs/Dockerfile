@@ -7,9 +7,9 @@ FROM docker.io/eclipse-temurin:8-jdk
 
 
 ENV user=vsh
-ENV uid=1000
+ENV uid=1042
 ENV group=vshgroup
-ENV gid=1000
+ENV gid=1042
 ENV home=/home/$user
 
 # Création d’un groupe non-root
