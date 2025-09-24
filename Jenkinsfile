@@ -2,9 +2,13 @@ pipeline {
     agent any
 
     environment {
-        PG_CONTAINER_NAME = "pg_sofime_ico"
-        POSTGRES_PASSWORD = "not24get"
         PG_IMAGE = "pg_sofime_ico" // image avec libfaketime
+        PG_CONTAINER_NAME = "pg_sofime_ico"
+
+        IMAGE_NAME_HTTP="sofime_http"
+        IMAGE_CONTAINER_HTTP="sofime_http"
+
+        POSTGRES_PASSWORD = "not24get"
         SQL_SCRIPT = "deploy.sql"             // script SQL à injecter
     }
 
@@ -94,9 +98,6 @@ pipeline {
                 # Attendre que PostgreSQL soit prêt
                 sleep 15
 
-
-
-
                 # Injecter le script SQL
                 podman exec -i $PG_CONTAINER_NAME psql -U postgres < sofime_reloc/deploy/$SQL_SCRIPT
                 """
@@ -155,15 +156,21 @@ pipeline {
                             echo "✅ Pas de mise à jour disponible, aucune action lancée."
 
                         } else {
-                            echo "⚠️ Nouvelle mise à jour détectée sur ${GIT_BRANCH}."
+                            echo "⚠️ Nouvelle mise à jour OpenAGE Forms détectée sur master."
                             // Ici tu mets ton action conditionnelle
                             withAnt(installation: 'Ant:1.9.13', jdk: 'Java1.6') {
                                 sh 'ant -Dbin-dist-folder=../../podman-tomcat/ build-webapp'
                             }
                         }
-
-
                     }
+                     dir("podman-tomcat") {
+                                        echo "Construction de l'image podman pour Tomcat..."
+                                        sh 'java -jar ../tools/keycodec.jar ${IMAGE_NAME_HTTP} enterprise > openage/context/openage/install/licence.txt'
+                                        sh 'podman build --build-arg EXPOSED_PORT=${EXPOSED_PORT} --build-arg WAR_NAME=openage --build-arg CONTAINER_NAME_DB=${CONTAINER_NAME_DB} --tag  ${IMAGE_NAME_HTTP} .'
+                                        echo "Lancement du conteneur Tomcat..."
+                                        // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
+                                        sh "podman run -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${IMAGE_NAME_HTTP} --network=${NETWORK} --name  ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
+                                    }
                 }
             }
         }
