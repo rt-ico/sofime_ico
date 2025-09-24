@@ -44,7 +44,7 @@
 <Environment name="db.use.jndi.name" type="java.lang.String" value=""></Environment>
 
 <!-- Pool OpenAGE (vide si JNDI utilis�) -->
-<Resource name="jdbc/OpenAGE" auth="Container" type="javax.sql.DataSource" maxActive="50" maxIdle="10" maxWait="5000" username="postgres" password="not24get" driverClassName="org.postgresql.Driver" url="jdbc:postgresql://CONTAINER_NAME:5432/sofime" factory="org.apache.commons.dbcp.BasicDataSourceFactory" connectionProperties="currentSchema=openage"></Resource>
+<Resource name="jdbc/OpenAGE" auth="Container" type="javax.sql.DataSource" maxActive="50" maxIdle="10" maxWait="5000" username="postgres" password="not24get" driverClassName="org.postgresql.Driver" url="jdbc:postgresql://CONTAINER_NAME:5432/oa_prod" factory="org.apache.commons.dbcp.BasicDataSourceFactory" connectionProperties="currentSchema=openage"></Resource>
 
 
 <!-- Autres pools de connexion -->
