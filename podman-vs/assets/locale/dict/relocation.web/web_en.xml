@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="appName">EasyRelo | Sofime Relocation</entry>
+	<entry key="appNamePrefix">EasyRelo | </entry>
+
+	<entry key="signOnTitle">Easy Relo</entry>
+	<entry key="signOnSubtitle">Sofime Relocation</entry>
+	<entry key="signOnInfo">To get started, please confirm your identity.</entry>
+	<entry key="signOnFailUserAgent">Your browser is not supported.</entry>
+	<entry key="signOnFailAuthn">Authentication failed, please try again. Repeated failures may cause your account to become locked.</entry>
+	<entry key="signOnFailAuthz">You are not authorized to use this application.</entry>
+	<entry key="signOnUsername">Username</entry>
+	<entry key="signOnPassword">Password</entry>
+	<entry key="signOnConnectAction">Sign on</entry>
+	<entry key="signOnRecoverPasswordAction">I forgot my password...</entry>
+	<entry key="signOff">Sign off</entry>
+	<entry key="delete">Delete</entry>
+	<entry key="tasks">Tâches</entry>
+
+	<entry key="contentLoadError">Content loading failed.</entry>
+	<entry key="contentStoreError">Content update failed.</entry>
+	<entry key="featureNameError">This feature is unavailable.</entry>
+	<entry key="ajaxSessionError">You must sign on again.</entry>
+	<entry key="ajaxNetworkError">A network error occurred.</entry>
+	<entry key="ajaxServerError">A server-side processing error occurred.</entry>
+	<entry key="ajaxClientError">A client-side processing error occurred.</entry>
+	<entry key="ajaxMaintenanceWarning">Maintenance in progress.</entry>
+	<entry key="ajaxFileRejected">File rejected (%s).</entry>
+	<entry key="ajaxFileUnsupported">Incompatible file.</entry>
+	<entry key="ajaxFileSingleItemOnly">Don't drop more than one file at a time.</entry>
+	<entry key="actionFailed">An error occurred.</entry>
+	<entry key="missingFields">Data not saved :</entry>
+	<entry key="missingFieldsTitle">Several fields are missing</entry>
+
+	<entry key="minimizeSidebar">Click here to reduce sidebar width</entry>
+	<entry key="maximizeSidebar">Click here to show sidebar</entry>
+
+	<entry key="navPlanning">Visit planner</entry>
+	<entry key="navExpats">Expatriates</entry>
+	<entry key="navMyAccount">My account</entry>
+    <entry key="navExpatSurveys">My surveys</entry>
+    <entry key="navExpatRelocation">My relocation</entry>
+    <entry key="navExpatGuides">My guides</entry>
+	<entry key="navExpatPhotos">Expatriate photos</entry>
+	<entry key="navExpatVisits">My visits</entry>
+	<entry key="navOtherVisits">My appointments</entry>
+	<entry key="navExpatDocs">My documents</entry>
+	<entry key="navSfTodo">To-do list</entry>
+	<entry key="navSfMemo">Add memo</entry>
+    <entry key="navSfSuppliers">Suppliers</entry>
+    <entry key="navSfMessages">Messages</entry>
+	<entry key="navSfStorageStatistics">Storage statistics</entry>
+    <entry key="navSofimeExpats">Relocations</entry>
+	<entry key="navSurveys">Surveys</entry>
+	<entry key="navReviewSurveys">Reviewable surveys</entry>
+	<entry key="navMailSend">Send an e-mail</entry>
+	<entry key="navMailSendExpatView">Send an e-mail</entry>
+	<entry key="navMailSent">Sent e-mails</entry>
+	<entry key="navMailSendGrouped">Send grouped e-mails</entry>
+
+	<entry key="navHome">Home</entry>
+	<entry key="navStats">Statistics</entry>
+	<entry key="navContacts">Contacts</entry>
+	<entry key="navHrPlanning">Planning</entry>
+	<entry key="navHrReloSetup">Ask for a quote</entry>
+	<entry key="navHrReloTrack">My relocations</entry>
+	<entry key="navHrSfServices">Sofime services</entry>
+
+	<entry key="toExpatMenu">to Expat Menu</entry>
+	<entry key="toSurvey">to Survey</entry>
+	<entry key="actionSubmitAndRedirect">Submit and return to Expat</entry>
+
+	<entry key="calendarDigitDate">%1$02d/%2$02d/%3$04d</entry>
+	<entry key="calendarDigitDateMask">dd/mm/yyyy</entry>
+	<entry key="calendarDayOfMonth">%2$d %1$s</entry>
+	<entry key="calendarMonthOfYear">%2$s %1$04d</entry>
+	<entry key="calendarWeekOfYear">Week %1$02d</entry>
+	<entry key="calendarShortWeekOfYear">W%1$02d</entry>
+	<entry key="calendarWeekAndMonthOfYear">Week %2$d, %3$s %1$d</entry>
+	<entry key="week">Week</entry>
+	<entry key="weekAbbrev">W</entry>
+	<entry key="timeMask">HH:MM</entry>
+
+	<entry key="otherChoicePlaceholder">Other choice</entry>
+
+	<entry key="yourIdentity">Your identity</entry>
+	<entry key="yourFamily">Your family</entry>
+	<entry key="mailRecipient">Recipient</entry>
+	<entry key="mailDocument">Document</entry>
+	<entry key="familyRelation">Relationship</entry>
+	<entry key="addFamilyRelation">Add family member</entry>
+	<entry key="removeFamilyRelation">Remove family member</entry>
+	<entry key="promptRemoveFamilyRelation">Do you really want to remove this member of your family?</entry>
+	<entry key="promptRemoveNamedFamilyRelation">Do you really want to remove %1$s from your family?</entry>
+	<entry key="promptRemoveRecipient">Do you really want to remove %1$s from the recipient list?</entry>
+	<entry key="promptRemoveDocument">Do you really want to remove %1$s from the attached document?</entry>
+	<entry key="workingInFrance">Works in France</entry>
+	<entry key="yourProject">Your project</entry>
+	<entry key="yourContactDetails">Contacting you</entry>
+	<entry key="expatriateLocale">User language</entry>
+	<entry key="expatriateSurName">Family name</entry>
+	<entry key="expatriateGivenName">Given name</entry>
+	<entry key="expatriateGender">Gender</entry>
+	<entry key="expatriateMail">E-mail</entry>
+	<entry key="expatriateHomeMail">Private e-mail</entry>
+	<entry key="expatriateWorkMail">Work e-mail</entry>
+	<entry key="expatriateTelZone1">Intl. code</entry>
+	<entry key="expatriateTel1">Phone</entry>
+	<entry key="expatriateTelZone2">Intl. code (2)</entry>
+	<entry key="expatriateTel2">Phone (2)</entry>
+	<entry key="expatriateBirthDate">Date of birth</entry>
+	<entry key="expatriateBirthPlace">Place of birth (town, country)</entry>
+	<entry key="expatriateNationality">Nationality</entry>
+	<entry key="expatriateNationalityUsed">Nationality used for your relocation</entry>
+	<entry key="expatriateArrivalDate">Date of arrival</entry>
+	<entry key="expatriateVisits">Visits</entry>
+	<entry key="relocationStatus">Relocation Status</entry>
+	<entry key="relocationFinished">Relocation Closed</entry>
+	<entry key="relocationAbandoned">Relocation Abandoned</entry>
+	<entry key="expatriateJobLocation">Workplace</entry>
+	<entry key="expatriateOldAddress">Personal address before moving</entry>
+	<entry key="newJobAddress">Future workplace address</entry>
+	<entry key="newJobCity">Future workplace town/city</entry>
+	<entry key="newJobPostCode">Future workplace postcode</entry>
+
+	<entry key="noUpcomingAppointments">No upcoming appointments</entry>
+	<entry key="yourNextAppointment">Your next appointment</entry>
+	<entry key="yourNextAppointments">Your next appointments</entry>
+	<entry key="sfNextAppointments">Next appointments</entry>
+	<entry key="showAllAppointments">View all appointments</entry>
+	<entry key="yourUpcomingAppointments">Upcoming appointment(s)</entry>
+	<entry key="appointmentDateTimePattern">MMMM d, yyyy 'at' h':'mm a</entry>
+	<entry key="appointmentDatePattern">MMMM d, yyyy</entry>
+	<entry key="appointmentTimePattern">h':'mm a</entry>
+	<entry key="addressToComplete">Complete address</entry>
+
+	<entry key="welcomeSubtitle">Your first steps for relocation</entry>
+	<entry key="welcomeDashboard">Dashboard</entry>
+	<entry key="welcomeReset">Show steps</entry>
+	<entry key="welcomeSkipToNext">Move on to next step</entry>
+	<entry key="stage_title_welcome">Welcome</entry>
+	<entry key="stage_cardtitle_welcome">Welcome!</entry>
+	<entry key="stage_cardmessage_welcome_none">Your welcomer has not yet been assigned.</entry>
+	<entry key="stage_cardmessage_welcome">Hello %1$s!
+
+I'm %2$s, your Welcomer, and delighted to be by your side in this adventure! Please follow the next steps so that we can get started with your relocation. You can update or add to them as you go along.
+
+Thanks!</entry>
+	<entry key="stage_action_welcome">Let's get started!</entry>
+
+	<entry key="stage_title_profile">Create profile</entry>
+	<entry key="stage_cardtitle_profile">Complete your profile</entry>
+	<entry key="stage_cardmessage_profile">Sofime will accompany you throughout the relocation process.
+Get things started as quick as possible by completing your profile.</entry>
+	<entry key="stage_action_profile">Complete my profile</entry>
+
+	<entry key="stage_title_survey">Complete survey</entry>
+	<entry key="stage_cardtitle_survey">Complete our surveys</entry>
+	<entry key="stage_cardmessage_survey">Please provide answers to our questionnaires.
+Any questions? Maybe you don't have all the information yet? You can finish or modify them at a later time using the "%1$s" option in the menu.</entry>
+	<entry key="stage_action_survey">Answer my questionnaire</entry>
+	<entry key="stage_action_survey_q1">Completed survey</entry>
+	<entry key="stage_action_survey_q2">Unfinished survey</entry>
+
+	<entry key="stage_title_document">Upload documents</entry>
+	<entry key="stage_cardtitle_document">Required documents</entry>
+	<entry key="stage_cardmessage_document">Please upload the documents we need to help you relocate. We'll keep them private, and uou can delete them at any time.
+Don't have all your documents at hand? You can finish uploading them later.</entry>
+	<entry key="stage_action_document">Upload my documents</entry>
+
+	<entry key="stage_title_appointment">Organize a phone call</entry>
+	<entry key="stage_cardtitle_appointment">Plan a call</entry>
+	<entry key="stage_cardmessage_appointment">Well done!
+
+Now, when are you free to discuss and organize the next steps for your relocation? Send a message to your Welcomer so that we can get planning.</entry>
+	<entry key="stage_action_appointment">Choose appointment time</entry>
+
+	<entry key="appointment_mail_subject">My first appointment</entry>
+	<entry key="appointment_mail_body">Hello %1$s,
+
+When could we discuss and organize the next steps of my relocation?
+
+Regards,
+%2$s</entry>
+
+	<entry key="projectUsefulInfo">Useful information</entry>
+
+	<entry key="surveysAvailable">Available surveys</entry>
+	<entry key="expatSurveySectionAccess">Direct access to survey sections</entry>
+	<entry key="expatSurveyDoneMessage">You've marked this survey as "finished".</entry>
+	<entry key="expatSurveyDoneUnlockAction">I want to make changes</entry>
+	<entry key="noSurveysAvailable">No surveys are available at this time</entry>
+	<entry key="noSurveysDone">No completed surveys to review at this time</entry>
+	<entry key="surveyAnswerRemarksPlaceholder">Your comments for this answer...</entry>
+	<entry key="surveyRemarks">Comments</entry>
+	<entry key="noMatchingSurveys">No matching surveys at this time</entry>
+	<entry key="saveReviewAndUndo">Mark as unfinished</entry>
+
+	<entry key="colSurveyName">Survey</entry>
+	<entry key="colExpatName">Expatriate</entry>
+	<entry key="colStaffName">Service Mgr</entry>
+	<entry key="colSubject">Subject</entry>
+	<entry key="colModel">Model</entry>
+	<entry key="colReview">Review</entry>
+	<entry key="colSendRequested">Send requested</entry>
+	<entry key="colMissingTag">Missing tag</entry>
+	<entry key="colSendDate">Send date</entry>
+	<entry key="colSend">Send</entry>
+	<entry key="colResend">Resend</entry>
+	<entry key="colCustomerName">Customer</entry>
+	<entry key="colReviewed">Reviewed</entry>
+	<entry key="colDate">Date</entry>
+	<entry key="colDateMandatory">Date*</entry>
+	<entry key="colTime">Time</entry>
+	<entry key="colTimeMandatory">Time*</entry>
+	<entry key="colPrice">Price</entry>
+	<entry key="colSurface">Surface</entry>
+	<entry key="colVisitType">Visit type</entry>
+	<entry key="colAppointmentType">Appointment type</entry>
+	<entry key="colContact">Contact</entry>
+	<entry key="colService">Service</entry>
+	<entry key="colSubject">Subject</entry>
+	<entry key="colSupplier">Supplier</entry>
+	<entry key="colSupplierType">Supplier type</entry>
+	<entry key="colSupplierContact">Supplier contact</entry>
+	<entry key="colSupplierFlag">Flag</entry>
+	<entry key="colSummary">Summary</entry>
+	<entry key="colRemarks">Comments</entry>
+	<entry key="colDescription">Description</entry>
+	<entry key="colChoice">Choice</entry>
+	<entry key="colPhoto">Photo</entry>
+	<entry key="colPhoto">Photos</entry>
+	<entry key="colAddress">Address</entry>
+	<entry key="colCity">City</entry>
+	<entry key="colPostcode">Postcode</entry>
+	<entry key="colFloor">Floor</entry>
+	<entry key="colHasElevator">With elevator</entry>
+	<entry key="colTel">Phone</entry>
+	<entry key="colTelWhatsapp">Phone &amp; Whatsapp</entry>
+	<entry key="colMail">E-mail</entry>
+	<entry key="colUrl">Web link</entry>
+	<entry key="colUrlAd">Advert link</entry>
+	<entry key="colLockStatus">Locked</entry>
+	<entry key="colHideStatus">Hidden</entry>
+	<entry key="colStartStatus">Started</entry>
+	<entry key="colFinishStatus">Finished</entry>
+	<entry key="elevator">elevator</entry>
+
+	<entry key="dialogDropTitle">Uploading...</entry>
+	<entry key="dialogDropProgress">%1$d%%</entry>
+	<entry key="dialogFileName">Filename*</entry>
+	<entry key="dialogFileRemarks">Comments</entry>
+	<entry key="dialogFileAddOrReplaceTitle">Add or update a document</entry>
+	<entry key="dialogExpatInfoTitle">Update document</entry>
+	<entry key="dialogDocumentInfoTitle">Document info</entry>
+	<entry key="dialogFileAddTitle">Add document</entry>
+	<entry key="selectDocumentType">Select document type</entry>
+	<entry key="dialogConfirmAddOrReplaceDocumentTitle">Warning</entry>
+	<entry key="dialogConfirmAddOrReplaceDocument">This document already exists, do you want to :</entry>
+	<entry key="dialogConfirmAddDocument">Add a duplicate</entry>
+	<entry key="dialogConfirmReplaceDocument">Replace document</entry>
+	<entry key="dialogConfirmCancelRelocation">Are you sure you want to abandon this relocation ?</entry>
+	<entry key="dialogConfirmTerminateRelocation">Are you sure you want to abandon this relocation ?</entry>
+	<entry key="dialogConfirmChangePassword">Are you sure you want to change this user's password ?</entry>
+	<entry key="dialogWriteConflict">Write Conflict</entry>
+	<entry key="dialogWriteConflictSub">Current information has been modified since loading. Please reload page and reenter your modifications.</entry>
+	<entry key="dialogWriteConflictOk">Ok</entry>
+	<entry key="dialogDocumentType">Type*</entry>
+	<entry key="dialogDocumentTypeForRequest">Type</entry>
+	<entry key="dialogDocumentTypeForUnRequest">Type</entry>
+	<entry key="dialogDocumentTypePlaceholder">select value</entry>
+	<entry key="dialogDocumentNew">Load New document</entry>
+	<entry key="menuUploadDocument">Personal documents</entry>
+	<entry key="menuBrowseDocument">Relocation documents</entry>
+	<entry key="dialogDeleteConfirm">Are you sure you want to delete this document?</entry>
+	<entry key="dialogMailDeleteConfirm">Are you sure you want to delete this mail?</entry>
+	<entry key="requiredExpatDocument">Required document</entry>
+	<entry key="expatRequestDocument">Request document</entry>
+	<entry key="expatUnRequestDocument">Do not request this document</entry>
+	<entry key="expatUnRequestDocumentAdd">Add document to unrequest</entry>
+	<entry key="givenExpatDocument">Supplied documents</entry>
+	<entry key="optionalExpatDocument">optional document</entry>
+	<entry key="incomingDocument">incoming documents</entry>
+	<entry key="expatDocumentUpload">Upload document</entry>
+	<entry key="expatDocumentChangeFile">Change File</entry>
+	<entry key="expatDocumentModify">Modify document</entry>
+	<entry key="expatDocumentPrint">Print document</entry>
+	<entry key="expatDocumentShowInfo">Show info</entry>
+	<entry key="expatDocumentDownloadWithSizeHint">Download original (%1$s)</entry>
+	<entry key="expatDocumentHrVisibility">HR</entry>
+	<entry key="expatDocumentHistory">History</entry>
+	<entry key="expatDocumentHelpTitle">Information: How to upload my documents?</entry>
+	<entry key="expatDocumentHelp">Please provide a good scan copy for each document (readable, not cut, no fingers…)</entry>
+	<entry key="expatDocCategoryLabel">Find here all document linked to your relocation</entry>
+
+	<entry key="expatDocumentAdmin">Adminstration</entry>
+	<entry key="expatDocumentMoving">Moving</entry>
+	<entry key="expatDocumentImmigration">Immigration</entry>
+	<entry key="expatDocumentHousing">Housing</entry>
+	<entry key="expatDocumentHealth">Health</entry>
+	<entry key="expatDocumentInvoice">Invoice</entry>
+	<entry key="expatDocumentPersonalDoc">Personal document</entry>
+	<entry key="expatDialogRequired">Required</entry>
+	<entry key="expatDialogRequired">Document relatif à la relocation</entry>
+	<entry key="expatNoRhVisibilty">This document won't be avaible to the HR</entry>
+	<entry key="expatExpatRhVisibilty">This document won't be avaible to the Expatriate</entry>
+	<entry key="expatDocumentRhBrowseTitle">Consulter un document</entry>
+	<entry key="expatDocumentRhUploadTitle">Fournir des documents</entry>
+
+	<entry key="dialogPhotoAddOrReplaceTitle">Add or update a  photo</entry>
+	<entry key="dialogPhotoInfoTitle">Update photo</entry>
+	<entry key="dialogVisitInfoTitle">Photo info</entry>
+	<entry key="dialogPhotoAddTitle">Add photo</entry>
+
+	<entry key="onDate">on</entry>
+	<entry key="atTime">at</entry>
+
+	<entry key="homecard_relocation">My relocation</entry>
+	<entry key="homecard_appointments">My appointments</entry>
+	<entry key="homecard_visits">My visits</entry>
+	<entry key="homecard_hr_visits">Selection for</entry>
+	<entry key="homecard_documents">My documents</entry>
+
+	<entry key="expatNoContacts">No contacts at this time.</entry>
+	<entry key="expatWelcomer">Welcomer</entry>
+	<entry key="welcomerMessage1">I'm your contact for the following subject:</entry>
+	<entry key="welcomerMessageN">I'm your contact for the following subjects:</entry>
+
+	<entry key="expatPlannedVisits">My planned appointments</entry>
+	<entry key="nChoice">Choice %1$d</entry>
+	<entry key="add2nd3rdChoice">You should also add your 2nd and 3rd preferences.</entry>
+
+	<entry key="invoiceAddress">Billing address</entry>
+	<entry key="postalAddress">Postal address</entry>
+	<entry key="telephone">Telephone</entry>
+	<entry key="usingOrderForms">Use order forms</entry>
+
+	<entry key="hrSuppliersTitle">Companies</entry>
+	<entry key="termsConditions">Terms &amp; conditions</entry>
+	<entry key="legalNotice">Legal notice</entry>
+	<entry key="onlineResources">Site &amp; blog</entry>
+
+	<entry key="hrCurrentRelos">Current relocation projects</entry>
+	<entry key="hrRequiredDocs">Required documents</entry>
+	<entry key="hrVisitsLink">Expat visits</entry>
+	<entry key="hrVisitsLinkLabel">Agenda</entry>
+	<entry key="hrVisitsNotSelected">Not selected</entry>
+	<entry key="hrVisitsBackNav">Back to %1$s relocation detail</entry>
+
+	<entry key="reloSetup1">1/ Choose and customize your package</entry>
+	<entry key="reloSetup1a">You can either pick a package that will automatically select the corresponding services, or just select whatever services you need.</entry>
+	<entry key="reloSetup1b">If you need a service, but can't find it in the list above, please [contact]contact Sofime directly[/contact]. We'll contact the person and check what they need, then get back to you with a quote.</entry>
+	<entry key="reloSetup2">2/ Provide information about the person</entry>
+	<entry key="reloSetup3">3/ Provide information about the project</entry>
+	<entry key="reloSetup4">4/ Relocation project created</entry>
+	<entry key="reloSetup4a">Thanks!</entry>
+	<entry key="reloSetup4b">Your request is being processed, and a member of the Sofime team will contact you soon.</entry>
+
+	<entry key="reloSetupClient">For which customer?</entry>
+	<entry key="reloSetupHireOrTransfer">Hire or transfer?</entry>
+	<entry key="reloSetupTrialPeriod">Trial period?</entry>
+	<entry key="reloSetupHire">Hire</entry>
+	<entry key="reloSetupTransfer">Transfer</entry>
+	<entry key="reloSetupNone">Undisclosed</entry>
+	<entry key="reloSetupArrivalSalary">Yearly pre-tax salary upon arrival</entry>
+	<entry key="reloSetupLeaseType">Lease type?</entry>
+	<entry key="reloSetupAgencyPayer">Payment of agency fees?</entry>
+	<entry key="reloSetupHousingBudget">Housing budget</entry>
+	<entry key="reloSetupHousingCompanyBudget">Housing budget (employer)</entry>
+	<entry key="reloSetupHousingGrant">Housing grant budget</entry>
+	<entry key="reloSetupHousingTempBudget">Temporary rental budget</entry>
+	<entry key="reloSetupTempHousingStart">Start date for temporary rental</entry>
+	<entry key="reloSetupTempHousingEnd">End date for temporary rental</entry>
+	<entry key="reloSetupTempHousingDuration">Temporary rental duration (in months)</entry>
+	<entry key="reloSetupDepartureHelpInventoryDate">End-of-rental inventory date</entry>
+	<entry key="reloSetupDepartureHelpInventoryDateHint">If date unknown, enter an approximative date.</entry>
+	<entry key="reloSetupDepartureHelpNotificationSender">End-of-rental notification sender</entry>
+	<entry key="reloSetupIntlSchoolNumberOfChildren">Number of children to enroll</entry>
+	<entry key="reloSetupIntlSchoolAnnualPerChildBudget">Annual budget fo school fees, per child</entry>
+	<entry key="reloSetupMobilipassRequested">Remember, you've requested the "Mobilipass" service, and we'll handle it for you. If the required conditions are met, funds will be applied.</entry>
+	<entry key="reloSetupInvalidPack">This pack can't be applied at present, as it includes some unavailable options. Please contact Sofime.</entry>
+	<entry key="expatRelocationService">Service</entry>
+	<entry key="expatRelocationServiceManager">Manager</entry>
+	<entry key="expatRelocationAddService">Add service</entry>
+	<entry key="expatRelocationContact">HR Contact</entry>
+
+	<entry key="reloSetupDuplicateMail">E-mail address already used:%1$s</entry>
+	<entry key="reloSetupNoExtraQuestions">We don't need any extra information at this time in order to set up this project.</entry>
+
+	<entry key="hrSfHomeServiceTitle">House finder service</entry>
+	<entry key="hrSfMoveServiceTitle">Moving service</entry>
+	<entry key="hrShowAllRelos">View all relocations</entry>
+	<entry key="hrStatsServicesUsed">Services used</entry>
+
+	<entry key="hrRelosCurrentList">Current</entry>
+	<entry key="hrRelosDoneList">Completed</entry>
+	<entry key="hrRelosTrackOne">Follow a relocation project</entry>
+	<entry key="emptyList">The list is currently empty.</entry>
+	<entry key="hrColExpat">Employee</entry>
+
+	<entry key="hrColRelo">Relocation</entry>
+	<entry key="hrColDocument">Document</entry>
+
+	<entry key="reloAppointments">Appointments</entry>
+	<entry key="reloServices">Services</entry>
+	<entry key="reloArrival">Arrival</entry>
+	<entry key="reloVisit">Visit</entry>
+	<entry key="reloPrefecture">Prefecture</entry>
+	<entry key="reloConsulate">Consulate</entry>
+
+	<entry key="hrRelosInfoExpat">Employee information</entry>
+	<entry key="hrRelosActiveServices">Active services</entry>
+	<entry key="hrRelosDocuments">Relocation documents</entry>
+	<entry key="hrOldCountry">Country of origin</entry>
+	<entry key="hrFamilyMembers">Family members</entry>
+
+	<entry key="reloEventDateRange">Event date</entry>
+	<entry key="reloEventDateRangeAll">All</entry>
+	<entry key="reloEventDateRangeFuture">Future</entry>
+	<entry key="reloEventDateRangePast">Past</entry>
+	<entry key="reloEventType">Event type</entry>
+	<entry key="reloEventTypeAll">All types</entry>
+	<entry key="reloExpatAll">All employees</entry>
+	<entry key="reloStaffAll">All staff</entry>
+	<entry key="reloCustomerAll">All customers</entry>
+	<entry key="surveyAll">All surveys</entry>
+
+	<entry key="noTodoTasks">Your to-do list is currently empty.</entry>
+	<entry key="colMemoStaff">Memo assignment</entry>
+	<entry key="colTaskLabel">Task</entry>
+	<entry key="colTaskDeadline">Deadline</entry>
+    <entry key="colTaskRdv">Date Rdv</entry>
+	<entry key="memoCreated">Memo created.</entry>
+	<entry key="actionTaskDone">Task done</entry>
+	<entry key="actionTaskDoneAbbrev">Done</entry>
+	<entry key="actionTaskNA">Task N/A</entry>
+	<entry key="actionTaskNAAbbrev">N/A</entry>
+	<entry key="actionViewExpat">Expatriate</entry>
+	<entry key="actionViewExpatAbbrev">Expat.</entry>
+	<entry key="actionViewAutomail">Mail</entry>
+	<entry key="actionViewAutomailAbbrev">Mail</entry>
+
+	<entry key="sfExpatDocuments">Documents</entry>
+	<entry key="sfExpatVisits">Appointments</entry>
+	<entry key="sfExpatVisitPlaces">Visit schedule</entry>
+	<entry key="sfExpatVisitGeneratingReport">A visit has been modified. A new planning is being generated.</entry>
+	<entry key="dialogPleaseWait">Please wait a few minutes before reloading page and try again.</entry>
+	<entry key="sfExpatVisitPlacesExpatRemarks">Expat remarks</entry>
+	<entry key="sfExpatHome">Housing</entry>
+	<entry key="sfExpatRelocationInfo">Relocation</entry>
+	<entry key="sfExpatImmigration">Immigration</entry>
+
+
+	<entry key="expatLocale_fr_FR">Français</entry>
+	<entry key="expatLocale_en_GB">Anglais</entry>
+
+	<entry key="sfExpatHomeSearch">Search</entry>
+	<entry key="sfExpatHomeSearch_yearlyincome">Annual pre-tax income</entry>
+	<entry key="sfExpatHomeSearch_trialperiod">Trial period</entry>
+	<entry key="sfExpatHomeSearch_rentmode">Rental mode</entry>
+	<entry key="sfExpatHomeSearch_budget">Housing budget</entry>
+	<entry key="sfExpatHomeSearch_companybudget">Company housing budget</entry>
+	<entry key="sfExpatHomeSearch_grant">Grant</entry>
+	<entry key="sfExpatHomeSearch_agencypaidby">Payer of agency fees</entry>
+	<entry key="sfExpatHomeSearch_remarks">Notes</entry>
+	<entry key="sfExpatHomeSearchTransportation">Transportation*</entry>
+	<entry key="sfExpatHomeSearchTemporaryHome">Temporary Home</entry>
+	<entry key="sfExpatHomeSearchTemporaryHomeBudget">Budget</entry>
+	<entry key="sfExpatHomeSearchTemporaryHomeDuration">Duration</entry>
+	<entry key="sfExpatHomeSearchTemporaryHomeExpenses">Expenses Cover</entry>
+	<entry key="sfExpatHomeSearchDEoTH">Date End</entry>
+
+	<entry key="sfExpatHomeSettle">Settling</entry>
+	<entry key="sfExpatHomeSettle_addressfinal">Final address</entry>
+	<entry key="sfExpatHomeSettle_arrival">Arrival date</entry>
+	<entry key="sfExpatHomeSettle_mouseoverDisabledHomesearch">Deducted from selected place in planning</entry>
+	<entry key="sfExpatHomeSettle_moving">Moving date</entry>
+	<entry key="sfExpatHomeSettle_supplier">Agency</entry>
+	<entry key="sfExpatHomeSettle_floor">Floor</entry>
+	<entry key="sfExpatHomeSettle_digicode1">Door code 1</entry>
+	<entry key="sfExpatHomeSettle_digicode2">Door code 2</entry>
+	<entry key="sfExpatHomeSettle_surface">Surface</entry>
+	<entry key="sfExpatHomeSettle_insurance">Insurance contract</entry>
+	<entry key="sfExpatHomeSettle_electricity">Electricity contract</entry>
+	<entry key="sfExpatHomeSettle_gascontract">Gas contract</entry>
+	<entry key="sfExpatHomeSettle_internet">Internet contract</entry>
+	<entry key="sfExpatHomeSettle_furnished">Furnished</entry>
+	<entry key="sfExpatHomeSettle_unfurnished">Unfurnished</entry>
+	<entry key="sfExpatHomeSettle_horsMarche">Off Market</entry>
+	<entry key="sfExpatHomeSettle_horsMarcheHover">Unpublished or Agency's site only</entry>
+	<entry key="sfExpatHomeSettle_publicTransportationAt15">PT nearby</entry>
+	<entry key="sfExpatHomeSettle_commuteTime">Commute time</entry>
+	<entry key="sfExpatHomeSettle_commuteTimeTail">min</entry>
+	<entry key="sfExpatHomeSettle_rentprice">Rent</entry>
+	<entry key="sfExpatHomeSettle_deposit">Deposit</entry>
+	<entry key="sfExpatHomeSettle_housingmgr">Housing manager</entry>
+	<entry key="sfExpatHomeSettle_remarks">Comments</entry>
+	<entry key="actionGenerateReport">Generate Report</entry>
+	<entry key="generatingReport">Generating Report</entry>
+	<entry key="dialogConfirmGenerateReport">Êtes-vous sûr(e) d'avoir rempli toutes les informations du logement ? Vous ne pourrez pas modifier ce rapport. Ce rapport sera disponible dans 3mn dans le document de la relocation. </entry>
+	<entry key="dialogConfirm">Confirm</entry>
+	<entry key="dialogCancel">Cancel</entry>
+
+	<entry key="sfSetAppointmentTime">Appointment date &amp; time</entry>
+	<entry key="sfSetVisitPlaceTime">Visit time</entry>
+	<entry key="flyToPlace">Show on map</entry>
+	<entry key="sfVisitPlaceSelected">Selected</entry>
+	<entry key="sfVisitPlaceSetSupplierDesc">Confirm supplier for selected place</entry>
+	<entry key="sfVisitPlaceAddNewSupplier">Create a new supplier...</entry>
+
+	<entry key="sfExpatReloSelectCustomer">Select customer</entry>
+	<entry key="sfExpatReloSelectContact">Select contact</entry>
+	<entry key="sfExpatReloCancelService">Cancel</entry>
+	<entry key="sfExpatReloValidateService">Validate</entry>
+	<entry key="sfExpatRelocationTrialPeriod">Trial Period</entry>
+	<entry key="sfExpatRelocationCause">Relocation cause</entry>
+	<entry key="sfExpatNewRelocation">New Relocation</entry>
+	<entry key="sfExpatRelocationAlreadyExists">Relocation already exists</entry>
+	<entry key="sfExpatRelocationAlreadyExistsSub">Redirect to existing relocation or stay and edit ?</entry>
+	<entry key="expatAmeliMail">Ameli Mail</entry>
+	<entry key="qualifications">Qualifications</entry>
+	<entry key="environment">Environment</entry>
+	<entry key="RSE">RSE</entry>
+	<entry key="paperless">paperless</entry>
+	<entry key="sfExpatReloSelectPaperlessStatus">Select paper status</entry>
+
+	<entry key="sfExpatIban">IBAN</entry>
+	<entry key="sfExpatAddressStart">Original Address</entry>
+	<entry key="sfExpatAddressJob">Job address</entry>
+	<entry key="sfExpatAddressTemp">Temporary address</entry>
+	<entry key="sfExpatFamily">Family</entry>
+	<entry key="sfExpatChildren">Children</entry>
+	<entry key="sfExpatNoVisibility">Remarks not available for expatriate</entry>
+
+	<entry key="sfSupplierAdd">Add contact</entry>
+	<entry key="sfSupplierContactName">Name</entry>
+	<entry key="sfSupplierLabel">Supplier Company</entry>
+	<entry key="sfNoSupplierAgency">No supplier/agency</entry>
+	<entry key="sfSupplierMail">E-mail</entry>
+
+	<entry key="sfAppointmentSetAddress">Appointment address</entry>
+	<entry key="sfAppointmentSetSupplier">Appointment supplier/agency</entry>
+	<entry key="sfAppointmentSetRemarks">Appointment comments</entry>
+	<entry key="pickSupplier">Choose supplier/agency</entry>
+
+	<entry key="sfSupplierAdd">New supplier</entry>
+	<entry key="sfSupplierName">New supplier name</entry>
+	<entry key="sfSupplierTypeNew">Supplier type</entry>
+	<entry key="sfSupplierTypeNew">New supplier type</entry>
+	<entry key="sfSupplierAll">All suppliers</entry>
+	<entry key="sfSupplierContactAll">All suppliers contacts</entry>
+
+	<entry key="spouse">Conjoint(e)</entry>
+	<entry key="child">Enfant</entry>
+	<entry key="children">Enfants</entry>
+
+	<entry key="sfSupplierFlagFurniture">Furniture</entry>
+	<entry key="sfSupplierFlagNofurniture">Nofurniture</entry>
+	<entry key="sfSupplierFlagVisale">Visale</entry>
+	<entry key="sfSupplierFlagGarantMe">GarantMe</entry>
+	<entry key="sfSupplierFlagJobTrialPeriod">JobTrialPeriod</entry>
+	<entry key="sfSupplierFlagInstitution">Institution</entry>
+	<entry key="sfSupplierFlagParisCenter">ParisCenter</entry>
+	<entry key="sfSupplierFlagParisNorth">ParisNorth</entry>
+	<entry key="sfSupplierFlagParisSouth">ParisSouth</entry>
+	<entry key="sfSupplierFlagParisWest">ParisWest</entry>
+	<entry key="sfSupplierFlagParisEast">ParisEast</entry>
+	<entry key="sfSupplierFlagSuburbWest">SuburbWest</entry>
+	<entry key="sfSupplierFlagNeuillyBoulogne">NeuillyBoulogne</entry>
+	<entry key="sfSupplierFlagOtherSuburbs">OtherSuburbs</entry>
+	<entry key="sfSupplierFlagElementary">Elementary</entry>
+	<entry key="sfSupplierFlagMiddleSchool">MiddleSchool</entry>
+	<entry key="sfSupplierFlagHighSchool">HighSchool</entry>
+	<entry key="sfSupplierFlagBilingualProgram">BilingualProgram</entry>
+	<entry key="sfSupplierFlagIntlCourse">IntlCourse</entry>
+	<entry key="sfSupplierFlagKindergarden">Kindergarden</entry>
+	<entry key="sfSupplierFlagIntlLevelA">IntlLevelA</entry>
+	<entry key="sfSupplierFlagIbDiploma">IbDiploma</entry>
+	<entry key="sfSupplierFlagAlurLaw">AlurLaw</entry>
+	<entry key="sfSupplierFlagMailing">Mailing</entry>
+
+	<entry key="sfImmigrationEndVisa">End of Visa</entry>
+	<entry key="sfImmigrationEndStay">End of Residence Permit </entry>
+	<entry key="sfImmigrationRDVConsulate">Consulate App.</entry>
+	<entry key="sfImmigrationRDVPrefecture">Prefecture App.</entry>
+	<entry key="sfImmigrationForeignNumber">Foreign ID Number</entry>
+	<entry key="sfImmigrationAnefPass">Password</entry>
+
+	<entry key="sfMailSentDate">Sent on </entry>
+
+	<entry key="sfStorageStatsClient">Usage by customer</entry>
+	<entry key="sfStorageStatsDocumentType">Usage by document type</entry>
+
+	<entry key="sfExpatViewBackNav">%1$s</entry>
+
+	<entry key="serviceImmigration">Immigration</entry>
+	<entry key="serviceImmigrationFamily">Immigration family</entry>
+	<entry key="serviceSocialSecurity">Sécurité Sociale salarié(e)</entry>
+	<entry key="serviceSocialSecurityFamily">Sécurité Sociale famille</entry>
+	<entry key="serviceFiscalite">Fiscalité</entry>
+
+	<entry key="addVisitPlace">Add a visit</entry>
+	<entry key="downloadPlanning">Download planning</entry>
+	<entry key="visitPlaceRealEstateAgent">Visit contact</entry>
+	<entry key="visitPlaceContactTel">Contact phone</entry>
+	<entry key="confirmDeleteVisit">Are you sure you want to delete this visit?</entry>
+
+	<entry key="outboxSendEmpty">No messages waiting to be sent at this time.</entry>
+	<entry key="outboxSentEmpty">No sent messages.</entry>
+	<entry key="outboxSendRequested">Send requested</entry>
+
+	<entry key="mailSender">Expéditeur</entry>
+	<entry key="mailRecipientTO">To</entry>
+	<entry key="mailRecipientCC">CC</entry>
+	<entry key="mailRecipientBCC">BCC</entry>
+	<entry key="mailSubject">Subject</entry>
+	<entry key="mailSignature">Signature</entry>
+	<entry key="mailStateDraft">Draft</entry>
+	<entry key="mailStateQueued">Send requested</entry>
+	<entry key="mailStateSent">Sent on %1$s</entry>
+	<entry key="mailAddExpatAttachment">Select an expat document</entry>
+	<entry key="mailAddCustomerAttachment">Select an client document</entry>
+	<entry key="mailAddGenericAttachment">Select an generic document</entry>
+	<entry key="mailAddSignature">Select a signature</entry>
+	<entry key="groupMailCheckExpat">View expatriate details</entry>
+	<entry key="groupMailRequestAdded">Your request has been added.</entry>
+	<entry key="groupMailRemarksExample">Example comments</entry>
+	<entry key="addRecipient">Add Recipient</entry>
+	<entry key="addRecipientTO">Add Recipient TO</entry>
+	<entry key="addRecipientCC">Add Recipient CC</entry>
+	<entry key="addRecipientBCC">Add Recipient BCC</entry>
+	<entry key="removeRecipient">Remove Recipient</entry>
+
+	<entry key="statsRelosPerYear">Number of relocations per year</entry>
+	<entry key="statsRelosCurrentYear">Number of relocations in %1$d</entry>
+	<entry key="statsRelosSatisfaction">Employee satisfaction score</entry>
+	<entry key="statsRelosCounted">Number of projects</entry>
+
+	<entry key="actionGdprDeleteRequest">Personal data delete request</entry>
+	<entry key="actionGdprDeleteRequested">Personal data delete requested on %1$s</entry>
+	<entry key="actionGdprDeleteRequestDone">Personal data deleted on %1$s</entry>
+
+	<entry key="actionDocument">Document</entry>
+	<entry key="actionForm">Information</entry>
+
+	<entry key="actionNext">Next</entry>
+	<entry key="actionPrev">Previous</entry>
+	<entry key="actionBack">Back</entry>
+
+	<entry key="actionAccept">OK</entry>
+	<entry key="actionCreate">Create</entry>
+	<entry key="actionCreateNewRelocation">Create New Relocation</entry>
+	<entry key="actionRedirect">Redirect</entry>
+	<entry key="actionStayAndModify">Stay and edit</entry>
+	<entry key="actionUpdate">Update</entry>
+	<entry key="actionDuplicate">Duplicate</entry>
+	<entry key="actionRequestSending">Send</entry>
+	<entry key="actionRequestResending">Duplicate</entry>
+	<entry key="actionModify">Modify</entry>
+	<entry key="actionDelete">Delete</entry>
+	<entry key="actionCancel">Cancel</entry>
+	<entry key="actionAbandonRelocation">Abandon Relocation</entry>
+	<entry key="actionTerminateRelocation">Finish Relocation</entry>
+	<entry key="actionClose">Close</entry>
+	<entry key="actionSubmit">Submit</entry>
+	<entry key="actionAdd">Add</entry>
+	<entry key="actionReplace">Replace</entry>
+	<entry key="actionChoose">Choose</entry>
+	<entry key="actionConfirm">Confirm</entry>
+	<entry key="actionSelect">Select</entry>
+	<entry key="actionDeselect">Deselect</entry>
+	<entry key="actionReview">Review</entry>
+	<entry key="actionIveFinished">I've finished</entry>
+	<entry key="actionFinishLater">Finish later</entry>
+
+
+	<entry key="yes">Yes</entry>
+	<entry key="no">No</entry>
+</properties>

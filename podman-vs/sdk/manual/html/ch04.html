@@ -1,0 +1,52 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter&nbsp;4.&nbsp;Customizing the default templates</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="pt02.html" title="Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer"><link rel="prev" href="pt02.html" title="Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer"><link rel="next" href="ch04s02.html" title="HTTP access to template resources"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Chapter&nbsp;4.&nbsp;Customizing the default templates</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="pt02.html">Prev</a>&nbsp;</td><th align="center" width="60%">Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch04s02.html">Next</a></td></tr></table><hr></div><div class="chapter" title="Chapter&nbsp;4.&nbsp;Customizing the default templates"><div class="titlepage"><div><div><h2 class="title"><a name="N2092D"></a>Chapter&nbsp;4.&nbsp;Customizing the default templates</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="ch04.html#N20932">Template systems and packages</a></span></dt><dt><span class="sect1"><a href="ch04s02.html">HTTP access to template resources</a></span></dt><dt><span class="sect1"><a href="ch04s03.html">Creating and modifying style packages</a></span></dt></dl></div>
+            
+            <div class="sect1" title="Template systems and packages"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N20932"></a>Template systems and packages</h2></div></div></div>
+                
+                <p>OpenAGE Viewer includes a theming service to make it easier to create user
+                    interfaces.  The theming service supports multiple template systems, with a
+                    default <a class="ulink" href="http://freemarker.org/" target="_top">FreeMarker</a>-based template system.  All template systems have a
+                    well-defined package structure, and are designed to support rapid development
+                    and straightforward deployment.</p>
+                <p>The FreeMarker<a name="N20940" class="indexterm"></a>-based template system is oriented towards creating HTML-based user
+                    interfaces. Other template systems can be implemented using other template
+                    engines (for example, a template system could be implemented using XML and XLST,
+                    or could generate binary files such as spreadsheet documents or PDF documents).
+                    Despite this diversity, all template systems structure their packages in the
+                    same way. Using OSGi plug-ins, you can provide your own template systems, or
+                    even provide additional user interfaces that can be accessed over HTTP and
+                    directly access data connectors.</p>
+                <p>Template packages are structured as follows:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                            <p>The template system has access to files in the <code class="filename">assets<a name="N20951" class="indexterm"></a>/themes<a name="N2095A" class="indexterm"></a></code> directory (see <a class="xref" href="ch02s02.html#sect.assets-dir" title="The &quot;assets&quot; directory">the section called &ldquo;The "assets" directory&rdquo;</a> for details). This directory can
+                                contain template packages, either as expanded directories (during
+                                development) or as imported "<code class="filename">.zip</code>" files
+                                (recommended for production). The theming service attaches template
+                                packages to template systems as appropriate.</p>
+                        </li><li class="listitem">
+                            <p>Each template package can contain one or more template files,
+                                associated media assets (such as images), and one or more style
+                                packages.  In the case of the default FreeMarker-based template
+                                system, the template files are stored in the top-level directory of
+                                the template package as "<code class="filename">.ftl</code>" files, media
+                                files are stored in the <code class="filename">media<a name="N20974" class="indexterm"></a></code> directory, and style packages are stored
+                                in the <code class="filename">style<a name="N2097F" class="indexterm"></a></code> directory.  The
+                                    <code class="filename">style</code> directory contains one subdirectory
+                                per style package, but does <span class="emphasis"><em>not</em></span> directly store
+                                    "<code class="filename">.css</code>" files themselves.</p>
+                        </li><li class="listitem">
+                            <p>Each style package can contain one or more stylesheets and
+                                associated media assets.  In the case of the default
+                                FreeMarker-based template system, the "<code class="filename">.css</code>"
+                                files are stored in the top-level directory, and media assets are
+                                stored in a <code class="filename">media</code> subdirectory. </p>
+                        </li></ul></div>
+                <p>Template packages therefore define how to structure the contents of different
+                    pages in the user interface.  Style packages make it possible to apply different
+                    visual themes and layouts to common templates (for example, varying how content
+                    is displayed by audience or device).  Simple template packages are not required
+                    to contain style packages, and can directly store stylesheets as media assets.
+                    Style packages must be defined within the template package to which they
+                    apply.</p>
+            </div>
+            
+            
+        </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="pt02.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="pt02.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch04s02.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;HTTP access to template resources</td></tr></table></div></body></html>

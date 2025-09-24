@@ -1,0 +1,195 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Running Viewer</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="ch02.html" title="Chapter&nbsp;2.&nbsp;Installing the Viewer application"><link rel="prev" href="ch02s02.html" title="Directory layout"><link rel="next" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Configuration"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Running Viewer</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch02s02.html">Prev</a>&nbsp;</td><th align="center" width="60%">Chapter&nbsp;2.&nbsp;Installing the Viewer application</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch03.html">Next</a></td></tr></table><hr></div><div class="sect1" title="Running Viewer"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N202FE"></a>Running Viewer</h2></div></div></div>
+                    
+                    <div class="sect2" title="Starting from the command line"><div class="titlepage"><div><div><h3 class="title"><a name="running.start.command"></a>Starting from the command line</h3></div></div></div>
+                        
+                        <p>Assuming that you have installed and correctly configured a Java SE 8
+                        environment, from within the directory where
+                            <code class="filename">viewshell.jar</code><a name="N2030D" class="indexterm"></a> is installed (along with its associated
+                            <code class="filename">lib</code><a name="N2031B" class="indexterm"></a> subdirectory), you can start OpenAGE Viewer with the following
+                        command:
+                        </p><pre class="screen"><span class="command"><strong>java -jar viewshell.jar</strong></span></pre>
+                        <p>In the event of receiving
+                                <code class="classname">UnsupportedClassVersionError</code>, check your
+                            configuration: this normally indicates that the <span class="command"><strong>java</strong></span>
+                            command was mapped to an earlier version of Java SE.</p>
+                        <p>When this command is successfully issued, the command line is blocked
+                        until the application is stopped. The application can be halted if necessary
+                        using <span class="command"><strong>CTRL+C</strong></span> in the command line, or by using the
+                        terminate command.</p>
+                    <div class="sect3" title="Stopping the server using a browser"><div class="titlepage"><div><div><h4 class="title"><a name="running.stop.uri"></a>Stopping the server using a browser</h4></div></div></div>
+                        
+                        <p>The terminate command can be issued without authentication over HTTP
+                            after changing the default settings (refer to <a class="xref" href="ch03s02.html#config.system.server.signal.uri-enabled" title="Options for server.signal.uri-enabled">Options for <code class="varname">server.signal.uri-enabled</code></a>). Depending upon
+                            the server endpoint configuration (here we assume that the endpoint is
+                                "<code class="code">http://localhost:8086/front/</code>"), it could be issued as
+                            follows:</p><pre class="programlisting">http://localhost:8086/front/admin/signal/<span class="bold"><strong>TERM</strong></span><a name="N2034A" class="indexterm"></a></pre>
+                        <p>When the command is successful, the server responds in plain text with
+                                <code class="varname">TERM</code> and then shuts down.</p>
+                        <div class="caution" title="Caution" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Caution"><tr><td valign="top" align="center" rowspan="2" width="25"><img alt="[Caution]" src="images/caution.svg"></td><th align="left">Caution</th></tr><tr><td valign="top" align="left">
+                            <p>For production servers, we recommend disabling this feature, as it
+                                exposes the application server to <span class="emphasis"><em>denial of
+                                    service</em></span> attacks.  This feature is not enabled by
+                                default.</p>
+                        </td></tr></table></div>
+                    </div>
+                        <div class="sect3" title="Stopping the server using a JMX console"><div class="titlepage"><div><div><h4 class="title"><a name="running.stop.jmx"></a>Stopping the server using a JMX console</h4></div></div></div>
+                        
+                        <p>OpenAGE Viewer exposes a management interface using JMX<a name="N20368" class="indexterm"></a> by default, and as such can be managed by tools such as
+                                <code class="code">jconsole</code><a name="N20370" class="indexterm"></a>. Using your JMX client, connect to the
+                                <code class="varname">viewshell.jar</code> process, then go to
+                                <span class="emphasis"><em>MBeans</em></span> view, and navigate to
+                                <code class="code">fr.reflexe.viewshell</code>. The
+                                <code class="varname">HostApplication</code> MBean provides a
+                                <code class="code">terminate()</code> operation, which will shutdown OpenAGE
+                            Viewer and disconnect the JMX client.</p>
+                    </div>
+                    </div>
+                <div class="sect2" title="Installing OpenAGE Viewer as a service"><div class="titlepage"><div><div><h3 class="title"><a name="N20388"></a>Installing OpenAGE Viewer as a service</h3></div></div></div>
+                    
+                    <div class="sect3" title="Using Microsoft&reg; Windows&reg; systems"><div class="titlepage"><div><div><h4 class="title"><a name="running.winsvc"></a>Using Microsoft&reg; Windows&reg; systems</h4></div></div></div>
+                        
+                        <p>On a Microsoft&reg; Windows&reg; system system, the application should be
+                            installed in the <code class="varname">%ProgramFiles%</code><a name="N20397" class="indexterm"></a> directory, and <code class="varname">VSH_HOME</code> will be a
+                            subdirectory of the <code class="varname">%ProgramData%</code><a name="N203A5" class="indexterm"></a> directory, where the name of the subdirectory matches the
+                            name of the service, which by default is
+                                "<code class="varname">ViewShell</code>"<a name="N203B1" class="indexterm"></a>.</p>
+                        <p>Therefore, in a default installation, the following paths will be used:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                                    <p><a name="N203C2" class="indexterm"></a><code class="filename">C:\Program Files\viewshell</code>
+                                        as the program installation directory.</p>
+                                </li><li class="listitem">
+                                    <p><a name="N203D2" class="indexterm"></a><code class="filename">C:\ProgramData\ViewShell</code>
+                                        as the <code class="varname">VSH_HOME</code> application data
+                                        directory, including log files, configuration information,
+                                        and runtime data.</p>
+                                </li></ul></div>
+                        <p>On typical Microsoft&reg; Windows&reg; installations, the environment variable
+                                <code class="varname">%ProgramData%</code> is defined and accessible to all
+                            users, including normal user accounts and the "<code class="varname">Local
+                                System</code>" account used to run services. If the environment
+                            variable is for some reason undefined, then
+                                <code class="varname">VSH_HOME</code> will default to creating and using a
+                                "<code class="filename">home</code><a name="N203F0" class="indexterm"></a>" directory within the installation directory. You can also
+                            override the default service installation script to specify an
+                            alternative path (and modify other parameters, if necessary).</p>
+                        <p>Before proceeding to install the service, you must define the
+                                <code class="varname">%JAVA_HOME%</code><a name="N203FE" class="indexterm"></a> environment variable, so that it refers to the installation
+                            directory of a 64-bit JDK (this directory will contain the
+                                "<code class="filename">bin</code>", "<code class="filename">lib</code>", and
+                                "<code class="filename">jre</code>" directories, along with some other files
+                            and directories).</p>
+                        <p>To install the service, you must open a command prompt as an
+                            administrator, and navigate to the "<code class="filename">viewshell</code>"
+                            installation directory, then to the "<code class="filename">service</code>"
+                            subdirectory.  You can then run the
+                                <code class="filename">InstallService.bat</code> script to install the
+                            service (the script will also attempt to start the service
+                            immediately).</p><div class="figure"><a name="N2041C"></a><p class="title"><b>Figure&nbsp;2.1.&nbsp;Opening a command prompt as an administrator</b></p><div class="figure-contents">
+                                
+                                <div class="mediaobject" align="center"><table cellpadding="0" cellspacing="0" summary="manufactured viewport for HTML img" border="0" width="40%"><tr><td align="center"><img src="media/winsvc.cmd_runas_admin.png" align="middle" width="100%" alt="Opening a command prompt as an administrator"></td></tr></table></div>
+                            </div></div><br class="figure-break">
+                        <p>For example, you might enter the following commands:
+                            </p><pre class="screen"><span class="command"><strong>cd %ProgramFiles%\viewshell\service</strong></span>
+<span class="command"><strong>InstallService.bat</strong></span><a name="N20438" class="indexterm"></a></pre>
+                        <p>Running the <code class="filename">InstallService.bat</code> script will
+                            normally produce the following output:
+                            </p><pre class="screen">Installing Windows Service (for 64-bit Intel/AMD architecture).
+Running script with administrative permissions.
+
+Using 64-bit JVM: C:\java\jdk8
+Using VSH_HOME:   C:\ProgramData\ViewShell<a name="N20447" class="indexterm"></a>
+Using LOGPATH:    C:\ProgramData\ViewShell\logs
+Using CLASSPATH:  C:\Program Files\viewshell\viewshell.jar
+
+Installing "ViewShell" service using ViewShell.exe
+Starting "ViewShell" service...
+
+Started service: check log files to confirm startup (see %LOGPATH%, above)</pre>
+                        <p>If the script fails for any reason (for example, insufficient
+                            permissions or incorrect paths), then an ERROR message will be displayed
+                            in the command window.  Note that you should check the logfiles, as
+                            suggested, as in some cases the service can install correctly but the
+                            application may fail to start correctly (for example, insufficient
+                            permissions or a conflict with another application running as a
+                            server).</p>
+                        <p>To uninstall the service, you must again open the command prompt as an
+                            administrator, and you might enter the following
+                            commands:</p><pre class="screen"><span class="command"><strong>cd %ProgramFiles%\viewshell\service</strong></span>
+<span class="command"><strong>UninstallService.bat</strong></span><a name="N20459" class="indexterm"></a></pre>
+                        <p>Running the <code class="filename">UninstallService.bat</code> script will
+                            normally produce the following
+                            output:</p><pre class="screen">Uninstalling Windows Service (for 64-bit Intel/AMD architecture).
+Running script with administrative permissions.
+
+Uninstalled "ViewShell" service.</pre>
+                        <p>When the application runs as a service, you can start it, stop it, and
+                            restart it using the "Computer Management" window (right click on the
+                                "<span class="guiicon">Computer</span>" icon on the Microsoft&reg; Windows&reg;
+                            desktop, and select the "<span class="guimenuitem">Manage</span>"
+                                option).</p><div class="figure"><a name="N20471"></a><p class="title"><b>Figure&nbsp;2.2.&nbsp;Computer Management window showing the running
+                                    service</b></p><div class="figure-contents">
+                                
+                                <div class="mediaobject" align="center"><table cellpadding="0" cellspacing="0" summary="manufactured viewport for HTML img" border="0" width="90%"><tr><td align="center"><img src="media/winsvc.list_popup.png" align="middle" width="100%" alt="Computer Management window showing the running service"></td></tr></table></div>
+                            </div></div><p><br class="figure-break"></p>
+                        <p>The start, stop, and restart actions are available from the above
+                            window's toolbar.  You can also access a more detailed dialog box by
+                            right-clicking the service and selecting the
+                                "<span class="guimenuitem">Properties</span>" option.  The following
+                            dialog window is displayed:</p><div class="figure"><a name="N2048A"></a><p class="title"><b>Figure&nbsp;2.3.&nbsp;General settings for the Microsoft&reg; Windows&reg; service</b></p><div class="figure-contents">
+                                
+                                <div class="mediaobject" align="center"><table cellpadding="0" cellspacing="0" summary="manufactured viewport for HTML img" border="0" width="40%"><tr><td align="center"><img src="media/winsvc.props1.png" align="middle" width="100%" alt="General settings for the Microsoft&reg; Windows&reg; service"></td></tr></table></div>
+                            </div></div><p><br class="figure-break"></p>
+                        <p>The second tab in the window lets you specify an alternative user
+                            account to use for running the service, if you have specific security
+                                requirements.</p><div class="figure"><a name="N204A0"></a><p class="title"><b>Figure&nbsp;2.4.&nbsp;User account settings for the Microsoft&reg; Windows&reg;
+                                    service</b></p><div class="figure-contents">
+                                
+                                <div class="mediaobject" align="center"><table cellpadding="0" cellspacing="0" summary="manufactured viewport for HTML img" border="0" width="40%"><tr><td align="center"><img src="media/winsvc.props2.png" align="middle" width="100%" alt="User account settings for the Microsoft&reg; Windows&reg; service"></td></tr></table></div>
+                            </div></div><p><br class="figure-break"></p>
+                        <p>Additional log files will be generated when running as a service.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                                    <p><code class="filename">service.YYYY-MM-DD.log</code><a name="N204BD" class="indexterm"></a>: contains debugging information generated when
+                                        starting and stopping the service.</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">stdout.log</code><a name="N204D0" class="indexterm"></a>: contains any output to
+                                            <code class="filename">STDOUT</code>.</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">stderr.log</code><a name="N204E6" class="indexterm"></a>: contains any output to
+                                            <code class="filename">STDERR</code>.</p>
+                                </li></ul></div>
+                    </div>
+                    <div class="sect3" title="Using Linux systems and JSVC"><div class="titlepage"><div><div><h4 class="title"><a name="N204F9"></a>Using Linux systems and JSVC</h4></div></div></div>
+                        
+                        <p>Running the application as the <code class="varname">root</code> user on
+                            Unix-type operating systems is not supported.  The server administrator
+                            will however require <code class="varname">root</code> privileges to be able to
+                            install and control the server application process.</p>
+                        <p>To install OpenAGE Viewer on a Linux server, starting by extracting
+                                <code class="filename">ViewShell-0.10.0.SNAPSHOT.zip</code> into an appropriate
+                            directory (such as <code class="filename">/var/opt</code><a name="N2050E" class="indexterm"></a>). After that, you need to install the Apache
+                                <code class="filename">jsvc</code><a name="N20519" class="indexterm"></a><a name="N20524" class="indexterm"></a> to start, stop and monitor the Viewer server process. You
+                            can install it using standard server tools such as
+                                <code class="filename">apt-get</code> (on Debian variants) or
+                                <code class="filename">yum</code> (on RedHat variants), or if necessary by
+                            downloading a source distribution from the <a class="ulink" href="http://commons.apache.org/proper/commons-daemon/jsvc.html" target="_top">Apache Commons</a> website, and compiling it.  The minimum
+                            supported version of <code class="filename">jsvc</code> is 1.0.15.</p>
+                        <p>Once OpenAGE Viewer and <code class="filename">jsvc</code> are successfully
+                            installed on your machine, you can create new Viewer-based server
+                            applications by renaming
+                                <code class="filename">viewshell/service/linux/vshservice</code><a name="N20542" class="indexterm"></a> as the name of your new service, and then modify it
+                            according to the instructions contained in this file. Each independent
+                            Viewer-based server application will require a dedicated configuration
+                            file. Once you have deployed this new configuration file in
+                                <code class="filename">/etc/init.d</code><a name="N20550" class="indexterm"></a>, you can start, stop and restart your OpenAGE Viewer
+                            service like many other services by using:
+                            </p><pre class="screen"><span class="command"><strong>sudo /etc/init.d/vshservice start|stop|restart</strong></span></pre><p>Remember
+                            to configure your service for automatic startup. This can be done with
+                            the <span class="command"><strong>update-rc.d</strong></span> command, as follows:
+                            </p><pre class="screen"><span class="command"><strong>sudo update-rc.d vshservice defaults</strong></span></pre><p>You can then select your
+                            service from the list of available services.</p>
+                    </div>
+                </div>
+                <div class="sect2" title="Installation using a reverse proxy"><div class="titlepage"><div><div><h3 class="title"><a name="N20567"></a>Installation using a reverse proxy</h3></div></div></div>
+                    
+                    <p>TODO: describe quick howto for Apache HTTPD.</p>
+                    <p>TODO: necessary if using Linux/Unix and requiring port such as 80.</p>
+                </div>
+            </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch02s02.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="ch02.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch03.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Directory layout&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Chapter&nbsp;3.&nbsp;Configuration</td></tr></table></div></body></html>

@@ -1,0 +1,56 @@
+<div class="card flat staff mail send-grouped with-header with-footer"><%
+
+var xp = data.expat;
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navMailSendGrouped %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="filter"><%
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colCustomerName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-client combo"><input class="combo" type=text></div><%
+%><div class="pick-client icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colExpatName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-expat combo"><input class="combo" type=text></div><%
+%><div class="pick-expat icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%></div><% /* .filter */
+
+%><div class="check-expat pad-container divider-color<% if(!xp){print(' disabled');} %>"><%
+%>→ <a href="#sfExpatHomeSearch/<%= xp ? xp.id : "-" %>/gm" class="underlined"><%- data.txt.groupMailCheckExpat %></a><%
+%></div><% /* .check-expat */
+
+%><div class="form <% if(!xp){print('disabled');} %> dark-text-color pad-container"><%
+
+if (data.md.remarksExample){
+	%><label   for="mg-comments-x"><%- data.txt.groupMailRemarksExample %> :</label><%
+	%><textarea id="mg-comments-x" <% if(!xp){print('disabled');} %> rows=6 cols=40 readonly><%- data.md.remarksExample %></textarea><%
+}
+
+%><label   for="mg-comments"><%- data.txt.colRemarks %> :</label><%
+%><textarea id="mg-comments" <% if(!xp){print('disabled');} %> rows=6 cols=40></textarea><%
+
+%></div><% /* .form */
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+%><a class="ellipsis accent-border accent-color update disabled"
+	 href="#confirm" title="<%- data.txt.actionConfirm %>"><%- data.txt.actionConfirm %></a><%
+
+%></div><% /* .footer */
+
+%></div>

@@ -1,0 +1,236 @@
+<div class="card flat welcome"><%
+
+var w = data.welcome;
+var welcomer = data.welcomer || {};
+var targetStage = (data.targetStage !== null) ? data.targetStage : w.stage;
+
+var displayOnNext = false;
+_.each(data.stages.reverse(), function(s) {
+    if (targetStage === s.name) {
+        s.enableDisplayOnSmallScreen = true;
+        s.enableLinkDisplayOnSmallScreen = true;
+        displayOnNext = true;
+    } else if (displayOnNext) {
+        s.enableDisplayOnSmallScreen = true;
+        s.enableLinkDisplayOnSmallScreen = false;
+        displayOnNext = false;
+    }  else {
+        s.enableDisplayOnSmallScreen = false;
+    }
+});
+_.each(data.stages.reverse(), function(s) {
+    if (targetStage === s.name) {
+        s.enableDisplayOnSmallScreen = true;
+        s.enableLinkDisplayOnSmallScreen = true;
+        displayOnNext = true;
+    } else if (displayOnNext) {
+        s.enableDisplayOnSmallScreen = true;
+        s.enableLinkDisplayOnSmallScreen = false;
+        displayOnNext = false;
+    }  else {
+       // s.enableDisplayOnSmallScreen = false;
+    }
+});
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navHome %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+%><p class="subtitle dark-text-color"><%- data.txt.welcomeSubtitle %></p><%
+
+%><div class="crumbtrail"><%
+
+_.each(data.stages, function(s){
+	if (!s.welcome) return true; // continue
+	if (s.ordinal){
+		%><hr class="line divider-background <%if (s.enableLinkDisplayOnSmallScreen) { %> small-screen-displayA <%} %> "><%
+	}
+	var classes = ["crumb" ];
+	var image = null;
+	var shown = _.isArray(w.shown)
+		? _.find(w.shown, function(it){ return it.name===s.name; })
+		: null;
+
+	if (w.stage === s.name){
+		classes = classes.concat(["doing","alt-accent-color","primary-text-color"]);
+		image = data.images.doing;
+	}
+	else if (!!shown){
+		classes = classes.concat(["done","accent-color","text-primary-color"]);
+		image = data.images.done;
+	}
+	else{
+		classes = classes.concat(["todo","divider-color","divider-foreground"]);
+		image = data.images.todo;
+	}
+	if (s.enableDisplayOnSmallScreen) {
+	    classes.push('small-screen-display');
+	}
+
+	%><div data-stage="<%= s.name %>" class="<%= classes.join(" ") %>"><%
+	print(image);
+	%></div><% /* .crumb */
+});
+%></div><% /* .crumbtrail */
+
+%><div class="crumbtrail-labels dark-text-color"><%
+var count = 1;
+_.each(data.stages, function(s){
+	if (!s.welcome) return true; // continue
+	var classes = ["crumb-label"];
+	var shown = _.isArray(w.shown)
+		? _.find(w.shown, function(it){ return it.name===s.name; })
+		: null;
+
+	if (w.stage === s.name){
+		classes.push("doing");
+	}
+	else if (!!shown){
+		classes.push("done");
+	}
+	else{
+		classes.push("todo");
+	}
+	if (s.enableDisplayOnSmallScreen) {
+    	    classes.push('small-screen-display');
+    	}
+
+	%><div class="<%= classes.join(" ") %>"><%
+	print(_.escape(data.txt["stage_title_"+s.name] || s.name) + ' '+ count++ +'/5');
+	%></div><% /* .crumb-label */
+});
+%></div><% /* .crumbtrail-labels */
+
+%><div class="homecard"><%
+%><h3 class="primary"><%- data.txt["stage_cardtitle_"+targetStage] %></h3><%
+%><p class="secondary-text-color"><%
+
+switch (targetStage){
+	case "welcome":
+		if (welcomer && welcomer.id){
+			print(data.fmt.nl2br(_.escape(data.fmt.sprintf(data.txt.stage_cardmessage_welcome, data.user.gn || data.user.cn || "?", welcomer.gn || "?"))));
+		}
+		else{
+			print(_.escape(data.txt.stage_cardmessage_welcome_none));
+		}
+		break;
+	case "survey":
+		print(data.fmt.nl2br(_.escape(data.fmt.sprintf(data.txt.stage_cardmessage_survey, data.txt.navExpatRelocation))));
+		break;
+	default:
+		print(data.fmt.nl2br(_.escape(data.txt["stage_cardmessage_" + targetStage])));
+}
+
+%></p><%
+
+%><div class="stage-ui <%= targetStage %>"><%
+switch (targetStage){
+	case "welcome":{
+		if (welcomer && welcomer.id){
+			var subjectCount = 1;
+			var serviceCount = _.isArray(welcomer.services) && welcomer.services.length ? welcomer.services.length : 0;
+			if (serviceCount > 0) subjectCount += serviceCount;
+
+			%><article class="minicard contact" title="<%- welcomer.cn %>"><%
+			%><div class="avatar default-primary-color text-primary-color"><%
+			%><img class="avatar" src="<%= data.route.staffAvatar + welcomer.id %>"><%
+			%></div><% /* .avatar */
+
+			%><div class="detail"><%
+			%><h3 class="cn ellipsis"><%- welcomer.cn %></h3><%
+			%><p><%- data.txt[subjectCount === 1 ? "welcomerMessage1":"welcomerMessageN"] %></p><%
+			%><div class="subjects"><%
+			%><span class="subject welcomer ellipsis alt-accent-border" title="<%- data.txt.expatWelcomer %>"><%- data.txt.expatWelcomer %></span><%
+			if (_.isArray(welcomer.services) && welcomer.services.length){
+				var services = [];
+				_.each(welcomer.services, function(id){
+					var v = _.find(data.validatedServices, function(it){ return it.id === id; });
+					if (v) services.push(v.service);
+				});
+				if (services.length > 1){
+					services = _.sortBy(services, "name");
+				}
+				_.each(services, function(s){
+					%><span class="subject ellipsis divider-color" title="<%- s.localDesc %>"><%- s.localDesc %></span><%
+				});
+			}
+			%></div><% /* .subjects */
+
+			if (welcomer.mail){
+				%><p class="contact ellipsis"><span class="tertiary-text-color"><%- data.txt.colMail %></span><br><a href="mailto:<%- welcomer.mail %>"><%- welcomer.mail %></a></p><%
+			}
+			if (welcomer.tel){
+				%><p class="contact ellipsis"><span class="tertiary-text-color"><%- data.txt.colTelWhatsapp %></span><br><a href="tel:<%- welcomer.tel %>"><%- welcomer.tel %></a></p><%
+			}
+
+			%></div><% /* .detail */
+
+			%></article><% /* .minicard */
+		}
+		break;
+	}
+	case "survey":{
+		%><article class="minimenu pad-container default-primary-color default-text-shadow text-primary-color"><%
+		%><div class="miniitem disabled expatMain"><%- data.txt.navHome %></div><%
+		%><div class="miniitem accent-color expatRelocation"><%- data.txt.navExpatRelocation %></div><%
+		%><div class="miniitem disabled otherVisits"><%- data.txt.navOtherVisits %></div><%
+		%><div class="miniitem disabled expatVisits"><%- data.txt.navExpatVisits %></div><%
+		%></article><% /* .minimenu */
+
+		%><article class="minibody pad-container dark-text-color"><%
+		%><div class="outline pad-container alt-accent-border"><%
+		%><h3 class="primary"><%- data.txt.navExpatSurveys %></h3><%
+
+		%><div class="survey-card pad-container accent-border"><%
+		%><div class="survey-text ellipsis"><%- data.txt.stage_action_survey_q1 %></div><%
+		%><div class="survey-icon accent-ghost"><%= data.images.done %></div><%
+		%></div><% /* .survey-card */
+
+		%><div class="survey-card pad-container alt-accent-border"><%
+		%><div class="survey-text ellipsis"><%- data.txt.stage_action_survey_q2 %></div><%
+		%><div class="survey-icon alt-accent-ghost"><%= data.images.doing %></div><%
+		%></div><% /* .survey-card */
+
+		%></div><% /* .outline */
+		%></article><% /* .minibody */
+		break;
+	}
+}
+%></div><% /* .stage-ui */
+
+%><div class="actions"><%
+var tCallToAction = data.txt["stage_action_"+targetStage];
+var tMoveOnToNext = data.txt.welcomeSkipToNext;
+if (tCallToAction){
+	let hrefCTA;
+	if (targetStage === "appointment"){
+        if(welcomer.urlCallAgenda){
+            hrefCTA = welcomer.urlCallAgenda;
+        }
+        else{
+            hrefCTA = "mailto:"+ encodeURI(welcomer.mail) +"?subject="+ encodeURI(data.txt.appointment_mail_subject);
+        }
+	    /*
+		hrefCTA += "&body=" + encodeURI(data.fmt.sprintf( data.txt.appointment_mail_body, welcomer.gn, data.user.gn ));
+		*/
+	}
+	else{
+		hrefCTA = "#"+targetStage;
+	}
+	var targetAttr = hrefCTA.indexOf("https:")===0 ? 'target="_blank"' : '';
+
+    if (targetStage !== "welcome" || w.stage === "welcome") {
+	%><a data-stage="<%= targetStage %>" href="<%= hrefCTA %>" <%= targetAttr %> class="accent-border accent-color text-primary-color ellipsis" title="<%- tCallToAction %>"><%- tCallToAction %></a><%
+	}
+}
+if (w.next && (w.stage === targetStage || targetStage === null) ){
+	%><a href="#skip" class="accent-border accent-ghost ellipsis" title="<%- tMoveOnToNext %>"><%- tMoveOnToNext %></a><%
+}
+%></div><% /* .actions */
+
+%></div><% /* .homecard */
+
+%></div><% /* .body */
+
+%></div>

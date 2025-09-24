@@ -1,0 +1,55 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter&nbsp;5.&nbsp;Creating custom templates</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="pt02.html" title="Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer"><link rel="prev" href="ch04s03.html" title="Creating and modifying style packages"><link rel="next" href="ch05s02.html" title="Template syntax with FreeMarker"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Chapter&nbsp;5.&nbsp;Creating custom templates</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch04s03.html">Prev</a>&nbsp;</td><th align="center" width="60%">Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch05s02.html">Next</a></td></tr></table><hr></div><div class="chapter" title="Chapter&nbsp;5.&nbsp;Creating custom templates"><div class="titlepage"><div><div><h2 class="title"><a name="N209BA"></a>Chapter&nbsp;5.&nbsp;Creating custom templates</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="ch05.html#pages.template.data">Default data provided for templates</a></span></dt><dt><span class="sect1"><a href="ch05s02.html">Template syntax with FreeMarker</a></span></dt><dd><dl><dt><span class="sect2"><a href="ch05s02.html#N20AB8">Default settings for templates</a></span></dt><dt><span class="sect2"><a href="ch05s02.html#ftl.structure">Template file structure</a></span></dt><dt><span class="sect2"><a href="ch05s02.html#N20C6B">Template variables</a></span></dt><dt><span class="sect2"><a href="ch05s02.html#N218AF">Template macros</a></span></dt><dt><span class="sect2"><a href="ch05s02.html#N2197A">Including other templates</a></span></dt><dt><span class="sect2"><a href="ch05s02.html#N219E8">Importing macros from other templates</a></span></dt></dl></dd><dt><span class="sect1"><a href="ch05s03.html">Template functions</a></span></dt><dd><dl><dt><span class="sect2"><a href="ch05s03.html#N21AA4">Default template functions</a></span></dt></dl></dd></dl></div>
+            
+            <div class="sect1" title="Default data provided for templates"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="pages.template.data"></a>Default data provided for templates</h2></div></div></div>
+                
+                <p>When using the default page rendering service in OpenAGE Viewer, all templates
+                    have a default data added into the template for rendering, including the data
+                    for the page and the navigation context. All default data is defined using
+                    either standard Java objects, or objects defined in the
+                        <code class="code">fr.reflexe.viewshell</code> API.</p>
+                <div class="variablelist"><dl><dt><span class="term"><code class="varname">page</code><a name="N209D2" class="indexterm"></a></span></dt><dd>
+                            <p>Provides access to properties of the page design (template,
+                                stylesheets, and so on).  Implements a subinterface of
+                                    <code class="classname">IThemedPage</code>.</p>
+                        </dd><dt><span class="term"><code class="varname">user</code><a name="N209ED" class="indexterm"></a></span></dt><dd>
+                            <p>Provides access to properties of the authenticated user (except on
+                                pages, such as the sign-on screen, where there is no user).
+                                Implements <code class="classname">IUser</code>.</p>
+                        </dd><dt><span class="term"><code class="varname">asset</code><a name="N20A08" class="indexterm"></a></span></dt><dd>
+                            <p>Provides access to a sequence of page assets, such as shared
+                                JavaScript libraries or web fonts.  The items in this sequence
+                                depend upon the page design.  Each item implements
+                                    <code class="classname">IPageAsset</code>.</p>
+                        </dd><dt><span class="term"><code class="varname">styleSheet</code><a name="N20A23" class="indexterm"></a></span></dt><dd>
+                            <p>Provides access to a sequence of stylesheets (that should be
+                                compatible with the page template).  The items in this sequence
+                                depend upon the page design.  Each item implements
+                                    <code class="classname">IStyleSheet</code>.</p>
+                        </dd><dt><span class="term"><code class="varname">dictionary</code><a name="N20A3E" class="indexterm"></a></span></dt><dd>
+                            <p>Provides access to a hash of text localization dictionaries, for
+                                internationalization support.  Hash keys are the dictionary names
+                                (which must be unique within the scope of the page).  The items in
+                                this hash depend upon the page design; additional dictionaries can
+                                be accessed using template functions (see <a class="xref" href="ch05s03.html#IHttpTemplateFunction.udict" title="udict">the section called &ldquo;udict&rdquo;</a>).  Each item implements
+                                    <code class="classname">ITemplateDictionary</code>.</p>
+                        </dd><dt><span class="term"><code class="varname">contextUri</code><a name="N20A5C" class="indexterm"></a></span></dt><dd>
+                            <p>A <code class="classname">String</code> containing the <span class="emphasis"><em>context
+                                    URI</em></span>, that is the path from the server host and port
+                                to the base path of the application.  Always starts and ends with
+                                "/".</p>
+                        </dd><dt><span class="term"><code class="varname">mediaUri</code><a name="N20A7A" class="indexterm"></a></span></dt><dd>
+                            <p>A <code class="classname">String</code> containing the <span class="emphasis"><em>media
+                                    URI</em></span>, that is the path from the server host and port
+                                to the path containing shared media files. Always starts and ends
+                                with "/".</p>
+                        </dd><dt><span class="term"><code class="varname">themeMediaUri</code><a name="N20A98" class="indexterm"></a></span></dt><dd>
+                            <p>A <code class="classname">String</code> containing the <span class="emphasis"><em>theme
+                                    media URI</em></span>, that is the path from the server host and
+                                port to the path containing media files that belong to the same
+                                template package as the page template. Always starts and ends with
+                                "/".</p>
+                        </dd></dl></div>
+            </div>
+            
+            
+        </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch04s03.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="pt02.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch05s02.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Creating and modifying style packages&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Template syntax with FreeMarker</td></tr></table></div></body></html>

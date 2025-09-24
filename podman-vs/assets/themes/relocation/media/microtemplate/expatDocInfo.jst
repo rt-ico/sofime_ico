@@ -1,0 +1,37 @@
+<div id="photoEdit" class="thumbDialog"><%
+
+%><div class="thumbPane"><%
+%><input type=file class="masked upload-document-file" accept="image/*" capture ><%
+if (data.dataChoices.has_thumb) {
+%><img data-action="fileUpload" class="img-edit" src="<%= data.dataChoices.url + data.dataChoices.id %>/thumb?mtime=<%= data.dataChoices.mtime %>" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+} else {
+%><img data-action="fileUpload" class="img-edit" src="<%= data.route.themeStyleUri %>media/white2x/form.png" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+}
+%><%
+%><div class="thumbPaneFooter"><%
+%><input type=file class="masked upload-document-file" accept="image/*" capture ><%
+%><p class="expat-doc-info-footer-width" data-action="fileUpload"><%-data.txt.expatDocumentChangeFile%></p><%
+%><div class="thumb-tool" data-action="fileUpload" title="<%- data.txt.expatDocumentUpload %>" class="icon alt-accent-ghost"><%= data.dataChoices.images.update %></div>
+</div>
+</div>
+
+<div class="fieldPane">
+
+<label for="documentType" class="strong"><%- data.txt.dialogDocumentType %> :</label>
+<input  id="documentType" type=text  autocomplete="off">
+
+<label for="fileName" class="strong"><%- data.txt.dialogFileName %> :</label>
+<input id="fileName" type=text value="<%- data.dataChoices.fileName %>">
+
+<label for="fileRemarks"><%- data.txt.dialogFileRemarks %> :</label>
+<textarea id="fileRemarks" rows=2></textarea>
+
+<input type="hidden" id="refExpat" name="refExpat" value="<%= data.dataChoices.refExpat %>" >
+<input type="hidden" id="refType" name="refType" value="<%= data.dataChoices.refType %>" >
+
+
+
+
+</div>
+
+</div>

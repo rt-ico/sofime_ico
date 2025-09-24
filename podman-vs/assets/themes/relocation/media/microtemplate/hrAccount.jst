@@ -1,0 +1,65 @@
+<div class="card flat hr account with-footer"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navMyAccount %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="plaincard pad-container secondary-text-color form"><%
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateSurName %>"><%
+%><label for="account-sn" class="required"><%- data.txt.expatriateSurName %></label><%
+%><input  id="account-sn" type=text maxlength=255 value="<%- data.account.sn %>"><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateGivenName %>"><%
+%><label for="account-gn" class="required"><%- data.txt.expatriateGivenName %></label><%
+%><input  id="account-gn" type=text maxlength=255 value="<%- data.account.gn %>"><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateMail %>"><%
+%><label for="account-workMail" class="required"><%- data.txt.expatriateMail %></label><%
+%><input  id="account-workMail" type=email maxlength=255 value="<%- data.account.workMail %>"><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateTel1 %>"><%
+%><label for="account-workTel" class="required"><%- data.txt.expatriateTel1 %></label><%
+%><input  id="account-workTel" type=tel maxlength=20 value="<%- data.account.workTel %>"><%
+%></div><%/* .hr-field */
+%></div><% /* .plaincard */
+
+
+if (!_.isEmpty(data.clients)){
+	%><h2 class="primary"><%- data.txt.hrSuppliersTitle %></h2><%
+	_.each(data.clients, function(c){
+		%><div class="plaincard pad-container secondary-text-color client"><%
+		%><h4 class="primary"><%- c.name %></h4><%
+		if (c.invoiceAddress){
+			%><p><span class="label"><%- data.txt.invoiceAddress %></span> : <%= data.fmt.nl2br(_.escape(c.invoiceAddress)) %></a></p><%
+		}
+		if (c.postalAddress){
+			%><p><span class="label"><%- data.txt.postalAddress %></span> : <%= data.fmt.nl2br(_.escape(c.postalAddress)) %></a></p><%
+		}
+		if (c.tel){
+			%><p><span class="label"><%- data.txt.telephone %></span> : <a href="tel:<%- c.tel %>"><%- c.tel %></a></p><%
+		}
+		%><p><span class="label"><%- data.txt.usingOrderForms %></span> : <%- c.usingOrderForms ? data.txt.yes : data.txt.no %></p><%
+		%></div><% /* .plaincard */
+	});
+}
+
+
+%><h2 class="primary"><%- data.txt.termsConditions %></h2><%
+
+
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+%><a class="update ellipsis accent-border accent-color disabled"
+	 href="#hrAccount" title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+
+%></div><% /* .footer */
+
+%></div>

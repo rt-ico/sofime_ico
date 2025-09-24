@@ -1,0 +1,27 @@
+<div id="photoEdit" class="thumbDialog"><%
+
+%><div class="thumbPane"><%
+if (data.dataChoices.has_thumb) {
+%><img src="<%= data.route.visitsDocuments + data.place.id +'/' + data.dataChoices.id %>/thumb?mtime=<%= data.dataChoices.mtime.getTime() %>" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+} else {
+%><img src="<%= data.route.themeStyleUri %>media/white2x/form.png" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+}
+
+%><p><%- data.fmt.formatDecimal(data.dataChoices.thumb.size_s) %> (<%- data.dataChoices.thumb.type %>)</p>
+
+</div>
+
+<div class="fieldPane">
+
+<label for="fileName" class="strong"><%- data.txt.dialogFileName %> :</label>
+<input id="fileName" type=text value="<%- data.dataChoices.fileName %>">
+
+<label for="fileRemarks" class="strong"><%- data.txt.dialogFileRemarks %> :</label>
+<textarea id="fileRemarks" rows=2></textarea>
+
+<input type="hidden" id="refExpat" name="refExpat" value="<%= data.dataChoices.refExpat %>" >
+
+
+</div>
+
+</div>

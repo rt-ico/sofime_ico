@@ -1,0 +1,40 @@
+@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+
+ECHO Uninstalling Windows Service (for 64-bit Intel/AMD architecture).
+
+
+:CHECKADMINPERMISSIONS
+NET SESSION >NUL 2>&1
+IF %ERRORLEVEL% == 0 (
+	ECHO Running script with administrative permissions.
+) ELSE (
+	ECHO. & ECHO ERROR: You must run this script with administrative permissions.
+	GOTO :ENDOFSCRIPT
+)
+
+
+:CHECKSERVICEIMAGE
+IF "%SERVICE_NAME%"=="" (
+	SET SERVICE_NAME=ViewShell
+)
+SET SERVICE_PATH=amd64
+SET SERVICE_IMAGE=ViewShell.exe
+IF NOT EXIST "%SERVICE_PATH%\%SERVICE_IMAGE%" (
+	ECHO. & ECHO ERROR: Cannot find "%SERVICE_IMAGE%" in: %CD%\%SERVICE_PATH%
+	GOTO :ENDOFSCRIPT
+)
+
+
+:UNINSTALLSERVICE
+"%SERVICE_PATH%\%SERVICE_IMAGE%" //DS//%SERVICE_NAME%
+IF NOT %ERRORLEVEL% == 0 (
+	ECHO. & ECHO ERROR^(%ERRORLEVEL%^): Uninstallation of "%SERVICE_NAME%" service failed.
+	GOTO :ENDOFSCRIPT
+)
+ECHO. & ECHO Uninstalled "%SERVICE_NAME%" service.
+
+
+:ENDOFSCRIPT

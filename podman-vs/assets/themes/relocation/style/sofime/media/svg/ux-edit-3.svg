@@ -1,0 +1,7 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0,0,24,24">
+	<g fill="none" fill-rule="nonzero" class="mix-blend-normal"
+	   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M14 2L18 6L7 17H3V13L14 2V2Z" fill-rule="evenodd" clip-rule="evenodd"/>
+		<path d="M3 22H21"/>
+	</g>
+</svg>

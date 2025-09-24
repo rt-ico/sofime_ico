@@ -1,0 +1,46 @@
+<div class="family-member divider-color"<% if(data.familyMember){ print(' data-id='+data.familyMember.id); } %>><%
+
+let fm = data.familyMember; // nullable
+console.log("-> fm: %O", fm);
+
+let domId_fmSurName      = _.uniqueId("fmSurName");
+let domId_fmGivenName    = _.uniqueId("fmGivenName");
+let domId_fmBirthDate    = _.uniqueId("fmBirthDate");
+let domId_fmSIN          = _.uniqueId("fmSIN");
+let domId_fmRemarks      = _.uniqueId("fmRemarks");
+
+
+
+%><div class="fm-field surName" title="<%- data.txt.expatriateSurName %>"><%
+%><label for="<%= domId_fmSurName %>" class="required"><%- data.txt.expatriateSurName %></label><%
+%><input type=text id="<%= domId_fmSurName %>" value="<%- fm ? fm.sn : '' %>"><%
+%></div><%
+
+%><div class="fm-field givenName" title="<%- data.txt.expatriateGivenName %>"><%
+%><label for="<%= domId_fmGivenName %>" class="required"><%- data.txt.expatriateGivenName %></label><%
+%><input type=text id="<%= domId_fmGivenName %>" value="<%- fm ? fm.gn : '' %>"><%
+%></div><%
+
+%><div class="fm-field birthDate date" title="<%- data.txt.expatriateBirthDate %>"><%
+%><label for="<%= domId_fmBirthDate %>" class="required"><%- data.txt.expatriateBirthDate %></label><%
+%><div class="input alignItemsCenter"><%
+%><input type=text id="<%= domId_fmBirthDate %>" class="date" value="<%- fm && fm.birthDate ? data.cachedMoment(fm.birthDate).format("L") : '' %>" data-floor=0><%
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="<%= domId_fmBirthDate %>" data-pick-date-title="<%- data.txt.expatriateBirthDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .field */
+%></div><% /* .fm-field */
+
+%><div class="fm-field SIN" title="<%- data.txt.sfExpatChildSSN %>"><%
+%><label for="<%= domId_fmSIN %>" class="required"><%- data.txt.sfExpatChildSSN %></label><%
+%><input type=text id="<%= domId_fmSIN %>" value="<%- fm ? fm.SIN : '' %>"><%
+%></div><%
+
+%><div class="fm-field grow remarks" title="<%- data.txt.colRemarks %>"><%
+%><label for="<%= domId_fmRemarks %>" class="required"><%- data.txt.colRemarks %></label><%
+%><input type=text id="<%= domId_fmRemarks %>" value="<%- fm ? fm.remarks : '' %>"><%
+%></div><%
+
+%><a href="#remove-family-member" class="text-primary-color dark-primary-color remove" title="<%- data.txt.removeFamilyRelation %>"><%= data.images.remove %></a><%
+
+%></div>

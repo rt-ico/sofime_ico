@@ -1,0 +1,48 @@
+<div class="card flat appointments"><%
+
+var visits = _.filter(data.visits, function(v){
+	//return !(v.next || v.past);
+	return !v.past;
+});
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navOtherVisits %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container"><%
+
+if (_.isEmpty(visits)){
+	%><p><%- data.txt.noUpcomingAppointments %></p><%
+}
+else{
+	_.each(visits, function(v,i){
+		switch(i){
+			case 0:
+				%><h3 class="primary"><%- data.txt.yourNextAppointment %></h3><%
+				break;
+			case 1:
+				%><h3 class="primary"><%- data.txt.yourUpcomingAppointments %></h3><%
+				break;
+			default:
+				// stfu
+		}
+		%><article class="infocard pad-container visits dark-text-color <%= v.next ? 'alt-accent-border':'dark-divider-color' %>"><%
+		if (false){
+			%><p class="subject ellipsis" title="<%- v.subject %>"><%- v.subject %></p><%
+		}
+		if (true){
+			%><p class="type ellipsis" title="<%- v.localeDesc %>"><%- v.localeDesc %></p><%
+		}
+		%><div class="about"><%
+		%><p class="appointment" title="<%- v.localized %>"><%- v.localized %></p><%
+		if (data.isLocation(v.location)){
+			%><p class="location"><%= data.toLocationText(v.location) %></p><%
+		}
+		%></div><% /* .about */
+		%></article><%
+	});
+}
+
+%></div><% /* .body */
+
+%></div>

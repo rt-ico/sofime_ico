@@ -1,0 +1,8 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<g fill="none" fill-rule="nonzero" class="mix-blend-normal">
+		<path d="M641,319h159c18.18,0 33,14.82 33,33v544.41l-0.59,0.59h-640.82l-0.59,-0.59v-768.82l0.59,-0.59h416.41c18.18,0 33,14.82 33,33zM704.23,158.82l96.95,96.95l-0.51,1.23h-97.08l-0.59,-0.59v-97.08z" visibility="hidden"/>
+		<g color="currentColor" class="color-1">
+			<path d="M128,64h522.98c35.25,0 65.58,12.56 90.51,37.49l117.02,117.02c24.93,24.92 37.49,55.26 37.49,90.51v650.98h-768zM192,128v768h640v-544c0,-17.62 -14.37,-32 -32,-32h-160v-160c0,-17.63 -14.37,-32 -32,-32zM704,160v96h96z" fill="currentColor"/>
+		</g>
+	</g>
+</svg>

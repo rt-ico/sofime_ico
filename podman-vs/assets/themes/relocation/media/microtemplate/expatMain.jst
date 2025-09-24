@@ -1,0 +1,82 @@
+<div class="card flat home"><%
+
+var appointments = _.chain(data.plannedVisits)
+	.filter(function(v){
+		return v.moment.isSameOrAfter(data.now, 'minute');
+	})
+	.value();
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navHome %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container"><%
+
+if (data.communication){
+	%><article class="infocard pad-container communication alt-accent-border"><%
+	%><div class="icon alt-accent-ghost"><%= data.images.mail %></div><%
+	%><p class="secondary-text-color"><%= data.fmt.nl2br(_.escape(data.communication)) %></p><%
+	%></article><%
+}
+
+if (data.callToAction.calendlyAppointmentRequired && data.welcomer && data.welcomer.urlCallAgenda){
+	%><article class="infocard pad-container appointments alt-accent-border"><%
+	%><div class="icon alt-accent-ghost"><%= data.images.appointments %></div><%
+	%><p class="secondary-text-color"><%
+	%><span class="strong"><%- data.txt.stage_cardtitle_appointment %></span><%
+	%><span class="secondary-text-color"><a class="underlined" href="<%- data.welcomer.urlCallAgenda %>"><%- data.txt.stage_action_appointment %></a></span><%
+	%></p><%
+	%></article><%
+}
+
+if (!_.isEmpty(appointments)){
+	%><article class="infocard pad-container visits dark-text-color dark-divider-color"><%
+	%><h4><%- data.txt[appointments.length === 1 ? 'yourNextAppointment':'yourNextAppointments'] %></h4><%
+	%><div class="appointments-box"><%
+	%><div class="appointments"><%
+	_.each(appointments, function(v,i){
+		if (i>1) return false; // break
+		var escVisitType = v.type && v.type.name ? _.escape(v.type.localeName || v.type.name) : "";
+		//var escSubject = v.subject ? _.escape(v.subject) : escVisitType || "";
+		var escSubject = escVisitType || v.subject || "";
+		%><p><%
+		%><span class="visit-subject ellipsis"><%= escSubject || "" %></span><%
+		%> <%- data.txt.onDate %> <span class="visit-date"><%- data.cachedMoment(v.date).format("L") %></span><%
+		if (v.time){
+			%> <%- data.txt.atTime %> <span class="visit-time"><%- v.time %></span><%
+		}
+		%></p><%
+	});
+	%></div><% /* .appointments */
+	if (data.plannedVisits.length > 2){
+		%><div class="show-all"><%
+		%><a class="underlined" href="#otherVisits"><%- data.txt.showAllAppointments %></a><%
+		%></div><% /*. show-all */
+	}
+	%></div><% /* .appointments-box */
+	%></article><%
+}
+
+%><div class="homecards dark-text-color"><%
+_.each(["relocation","documents","visits","appointments"], function(f){
+	var i = data.indicator[f];
+	var infoCount = _.toInteger(i.info);
+	var warnCount = _.toInteger(i.warn);
+	var escLabel = _.escape(data.txt["homecard_"+f]);
+	%><div class="homecard" <% if(i.target){ print('data-target="'+_.escape(i.target)+'"'); } %> title="<%= escLabel %>"><%
+	%><div class="indicator"><%
+	%><p class="ellipsis"><%= escLabel %></p><%
+	%><div class="info <%= infoCount > 0 ? "accent-color text-primary-color":"light-primary-color" %>"><span class="value"><%= infoCount %></span></div><%
+	if (warnCount > 0){
+		%><div class="warn"><span class="value"><%= warnCount %></span><span class="bg"><%= data.images.triangle %></span></div><%
+	}
+	%></div><% /* .indicator */
+	%><div class="icon alt-accent-color text-primary-color"><%= data.images[f] %></div><% /* .icon */
+	%></div><% /* .homecard */
+});
+
+%></div><% /* .homecards */
+
+%></div><% /* .body */
+
+%></div>

@@ -1,0 +1,493 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Template functions</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Creating custom templates"><link rel="prev" href="ch05s02.html" title="Template syntax with FreeMarker"><link rel="next" href="ch06.html" title="Chapter&nbsp;6.&nbsp;Customizing page navigation"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Template functions</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch05s02.html">Prev</a>&nbsp;</td><th align="center" width="60%">Chapter&nbsp;5.&nbsp;Creating custom templates</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch06.html">Next</a></td></tr></table><hr></div><div class="sect1" title="Template functions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="template.functions"></a>Template functions</h2></div></div></div>
+                
+                <p>OpenAGE Viewer provides a default set of template functions, and makes it
+                    possible to plug in additional template functions.  Template functions generally
+                    transform existing data (for example, formatting text, numbers, and dates) or
+                    can calculate new content.  They are also commonly used to create context-aware
+                    links between elements (for example, creating hypertext links for navigation
+                    that apply to the currently-connected user).</p>
+                <p>In the following sections, each default template function is described as
+                    follows:</p><pre class="screen">function<a class="co" name="tf.example.fn-co" href="ch05s03.html#tf.example.fn"><img border="0" alt="1" src="images/callouts/1.svg"></a> ( param:Type<a class="co" name="tf.example.p1-co" href="ch05s03.html#tf.example.p1"><img border="0" alt="2" src="images/callouts/2.svg"></a> , param:Type<a class="co" name="tf.example.p2-co" href="ch05s03.html#tf.example.p2"><img border="0" alt="3" src="images/callouts/3.svg"></a> [, param:Type<a class="co" name="tf.example.p3-co" href="ch05s03.html#tf.example.p3"><img border="0" alt="4" src="images/callouts/4.svg"></a>] )</pre>
+                <p>
+                    </p><div class="calloutlist"><table summary="Callout list" border="0"><tr><td align="left" valign="top" width="5%"><p><a name="tf.example.fn"></a><a href="#tf.example.fn-co"><img border="0" alt="1" src="images/callouts/1.svg"></a> </p></td><td align="left" valign="top"><p>The function name appears before the list of parameters (also referred to as
+                                    <span class="emphasis"><em>arguments</em></span>).  In the following function
+                                descriptions, the name of the function is used in place of the
+                                literal string "function" above.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="tf.example.p1"></a><a href="#tf.example.p1-co"><img border="0" alt="2" src="images/callouts/2.svg"></a> </p></td><td align="left" valign="top"><p>Most functions (but not all) expect at least one parameter.  In all cases, the function name
+                                is shown followed by parentheses.  When the function expects one or
+                                more parameters, these are shown within the parentheses; when there
+                                are multiple parameters, each parameter is separated by an
+                                intermediate comma.  The name (here, "param") has no meaning to the
+                                function, it is simply shown for reference.  In the same way, the
+                                ":Type" suffix is not expected, but is shown to indicate the data
+                                type (such as <code class="varname">String</code>, for text).</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="tf.example.p2"></a><a href="#tf.example.p2-co"><img border="0" alt="3" src="images/callouts/3.svg"></a> </p></td><td align="left" valign="top"><p>Example of how a second required parameter can be specified in the argument list, separated
+                                from other parameters with a comma.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="tf.example.p3"></a><a href="#tf.example.p3-co"><img border="0" alt="4" src="images/callouts/4.svg"></a> </p></td><td align="left" valign="top"><p>Optional parameters are shown within square brackets.  These brackets are shown in examples to
+                                identify optional parameters but <span class="emphasis"><em>must not</em></span> be
+                                used within templates.  This indicates that the parameter may be
+                                processed by the template function if provided, but is not required
+                                in all cases.</p></td></tr></table></div><p>
+                </p>
+                <p>When used with the FreeMarker template system, functions can be combined with
+                    other FreeMarker functions, variables, and built-ins.  For
+                    example:</p><pre class="screen">&lt;p&gt;${nl2br(page.title?html)}&lt;/p&gt;</pre>
+                <p>The <code class="code">${...}</code> syntax defines where the block of FreeMarker content
+                    occurs; within that block, FreeMarker interprets the text as commands and as
+                    variable references.  The <code class="varname">nl2br</code> function will be passed the
+                    value of the hypothetical data <code class="code">page.title</code>
+                    <span class="emphasis"><em>after</em></span> it is transformed safely to HTML by FreeMarker's
+                        <code class="code">?html</code> built-in (as the aim of <code class="varname">nl2br</code> is to
+                    convert new line characters into <code class="code">&lt;br/&gt;</code> tags, the HTML conversion
+                    must be performed <span class="emphasis"><em>first</em></span>, otherwise the output would be
+                        <code class="code">&amp;lt;br/&amp;gt;</code>).</p>
+                <div class="sect2" title="Default template functions"><div class="titlepage"><div><div><h3 class="title"><a name="N21AA4"></a>Default template functions</h3></div></div></div>
+                    
+                    <div class="sect3" title="nl2br"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.nl2br"></a>nl2br<a name="N21AAE" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">nl2br</code> template function has the following
+                            syntax:</p><pre class="screen">nl2br(text:String)</pre>
+                        <p>This function converts new line characters into HTML
+                                <code class="code">&lt;br/&gt;</code> elements, so that the original data can store
+                            plain text without needing to store HTML markup.  Multiple consecutive
+                            new line characters create multiple <code class="code">&lt;br/&gt;</code> tags, with
+                            intermediate <code class="code">&amp;nbsp;</code> entities being generated as
+                            necessary.</p>
+                        <p>For example, given the following input
+                            text:</p><pre class="screen">This is a subtitle.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr...</pre>
+                        <p>...the <code class="varname">nl2br</code> function will produce the following
+                            output
+                            text:</p><pre class="screen">This is a subtitle.<span class="bold"><strong>&lt;br /&gt;</strong></span>
+<span class="bold"><strong>&amp;nbsp;&lt;br /&gt;</strong></span>
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr...</pre>
+                        <p>This function can be used in any context.</p>
+                    </div>
+                    <div class="sect3" title="addr"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.addr"></a>addr<a name="N21AEC" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">addr</code> template function has the following
+                            syntax:</p><pre class="screen">addr(relativeUri:String|URI)</pre>
+                        <p>This function converts a string or a relative URI into an instance of
+                                <code class="classname">IAddress</code>, an interface defined by the API for
+                            working with addresses relative to (and not including) the server path,
+                            for use with other template functions or for accessing component parts
+                            of the address.  It will neither add nor remove the server path, and
+                            must not contain the protocol, hostname, port, or the query string.  The
+                            specified string must start with a forward slash ("/").</p>
+                        <p>The resulting <code class="classname">IAddress</code> instance is recognized
+                            by other template functions as being relative the configured server
+                            path, and not as relative to the server root.</p>
+                        <p>This function can be used in any context.</p>
+                    </div>
+                    <div class="sect3" title="sid"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.sid"></a>sid<a name="N21B15" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">sid</code> template function has the following
+                            syntax:</p><pre class="screen">sid(url:String|URI|URL|IAddress)</pre>
+                        <p>This function encodes<a name="N21B2B" class="indexterm"></a> the session ID<a name="N21B31" class="indexterm"></a> into the absolute or relative URL passed as
+                            a parameter to the template function. The <code class="varname">url</code>
+                            parameter may be specified as the output of another link-producing
+                            function.  It should be used for all internal links when the default
+                            session cookie settings are effective (refer to <a class="xref" href="ch03s02.html#config.system.server.using-session-cookies" title="Options for server.using-session-cookies">Options for <code class="varname">server.using-session-cookies</code></a>).</p>
+                        <p>For example, assuming the function is invoked when processing a
+                            request for a user with an active session (with a session token of
+                                "<code class="varname">abcd1234</code>"), then the following call to the
+                                <code class="varname">sid()</code> template function with an example
+                            URL:</p><pre class="screen">sid('/report.pdf?orientation=landscape')</pre>
+                        <p>...would
+                            produce:</p><pre class="screen">/report.pdf<span class="bold"><strong>;jsessionid<a name="N21B53" class="indexterm"></a>=abcd1234</strong></span>?orientation=landscape</pre>
+                        <p>No transformation occurs when this function is invoked when there is
+                            no active session.</p>
+                        <p>The "<code class="varname">url</code>" parameter can be of Java type
+                                <code class="classname">String</code>, <code class="classname">URI</code>,
+                                <code class="classname">URL</code>, or
+                            <code class="classname">IAddress</code>.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to access the currently-connected user's
+                            session information.</p>
+                    </div>
+                    <div class="sect3" title="uriHome"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.uriHome"></a>uriHome<a name="N21B77" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">uriHome</code> template function has the following
+                            syntax:</p><pre class="screen">uriHome()</pre>
+                        <p>This function generates a URI (relative hyperlink) that can be
+                            embedded into an HTML <code class="code">&lt;a&gt;</code> element to link to the current
+                            user's home page, which by default is the default dashboard. The
+                            generated URI automatically includes the session ID, if necessary.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to construct an appropriate URI and determine
+                            the currently-connected user.</p>
+                    </div>
+                    <div class="sect3" title="uriDashboard"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.uriDashboard"></a>uriDashboard<a name="N21B9A" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">uriDashboard</code> template function has the following
+                            syntax:</p><pre class="screen">uriDashboard()</pre>
+                        <p>This function generates a URI (relative hyperlink) that can be
+                            embedded into an HTML <code class="code">&lt;a&gt;</code> element to link to the current
+                            user's default dashboard page.  The generated URI automatically includes
+                            the session ID, if necessary.</p>
+                        <p>If the URI cannot be determined using the
+                                <code class="classname">IPageRouter</code> service, this returns the hash
+                            location <code class="code">#uriDashboard</code>.  Hash location updates can be
+                            handled using the <code class="varname">onhashchange</code> event of modern web
+                            browsers.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to construct an appropriate URI and determine
+                            the currently-connected user.</p>
+                    </div>
+                    <div class="sect3" title="uriList"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.uriList"></a>uriList<a name="N21BC9" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">uriList</code> template function has the following
+                            syntax:</p><pre class="screen">uriList(list:IListPage|IListView [, route:String] [, page:int [, pageSize:int]])</pre>
+                        <p>This function generates a URI (relative hyperlink) that can be
+                            embedded into an HTML <code class="code">&lt;a&gt;</code> element to link to the
+                            specified list page. The generated URI automatically includes the
+                            session ID, if necessary.</p>
+                        <p>The optional <em class="parameter"><code>route</code></em> parameter can be used to
+                            select a non-default route, if such as route has been configured.  The
+                            default route can be selected by omitting this parameter.</p>
+                        <p>The optional <em class="parameter"><code>page</code></em> parameter specifies the page
+                            number as a positive integer, for paginated lists.  The default page
+                            number is 1.</p>
+                        <p>The optional <em class="parameter"><code>pageSize</code></em> parameter specifies the
+                            number of items per page as a positive integer, for paginated lists.
+                            The default number of items per page is 50.  This optional parameter can
+                            only be specified if the <em class="parameter"><code>page</code></em> parameter is
+                            specified before it.</p>
+                        <p>If the URI cannot be determined using the
+                                <code class="classname">IPageRouter</code> service, this returns the hash
+                            location <code class="code">#uriList</code>.  Hash location updates can be handled
+                            using the <code class="varname">onhashchange</code> event of modern web
+                            browsers.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to construct an appropriate URI and determine
+                            the currently-connected user.</p>
+                    </div>
+                    <div class="sect3" title="uriForm"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.uriForm"></a>uriForm<a name="N21C0D" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">uriForm</code> template function has the following
+                            syntax:</p><pre class="screen">uriForm(form:IFormPage|IItem|IKey|ISource [, route:String])</pre>
+                        <p>This function generates a URI (relative hyperlink) that can be
+                            embedded into an HTML <code class="code">&lt;a&gt;</code> element to link to the
+                            specified form page. If the first parameter is an instance of
+                                <code class="classname">ISource</code>, the form page can be used to create
+                            a new record; in all other cases, the form page is designed for viewing
+                            and/or editing an existing record. The generated URI automatically
+                            includes the session ID, if necessary.</p>
+                        <p>The optional <em class="parameter"><code>route</code></em> parameter can be used to
+                            select a non-default route, if such as route has been configured.  The
+                            default route can be selected by omitting this parameter.</p>
+                        <p>If the URI cannot be determined using the
+                                <code class="classname">IPageRouter</code> service, this returns the hash
+                            location <code class="code">#uriForm</code>.  Hash location updates can be handled
+                            using the <code class="varname">onhashchange</code> event of modern web
+                            browsers.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to construct an appropriate URI and determine
+                            the currently-connected user.</p>
+                    </div>
+                    <div class="sect3" title="uriSignOn"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.uriSignOn"></a>uriSignOn<a name="N21C45" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">uriSignOn</code> template function has the following
+                            syntax:</p><pre class="screen">uriSignOn()</pre>
+                        <p>This function generates a URI (relative hyperlink) that can be
+                            embedded into an HTML <code class="code">&lt;a&gt;</code> element to link to the first
+                            valid configured definition of a password-based page design.  If no such
+                            authentication service is available (for example, with a public site or
+                            a site using SSO), then this function will be unable to generate a valid
+                            URI.  The generated URI automatically includes the session ID, if
+                            necessary.</p>
+                        <p>If the URI cannot be determined, this returns the hash location
+                                <code class="code">#uriSignOn</code>.  Hash location updates can be handled using
+                            the <code class="varname">onhashchange</code> event of modern web browsers.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to construct an appropriate URI.</p>
+                    </div>
+                    <div class="sect3" title="uriSignOff"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.uriSignOff"></a>uriSignOff<a name="N21C71" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">uriSignOff</code> template function has the following
+                            syntax:</p><pre class="screen">uriSignOff()</pre>
+                        <p>This function generates a URI (relative hyperlink) that can be
+                            embedded into an HTML <code class="code">&lt;a&gt;</code> element to link to the first
+                            valid configured sign-off URI of a password-based page design.  If no such
+                            authentication service is available (for example, with a public site or
+                            a site using SSO, or an invalidation definition), then this function will
+                            be unable to generate a valid URI.  The generated URI automatically
+                            includes the session ID, if necessary.</p>
+                        <p>If the URI cannot be determined, this returns the hash location
+                                <code class="code">#uriSignOff</code>.  Hash location updates can be handled
+                            using the <code class="varname">onhashchange</code> event of modern web
+                            browsers.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to construct an appropriate URI.</p>
+                    </div>
+                    <div class="sect3" title="udict"><div class="titlepage"><div><div><h4 class="title"><a name="IHttpTemplateFunction.udict"></a>udict<a name="N21C9D" class="indexterm"></a><a name="N21CA8" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">udict</code> template function has the following
+                            syntax:</p><pre class="screen">udict(dictionary:String|UUID|IDictionary [, key:String [, formatParameters...]])</pre>
+                        <p>This function can either return a reference to a translation
+                            dictionary (an instance of <code class="classname">ITemplateDictionary</code>),
+                            or (more usefully) directly retrieve a text translation identified by a
+                            specific translation key. If the text is a template, and appropriate
+                            formatting parameters are specified, then they will be merged with the
+                            template. Furthermore, if any formatting parameters are themselves
+                            translatable (are instances of <code class="classname">ITranslated</code>, such
+                            as <code class="classname">ICell</code> or <code class="classname">ISource</code>), then
+                            they will be translated first before being merged with the
+                            template.</p>
+                        <p>The translation is selected by first checking the request for an
+                            authenticated user (defining a locale preference), then falling back to
+                            any information provided using HTTP request headers (specifically,
+                                <code class="varname">Accept-Language</code>). If it is still not possible to
+                            select a translation, a neutral locale will be assumed.  However, if an
+                            instance of <code class="classname">ITemplateDictionary</code> is used as the
+                            first parameter, then this will define the locale instead.</p>
+                        <p>This function can only be used in the context of processing an HTTP
+                            call, as it must be able to determine the locale to use to select
+                            translations.</p>
+                    </div>
+                    <div class="sect3" title="isTextType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isTextType"></a>isTextType<a name="N21CDA" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isTextType</code> template function has the
+                            following syntax:</p><pre class="screen">isTextType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">ITextType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isIntegerType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isIntegerType"></a>isIntegerType<a name="N21D1B" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isIntegerType</code> template function has the
+                            following syntax:</p><pre class="screen">isIntegerType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IIntegerType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type contain signed numbers (with no decimal
+                            point) with up to 20 digits (the exact number of digits will usually
+                            depend on database constraints).  The default precision is 10
+                            digits.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isDecimalType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isDecimalType"></a>isDecimalType<a name="N21D5F" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isDecimalType</code> template function has the
+                            following syntax:</p><pre class="screen">isDecimalType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IDecimalType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type contain signed numbers, and can have
+                            numbers after the decimal point.  They are suitable for use in financial
+                            applications. The range of numbers that can be stored in such objects is
+                            in principle arbitrary, but in practice limited by database constraints
+                            (varying from one database to another).  Generally, this can potentially
+                            store more digits than <code class="classname">IIntegerType</code>
+                            objects.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isFloatType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isFloatType"></a>isFloatType<a name="N21DA6" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isFloatType</code> template function has the
+                            following syntax:</p><pre class="screen">isFloatType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IFloatType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type contain signed numbers and have a
+                            decimal point.  They can store very large ranges of numbers (and are
+                            therefore suited to scientific applications), and are memory-efficient
+                            (compact) and processor-efficient (fast).  However, this comes at the
+                            cost of accuracy (such objects <span class="emphasis"><em>are</em></span> very accurate,
+                            but are <span class="emphasis"><em>not</em></span> absolutely accurate), and therefore
+                            such objects should not be used in financial applications.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isDateTimeType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isDateTimeType"></a>isDateTimeType<a name="N21DF0" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isDateTimeType</code> template function has the
+                            following syntax:</p><pre class="screen">isDateTimeType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IDateTimeType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type contain both date
+                                <span class="emphasis"><em>and</em></span> time information.  Care should be taken
+                            when working with multiple time zones (for example, databases generally
+                            are inadequate at storing time zone offsets and working with daylight
+                            savings rules).</p>
+                        <p>Such objects are <span class="emphasis"><em>not</em></span> equivalent to objects
+                            implementing or referring to <code class="classname">IDateType</code> or
+                                <code class="classname">ITimeType</code>.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isDateType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isDateType"></a>isDateType<a name="N21E43" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isDateType</code> template function has the
+                            following syntax:</p><pre class="screen">isDateType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IDateType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Such objects are <span class="emphasis"><em>not</em></span> equivalent to objects
+                            implementing or referring to
+                            <code class="classname">IDateTimeType</code>.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isTimeType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isTimeType"></a>isTimeType<a name="N21E8D" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isTimeType</code> template function has the
+                            following syntax:</p><pre class="screen">isTimeType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">ITimeType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Such objects are <span class="emphasis"><em>not</em></span> equivalent to objects
+                            implementing or referring to
+                            <code class="classname">IDateTimeType</code>.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isBinaryType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isBinaryType"></a>isBinaryType<a name="N21ED7" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isBinaryType</code> template function has the
+                            following syntax:</p><pre class="screen">isBinaryType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IBinaryType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type usually store uploaded files.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isImageType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isImageType"></a>isImageType<a name="N21F1B" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isImageType</code> template function has the
+                            following syntax:</p><pre class="screen">isImageType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IImageType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type usually store picture files.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isBooleanType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isBooleanType"></a>isBooleanType<a name="N21F5F" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isBooleanType</code> template function has the
+                            following syntax:</p><pre class="screen">isBooleanType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IBooleanType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type usually store "yes or no" information
+                            (note that they can also be undefined, storing neither "yes" nor
+                            "no").</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isUuidType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isUuidType"></a>isUuidType<a name="N21FA3" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isUuidType</code> template function has the
+                            following syntax:</p><pre class="screen">isUuidType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IUuidType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>There are no template objects of this type when using the default
+                            OpenAGE connector.  Such objects may exist with other connector types,
+                            and are usually limited to unique computer-generated identifiers.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                    <div class="sect3" title="isArrayType"><div class="titlepage"><div><div><h4 class="title"><a name="ITemplateFunction.isArrayType"></a>isArrayType<a name="N21FE7" class="indexterm"></a></h4></div></div></div>
+                        
+                        <p>The <code class="varname">isArrayType</code> template function has the
+                            following syntax:</p><pre class="screen">isArrayType(variable:IData|ICell|IType)</pre>
+                        <p>This function determines if a given variable implements the
+                                <code class="classname">IArrayType</code> interface (or refers to it), so
+                            that a template can process the associated data appropriately. When the
+                                <code class="varname">variable</code> implements (or refers to) this
+                            interface, this function returns <code class="code">true</code>. If the
+                                <code class="varname">variable</code> is <code class="code">NULL</code> or not one of the
+                            specified variable types (<code class="classname">IData</code>,
+                                <code class="classname">ICell</code>, or <code class="classname">IType</code>), then
+                            this returns <code class="code">false</code>.</p>
+                        <p>Template objects of this type contain embedded data sets, and can be
+                            used to store tabular data within a form.</p>
+                        <p>TODO: describe properties of this type, and the associated data interface.</p>
+                        <p>This function can be used in any context, and can be used in
+                                <code class="code">if...else</code> blocks.</p>
+                    </div>
+                </div>
+            </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch05s02.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="ch05.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch06.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Template syntax with FreeMarker&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Chapter&nbsp;6.&nbsp;Customizing page navigation</td></tr></table></div></body></html>

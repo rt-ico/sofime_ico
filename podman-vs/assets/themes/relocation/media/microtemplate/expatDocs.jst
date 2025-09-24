@@ -1,0 +1,145 @@
+<div class="card flat tagged" id="ExpatDocumentsCard"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navExpatDocs %></h2><%
+%></div><% /* .header */
+
+
+%><div class="body fit-container pad-container"><%
+    %><article class="pad-container document-help document-help-closed"><%
+    %><div class="icon alt-accent-ghost help-icon"><%= data.images.circle %></div><%
+    %><p class="secondary-text-color help-title"><%- data.txt.expatDocumentHelpTitle %></p><%
+    %><p class="secondary-text-color help-text"><%- data.txt.expatDocumentHelp %></p><%
+    %><div class="document-help-imgs"><%
+    %><img class="document-help-img" src="<%= data.route.themeStyleUri %>media/examples/expat_document_ko_01.jpg" ><%
+    %><img class="document-help-img" src="<%= data.route.themeStyleUri %>media/examples/expat_document_ko_02.jpg" ><%
+    %><img class="document-help-img" src="<%= data.route.themeStyleUri %>media/examples/expat_document_ko_03.png" ><%
+    %><img class="document-help-img" src="<%= data.route.themeStyleUri %>media/examples/expat_document_ok_01.jpg" ><%
+    %></div><%
+    %></article><%
+
+%><ul class="doc-menus"> <%
+    %><li class="doc-menu nav-selected" data-id="upload"><a><%- data.txt.menuUploadDocument %></a><span class="counter">(<%- data.uploadCount %>)</span></li><%
+    %><li class="doc-menu" data-id="browse"><a><%- data.txt.menuBrowseDocument %></a><span class="counter"></span>(<%- data.showCount %>)</li><%
+%></ul><%
+
+%><h3 class="primary document-category-label"><%- data.txt.expatDocCategoryLabel %></h3><%
+
+%><select  class="doc-filters"><%
+  _.each(data.family, function(it) {
+      %><option class="doc-filter counter <%- it.id %>" data-id="<%- it.id %>" value="<%- it.id %>"><%- it.text %> (0)</option><%
+  })
+%></select><%
+
+%><ul class="doc-onglets"> <%
+_.each(data.family, function(it) {
+    %><li class="doc-onglet <%if (it.selected) { %> nav-selected <%} %>" data-id=<%- it.id %>><a><%- it.text %></a><span class="counter <%- it.id %>"></span></li><%
+})
+%></ul><%
+
+_.each(data.documentBlocks, function(block) {
+
+    %><div class="document-cards dark-text-color <%- block.viewType %>" data-enable-filter="<%- block.enableFilter %>""><%
+    if (block.title) {
+        %><h3 class="primary document-block-title <%- block.viewType %>"><%- block.title %></h3><%
+    }
+
+
+	if (block.canAdd) {
+		%><div class="thumb document-card new-document-card" data-file="0" data-uuid="" title="<%- data.txt.dialogDocumentNew  %>"
+		  isAdmin=true
+                    isMoving=true
+                    isInvoice=true
+                    isImmigration=true
+                    isHousing=true
+                    isHealth=true
+		><%
+		%><span class="thumb-tools" title=""><%
+		%><input type=file class="masked upload-document-file" ><% /* accept="image/*" capture  */
+		%><div class="thumb-tool" data-action="upload" title="<%- data.txt.expatDocumentUpload %>" class="icon alt-accent-ghost"><%= data.images.upload %></div><%
+		%></span><%
+		%><div data-action="upload" class="card-img accent-ghost accent-light"><%= data.images.add_file %></div><%
+
+		%><span class="thumb-label-1"><%-  data.txt.dialogDocumentNew %></span><%
+
+		%></div><%
+	}
+
+	if (block.docs.length > 0) {
+		_.each(block.docs, function(p) {
+
+            var docType = data.findDocumentTypeById(p.ref_type);
+            var title = (docType !== null) ? docType.name : p.name;
+            if (title === null || title.length === 0) { title = block.emptyText;}
+            %><div class="thumb document-card <%if (p.required) { %> thumb-required <%} %> <%if (block.count) { %> card-count <%} %>" data-has-file=<%- p.has_file %> data-file="<%= p.id %>" data-uuid="<%= p.uuid %>" data-url="<%= block.url %>"
+            isAdmin=<%= docType.isAdmin %>
+            isMoving=<%= docType.isMoving %>
+            isInvoice=<%= docType.isInvoice %>
+            isImmigration=<%= docType.isImmigration %>
+            isHousing=<%= docType.isHousing %>
+            isHealth=<%= docType.isHealth %>
+            ><%
+
+            %><span class="thumb-tools" title=""><%
+            if (p.has_thumb || p.has_file) {
+                if (block.canDelete) {
+                %><div class="thumb-tool flex-left" data-action="delete" title="<%- data.txt.actionDelete %>" class="icon alt-accent-ghost"><%= data.images.deleteFile %></div><%
+                }
+                %><div class="thumb-tool filler"></div><%
+                if (block.canDownload) {
+                %><div class="thumb-tool" data-action="download" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>" class="icon alt-accent-ghost"><%= data.images.download %></div><%
+                }
+            }
+            if (block.canUpload && !p.has_file) {
+                %><input type=file class="masked upload-document-file"><%
+                %><div class="thumb-tool" data-action="upload" title="<%- data.txt.expatDocumentUpload %>" class="icon alt-accent-ghost"><%= data.images.upload %></div><%
+            }
+            if (block.canUpload && p.has_file) {
+                %><input type=file class="masked upload-document-file"><%
+                %><div class="thumb-tool" data-action="showInfo" title="<%- data.txt.expatDocumentModify %>" class="icon alt-accent-ghost"><%= data.images.update %></div><%
+            }
+
+            if (p.has_thumb || p.has_file) {
+                if (block.canPrint) {
+                    %><div class="thumb-tool" data-action="print" title="<%- data.txt.expatDocumentPrint %>" class="icon alt-accent-ghost"><%= data.images.print %></div><%
+                }
+            }
+
+            %></span><%
+
+
+            if (p.has_file) {
+
+                if (p.has_thumb) {//TODO : add block.canOpen as condition for data-action
+                    %><img data-action="open" class="card-img alt-accent-ghost" src="<%= data.route.expatsDocuments + '0/' + p.id %>/thumb?mtime=<%= p.mtime %>" ><%
+                } else {
+                    %><div data-action="open" class="card-img alt-accent-ghost" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>"><%= data.images.file %></div><%
+                }
+
+            } else {
+                %><div data-action="upload" class="card-img-empty alt-accent-ghost"><%= data.images.empty_file %></div><%
+            }
+            if (!docType.hrVisible) {
+                %><div data-action="showInfo" class="card-visibility alt-accent-ghost"  title="<%- data.txt.expatNoRhVisibilty  %>"><%= data.images.visibility %><span><%- data.txt.expatDocumentHrVisibility %></span></div><%
+            }
+
+            %><span class="thumb-label-1"><%- title %></span><%
+
+            %><span class="thumb-visibility-text"><%
+            if (p.required) {
+                data.txt.dialogRequired
+            }
+            %></span><%
+
+            %></div><%
+
+		});
+	}
+	%></div><%
+});
+
+%><p class="strong rgpd"><%- data.txt.gdpr.expatDocs %></p><%
+
+%></div><% /* .body */
+
+%></div>

@@ -1,0 +1,83 @@
+<div class="card flat hr planning"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navHrPlanning %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="filter"><%
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.reloEventDateRange %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-date-range combo"><input class="combo" type=text></div><%
+%><div class="pick-date-range icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.hrColExpat %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-expat combo"><input class="combo" type=text></div><%
+%><div class="pick-expat icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.reloEventType %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-visit-type combo"><input class="combo" type=text></div><%
+%><div class="pick-visit-type icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%></div><% /* .filter */
+
+if (_.isEmpty(data.events)){
+	%><p><%- data.txt.emptyList %></p><%
+}
+else{
+	%><table class="expats planning"><%
+	%><thead class="text-primary-color dark-primary-color"><%
+	%><tr><%
+	%><th class="sortable" data-col="date"><%
+	if (data.sort.att === "date"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.colDate));
+	%></th><%
+	%><th><%- data.txt.colTime %></th><%
+	%><th class="sortable" data-col="expat"><%
+	if (data.sort.att === "expat"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.hrColExpat));
+	%></th><%
+	%><th class="sortable" data-col="visitType"><%
+	if (data.sort.att === "visitType"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.reloEventType));
+	%></th><%
+	%></tr><%
+	%></thead><%
+	%><tbody class="secondary-text-color"><%
+	console.log("Showing %d event(s)...", _.size(data.events));
+	_.each(data.events, function(it){
+		var xp = _.find(data.expats, function(o){ return it.expat===o.id; });
+		var vt = _.find(data.visitType, function(o){ return it.type===o.id; });
+		%><tr data-id=<%= it.id %>><%
+		%><td><%- it.date ? data.cachedMoment(it.date).format("L") : '-' %></td><%
+		%><td><%- it.localeTime || it.time ? it.localeTime || it.time : '-' %></td><%
+		%><td><a class="underlined" href="#hrReloTrack/<%= xp.id %>"><%- xp ? xp.cn : '-' %></a></td><%
+		%><td><%- vt ? vt.localeName || vt.name : '-' %></td><%
+		%></tr><%
+	});
+	%></tbody><%
+	%></table><%
+}
+
+%></div><% /* .body */
+
+%></div>

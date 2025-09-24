@@ -1,0 +1,248 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Appendix&nbsp;A.&nbsp;Configuration files</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="pt03.html" title="Part&nbsp;III.&nbsp;Reference"><link rel="prev" href="pt03.html" title="Part&nbsp;III.&nbsp;Reference"><link rel="next" href="ix01.html" title="Index"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Appendix&nbsp;A.&nbsp;Configuration files</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="pt03.html">Prev</a>&nbsp;</td><th align="center" width="60%">Part&nbsp;III.&nbsp;Reference</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ix01.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;A.&nbsp;Configuration files"><div class="titlepage"><div><div><h2 class="title"><a name="N2208C"></a>Appendix&nbsp;A.&nbsp;Configuration files</h2></div></div></div>
+            
+            <div class="simplesect" title="active-bundles.xml"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="config.active-bundles"></a>active-bundles.xml<a name="N22096" class="indexterm"></a></h2></div></div></div>
+                
+                <p>This file defines which OSGi bundles should be activated at startup, and which
+                    bundles should be excluded from automatic startup. It is created automatically
+                    at startup if not present, but is not automatically updated thereafter. Bundles
+                    are referred to using their symbolic<a name="N220A4" class="indexterm"></a>&nbsp;name. If a bundle is not included in this file, it will be
+                    automatically started; consequently, this file may be edited to list only those
+                    that should be excluded from automatic startup (by setting the associated entry
+                    value to <em class="parameter"><code>false</code></em>).  Changes to this file take immediate
+                    effect (unless the <code class="varname">system.config</code> bundle is stopped).</p>
+                <p>The default file will be similar to the following example:</p>
+                <pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;entry key="system.api"&gt;true&lt;/entry&gt;
+&lt;entry key="system.config"&gt;true&lt;/entry&gt;
+&lt;entry key="system.connector"&gt;true&lt;/entry&gt;
+&lt;entry key="system.defaultdesign"&gt;true&lt;/entry&gt;
+&lt;entry key="system.design"&gt;true&lt;/entry&gt;
+&lt;entry key="system.formatting"&gt;true&lt;/entry&gt;
+&lt;entry key="system.freemarker"&gt;true&lt;/entry&gt;
+&lt;entry key="system.fs"&gt;true&lt;/entry&gt;
+&lt;entry key="system.http"&gt;true&lt;/entry&gt;
+&lt;entry key="system.jmx"&gt;true&lt;/entry&gt;
+&lt;entry key="system.locale"&gt;true&lt;/entry&gt;
+&lt;entry key="system.themes"&gt;true&lt;/entry&gt;
+&lt;entry key="system.views"&gt;true&lt;/entry&gt;
+&lt;/properties&gt;</pre>
+                <p>For applications that do not require the default navigation system nor the
+                    default visual theme, this file could be replaced with the following
+                    example:</p>
+                <pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;entry key="system.defaultdesign"&gt;<span class="bold"><strong>false</strong></span>&lt;/entry&gt;
+&lt;entry key="system.design"&gt;<span class="bold"><strong>false</strong></span>&lt;/entry&gt;
+&lt;/properties&gt;</pre>
+                <p>The above example excludes two specific bundles, by setting the entry value to
+                        <em class="parameter"><code>false</code></em>.  All other bundles will be started
+                    automatically.  If these bundles are not required for your application, you
+                    should deactivate them <span class="emphasis"><em>before</em></span> configuring a connector (as
+                    this will prevent these bundles from needlessly creating additional
+                    configuration files when the connector is activated).  Going further, for
+                    applications that do not require the standard OpenAGE connector, the following
+                    entry could also be added:</p>
+                <pre class="screen">&lt;entry key="system.connector"&gt;<span class="bold"><strong>false</strong></span>&lt;/entry&gt;</pre>
+                <p>This will effectively prevent installation the connector setup interface (see
+                        <a class="xref" href="ch03s03.html" title="Configuring the default connector">the section called &ldquo;Configuring the default connector&rdquo;</a>), and make the standard connector
+                    unavailable to plugins.  If the connector is not available, you can implement
+                    your own connector or construct an application without a connector (for example,
+                    for directly accessing a database without leveraging OpenAGE's features).</p>
+                <p>Note that bundles that are excluded from automatic startup may be resolved
+                    transitively when they export packages that are imported by one or more bundles
+                    that are included in automatic startup.</p>
+            </div>
+            
+            <div class="simplesect" title="system.connector.xml"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="config.connector"></a>system.connector.xml<a name="N220E9" class="indexterm"></a></h2></div></div></div>
+                
+                <p>The role of this file is to configure options for the standard connector
+                    implementation.</p>
+                <p>This file is not available by default; all of the options that it contains
+                    have default values.  It is created automatically if any default value is
+                    overridden using the API or using a JMX console.  It can also be created and
+                    updated manually, with any changes taking immediate effect (without requiring an
+                    application restart).  All available options are presented in the following
+                    example:</p>
+                <pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;entry key="setup.interface.enable"&gt;true&lt;/entry&gt;
+&lt;entry key="network.connector.pool.size"&gt;16&lt;/entry&gt;
+&lt;entry key="network.connector.clock.driftLimit"&gt;20&lt;/entry&gt;
+&lt;entry key="network.connector.connectionTimeout"&gt;250&lt;/entry&gt;
+&lt;entry key="network.connector.socketTimeout"&gt;5000&lt;/entry&gt;
+&lt;entry key="network.data.cache.diskThreshold"&gt;32768&lt;/entry&gt;
+&lt;entry key="network.data.compress.auto"&gt;true&lt;/entry&gt;
+&lt;entry key="network.data.format.binary"&gt;true&lt;/entry&gt;
+&lt;entry key="authn.fail.logLevel"&gt;WARN&lt;/entry&gt;
+&lt;entry key="authn.trust.keySpec"&gt;<em class="replaceable"><code>keySpec</code></em>&lt;/entry&gt;
+&lt;/properties&gt;</pre>
+                <div class="variablelist" title="Options for setup.interface.enable"><a name="config.connector.setupInterfaceEnable"></a><p class="title"><b>Options for <code class="varname">setup.interface.enable</code><a name="N22107" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">true</code></span></dt><dd><p>Enables the default HTML connector setup interface (see <a class="xref" href="ch03s03.html" title="Configuring the default connector">the section called &ldquo;Configuring the default connector&rdquo;</a>) when no connector (standard or any other implementation) is
+                                available.  This is the default setting.</p></dd><dt><span class="term"><code class="varname">false</code></span></dt><dd><p>Disables the default HTML connector setup interface. If a connector is required and has not
+                                yet been configured, it must be configured using either a
+                                configuration file (see <a class="xref" href="apa.html#config.connector.endpoint" title="system.connector_endpoint.xml">the section called &ldquo;system.connector_endpoint.xml&rdquo;</a>), or by using the API or using a JMX console.</p></dd></dl></div>
+                <div class="variablelist" title="Options for network.connector.pool.size"><a name="config.connector.networkConnectorPoolSize"></a><p class="title"><b>Options for <code class="varname">network.connector.pool.size</code><a name="N22133" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>size</code></em></code></span></dt><dd><p>A positive integer, greater than or equal to 1 (with 16 being the default value).  Defines how
+                                many concurrent HTTP connections can be used to connect to the
+                                OpenAGE server.</p></dd></dl></div>
+                <div class="variablelist" title="Options for network.connector.clock.driftLimit"><a name="config.connector.networkConnectorClockDriftLimit"></a><p class="title"><b>Options for <code class="varname">network.connector.clock.driftLimit</code><a name="N2214F" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>limit</code></em></code></span></dt><dd><p>An integer, greater than or equal to 0 (with 20 being the default value, and 0 being
+                                recommended). Defines (as a number of milliseconds) how much
+                                measurable clock desynchronization is permitted between servers,
+                                when OpenAGE is not running on the same server as OpenAGE Viewer.
+                                Clock drift is more of a problem than latency; poor performance (due
+                                to network or server load and capacity) is obviously not desirable,
+                                but clock drift can cause connector data caches to become
+                                inconsistent and unreliable. When significant clock drift (i.e.:
+                                above this defined limit) is detected (detection is automatic), the
+                                connector cache will be automatically deactivated to improve
+                                reliability and consistency, but at the cost of reduced performance.
+                                If this happens, a warning will be written to
+                                    <code class="filename">system.log</code> (see <a class="xref" href="ch02s02.html#sect.app-home.logs" title="The &quot;logs&quot; directory">the section called &ldquo;The "logs" directory&rdquo;</a>).</p></dd></dl></div>
+                <div class="variablelist" title="Options for network.connector.connectionTimeout"><a name="config.connector.networkConnectorConnectionTimeout"></a><p class="title"><b>Options for <code class="varname">network.connector.connectionTimeout</code><a name="N22171" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>timeout</code></em></code></span></dt><dd><p>An integer, greater than or equal to 20 (with 250 being the default value).  Defines (as a
+                                number of milliseconds) the network connection timeout used by the
+                                connector.</p></dd></dl></div>
+                <div class="variablelist" title="Options for network.connector.socketTimeout"><a name="config.connector.networkConnectorSocketTimeout"></a><p class="title"><b>Options for <code class="varname">network.connector.socketTimeout</code><a name="N2218D" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>timeout</code></em></code></span></dt><dd><p>An integer, greater than or equal to 20 (with 5000 being the default value).  Defines (as a
+                                number of milliseconds) the network socket timeout used by the
+                                connector.</p></dd></dl></div>
+                <div class="variablelist" title="Options for network.data.cache.diskThreshold"><a name="config.connector.networkDataCacheDiskThreshold"></a><p class="title"><b>Options for <code class="varname">network.data.cache.diskThreshold</code><a name="N221A9" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>threshold</code></em></code></span></dt><dd><p>An integer, either equal to 4096 or a multiple thereof (with 32768 being the default value).
+                                Defines (as a number of bytes) the threshold that will trigger the
+                                connector to buffer data on disk instead of in memory.  Low values
+                                reduce performance and consume extra disk space, whereas high values
+                                improve performance but increase memory pressure (beyond a certain
+                                point, this will also reduce performance as it will force excessive
+                                garbage collection and cache invalidation, and in some cases cause
+                                the operating system to make heavy use of memory paging).</p></dd></dl></div>
+                <div class="variablelist" title="Options for network.data.compress.auto"><a name="config.connector.networkDataCompressAuto"></a><p class="title"><b>Options for <code class="varname">network.data.compress.auto</code><a name="N221C5" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">true</code></span></dt><dd><p>The connector will automatically compress buffered, cached, and transmitted data with this
+                                setting, at the cost of a small processing overhead.  This is the
+                                default setting.</p></dd><dt><span class="term"><code class="varname">false</code></span></dt><dd><p>The connector will not compress data with this setting, reducing CPU load (but with little
+                                measurable difference given that network performance will remain a
+                                bottleneck). This setting makes it easier to inspect transmitted
+                                data for development and debugging purposes.</p></dd></dl></div>
+                <div class="variablelist" title="Options for network.data.format.binary"><a name="config.connector.networkDataFormatBinary"></a><p class="title"><b>Options for <code class="varname">network.data.format.binary</code><a name="N221EB" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">true</code></span></dt><dd><p>The connector will use an optimized binary format for sending and receiving data, and will
+                                compress UUIDs.  This is the default setting.</p></dd><dt><span class="term"><code class="varname">false</code></span></dt><dd><p>The connector will use a plain text format for sending and receiving data (with the exception
+                                of binary objects, such as file data).</p></dd></dl></div>
+                <div class="variablelist" title="Options for authn.fail.logLevel"><a name="config.connector.authnFailLogLevel"></a><p class="title"><b>Options for <code class="varname">authn.fail.logLevel</code><a name="N22211" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">WARN</code></span></dt><dd><p>The connector will log warnings (in <code class="filename">system.log</code>) when an authentication
+                                attempt fails.  This is the default setting.</p></dd><dt><span class="term"><code class="varname">INFO</code></span></dt><dd><p>The connector will log information messages when an authentication attempt fails, instead of
+                                warnings.</p></dd><dt><span class="term"><code class="varname">DEBUG</code></span></dt><dd><p>The connector will log debugging messages when an authentication attempt fails, instead of
+                                warnings.  As <em class="parameter"><code>INFO</code></em> is the recommended logging
+                                verbosity level for production systems, choosing
+                                    <em class="parameter"><code>DEBUG</code></em> here will filter out such messages
+                                to avoid an excessive amount of such messages when users frequently
+                                enter passwords incorrectly.</p></dd></dl></div>
+                <div class="variablelist" title="Options for authn.trust.keySpec"><a name="config.connector.authnTrustKeySpec"></a><p class="title"><b>Options for <code class="varname">authn.trust.keySpec</code><a name="N2224B" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>keySpec</code></em></code></span></dt><dd><p>When trusted authentication is setup as part of an SSO solution, the hexadecimal-encoded key
+                                specification (generated either by OpenAGE or by OpenAGE Viewer) is
+                                set as the entry value for this option.  The API does not permit
+                                authentication without a password unless a valid key specification
+                                is configured for both ends of the connector.</p></dd></dl></div>
+                <p>Note that deleting this file has no immediate effect: it is permitted to
+                    delete this file as part of a deployment workflow, pending deployment of an
+                    updated version. Deleting the file will only have an effect if the application
+                    is restarted without any replacement file being deployed.</p>
+            </div>
+            
+            <div class="simplesect" title="system.connector_endpoint.xml"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="config.connector.endpoint"></a>system.connector_endpoint.xml<a name="N2226C" class="indexterm"></a></h2></div></div></div>
+                
+                <p>The role of this file is to associate a fixed identifier to a connector, so
+                    that application code can avoid hard-coded connector endpoints (hostnames,
+                    etc.); without such identifiers, this would be a potential source of
+                    configuration errors when deploying code (a developer should not normally
+                    directly develop an application using a live production server) or when updating
+                    infrastructure (changing hostnames or ports, for example).</p>
+                <p>This file is not available by default. It is created automatically if a
+                    connector is defined using the setup interface (see <a class="xref" href="ch03s03.html" title="Configuring the default connector">the section called &ldquo;Configuring the default connector&rdquo;</a>), using the API, or using JMX.  It can
+                    also be created and updated manually, with any changes taking immediate effect
+                    (without requiring an application restart). The following example illustrates
+                    how this file can be used:</p>
+                <pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;entry key="d55c21e6-9a41-4c19-8bee-11ed1c817390"&gt;http://host:8080/openage/&lt;/entry&gt;
+&lt;/properties&gt;</pre>
+                <p>Each entry corresponds to an OpenAGE connector; normally, this file will
+                    contain at most one entry.  Entry keys must be unique UUIDs, and not arbitrarily
+                    copied-and-pasted (use tools such as <span class="command"><strong>uuidgen</strong></span> to create one if
+                    necessary), and values must be well-formed connector endpoints, as shown above.
+                    When deploying an application for the first time, copy the file and change as
+                    appropriate the connector endpoint (to refer to your production OpenAGE server,
+                    instead of your development server) without modifying the UUID (this is the only
+                    time that the UUID should be copied).</p>
+                <p>Note that deleting this file has no immediate effect: it is permitted to
+                    delete this file as part of a deployment workflow, pending deployment of an
+                    updated version. Deleting the file will only have an effect if the application
+                    is restarted without any replacement file being deployed.</p>
+            </div>
+            
+            <div class="simplesect" title="system.connector_alias.xml"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="config.connector.alias"></a>system.connector_alias.xml<a name="N22295" class="indexterm"></a></h2></div></div></div>
+                
+                <p>The role of this file is to configure aliases for connector endpoints.  It is
+                    recommended to create this file on production servers, so that accidental
+                    overwriting of a production connector hostname by a developer does not suddenly
+                    make a production server try to connector to the developer's OpenAGE instance.
+                    It should not be necessary to use this file on a developer system (with a
+                    rational deployment workflow).</p>
+                <p>This file is not available by default. It is created automatically if a
+                    connector alias is defined using the API. It can also be created and updated
+                    manually, with any changes taking immediate effect (without requiring an
+                    application restart). The following example illustrates how this file can be
+                    used:</p>
+                <pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;entry key="http://dev:8080/openage/"&gt;https://prod:8443/openage/&lt;/entry&gt;
+&lt;/properties&gt;</pre>
+                <p>In the above example, if <code class="filename">system.connector_endpoint.xml</code> is
+                    deployed and refers to the endpoint "http://dev:8080/openage/", it will be
+                    interpreted instead as "http://prod:8080/openage/", without needing to fix the
+                    incorrectly-deployed file.</p>
+                <p>Note that deleting this file has no immediate effect: it is permitted to
+                    delete this file as part of a deployment workflow, pending deployment of an
+                    updated version. Deleting the file will only have an effect if the application
+                    is restarted without any replacement file being deployed.</p>
+            </div>
+            
+            <div class="simplesect" title="system.http.xml"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="config.http"></a>system.http.xml<a name="N222BB" class="indexterm"></a></h2></div></div></div>
+                
+                <p>The role of this file is to configure options for the HTTP service
+                    implementation.</p>
+                <p>This file is not available by default; all of the options that it contains
+                    have default values.  It is created automatically if any default value is
+                    overridden using the API or using a JMX console.  It can also be created and
+                    updated manually, with any changes taking immediate effect (without requiring an
+                    application restart).  All available options are presented in the following
+                    example:</p>
+                <pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;entry key="redirect.code"&gt;303&lt;/entry&gt;
+&lt;entry key="request.debug.enabled"&gt;false&lt;/entry&gt;
+&lt;entry key="session.serializable"&gt;true&lt;/entry&gt;
+&lt;/properties&gt;</pre>
+                <div class="variablelist" title="Options for redirect.code"><a name="config.http.redirectCode"></a><p class="title"><b>Options for <code class="varname">redirect.code</code><a name="N222D6" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>code</code></em></code></span></dt><dd><p>A valid HTTP redirect code, defaulting to 303, with 302 and 307 also accepted.
+                            The default value is recommended for modern HTTP clients.</p></dd></dl></div>
+                <div class="variablelist" title="Options for request.debug.enabled"><a name="config.http.requestDebugEnabled"></a><p class="title"><b>Options for <code class="varname">request.debug.enabled</code><a name="N222F2" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">true</code></span></dt><dd><p>When <code class="varname">DEBUG</code> logging is enabled, the <code class="filename">http.log</code> file
+                            will contain entries for all requests handled by the server, including the mapped
+                            diagnostic context, the remote address, the HTTP method, and the requested URI.
+                            When <code class="varname">TRACE</code> logging is enabled, this behavior is automatic.
+                            Enabling this feature may significantly increase the verbosity and size of log files.</p></dd><dt><span class="term"><code class="varname">false</code></span></dt><dd><p>Avoids adding additional entries in <code class="filename">http.log</code>
+                            to identify all incoming requests.  This is the default setting.</p></dd></dl></div>
+                <div class="variablelist" title="Options for request.remote_addr"><a name="config.http.requestRemoteAddr"></a><p class="title"><b>Options for <code class="varname">request.remote_addr</code><a name="N22324" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">auto</code></span></dt><dd><p>Enables automatic behavior for detecting and reporting the remote (client) IP address.
+                            When selected, the value of the <code class="varname">X-Real-IP</code> header (or supported equivalents)
+                            will be used when present (and valid), instead of the value of the
+                            <code class="varname">REMOTE_ADDR</code> CGI variable, <span class="emphasis"><em>if</em></span> the remote address
+                            corresponds to the address of a local loopback interface.  This targets common reverse
+                            proxy server configurations, and is the default setting.</p></dd><dt><span class="term"><code class="varname">accept</code></span></dt><dd><p>Defines the option to always accept the value of a header-defined remote address, without requiring usage of a loopback interface.
+                        This targets configurations where a reverse proxy is used, but not via the local loopback address.</p></dd><dt><span class="term"><code class="varname">reject</code></span></dt><dd><p>Defines the option to always ignore the value of a header-defined remote address, even if present.
+                        This aims to prevent IP address spoofing, for when localhost is potentially untrusted.</p></dd></dl></div>
+                <div class="variablelist" title="Options for session.serializable"><a name="config.http.sessionSerializable"></a><p class="title"><b>Options for <code class="varname">session.serializable</code><a name="N2235E" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">true</code></span></dt><dd><p>Requires that session attributes implement <code class="interfacename">java.io.Serializable</code>.
+                            Serialization is required to enable scalable deployments, for persistent and distributed sessions.
+                            This is the default setting.</p></dd><dt><span class="term"><code class="varname">false</code></span></dt><dd><p>Enables storage of arbitrary Java objects in the HTTP session, but at the cost of limited
+                                scalability and limited durability (if the bundle is stopped, active
+                                sessions will be discarded in this mode).</p></dd></dl></div>
+                <p>Note that deleting this file has no immediate effect: it is permitted to
+                    delete this file as part of a deployment workflow, pending deployment of an
+                    updated version. Deleting the file will only have an effect if the application
+                    is restarted without any replacement file being deployed.</p>
+            </div>
+        </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="pt03.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="pt03.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ix01.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Part&nbsp;III.&nbsp;Reference&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Index</td></tr></table></div></body></html>

@@ -1,0 +1,9 @@
+<%
+var a = data.attachment;
+var escTitle = _.escape(a.name)+"\n"+_.escape(a.doctype);
+%><div class="attached-doc" data-mail-id="<%= data.item.id %>" data-source="<%=_.escape(a.source) %>" data-doc-id="<%=a.sourceId %>"  data-doc-name="<%=a.name %>" data-attachment-id="<%=a.id %>"><%
+%><a href="<%= data.route.sfAutoMailOutboxFile+data.item.id+"/"+_.escape(a.source)+"/"+a.sourceId %>" class="attachment default-primary-color text-primary-color underlined inactive" title="<%= escTitle %>"><%- a.doctype %></a><%
+if(!a.dateSent){
+%><a href="<%= data.route.sfAutoMailOutboxFile+data.item.id+"/"+_.escape(a.source)+"/"+a.sourceId %>" class="attachment default-primary-color text-primary-color remove remove-document underlined <%a.dateSent ?'disabled':''%>" title="<%= data.txt.actionDelete %>"><%= data.images.remove %></a><%
+}
+%></div>

@@ -1,0 +1,9 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1 -->
+	<desc>floppy_disk icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<g fill="none" fill-rule="nonzero" class="mix-blend-normal">
+		<g color="currentColor" class="color-1">
+			<path d="M935.72,88.28v847.44c-261.38,0 -522.75,0 -784.13,0l-63.31,-63.31v-784.13c282.48,0 564.96,0 847.44,0zM900.41,123.59h-105.93v300.13c0,48.64 -39.63,88.28 -88.27,88.28h-388.42c-48.64,0 -88.27,-39.64 -88.27,-88.28v-300.13h-105.93v734.2l42.62,42.62h98.62v-317.79h494.34v317.79h141.24zM759.17,123.59h-494.34v300.13c0,29.15 23.81,52.97 52.96,52.97h388.42c29.15,0 52.96,-23.82 52.96,-52.97zM723.86,617.93h-423.72v282.48h423.72zM353.1,865.1v-211.86h141.24v35.31h-105.93v176.55zM335.45,158.9h353.1v35.31h-353.1z" fill="currentColor"/>
+		</g>
+	</g>
+</svg>

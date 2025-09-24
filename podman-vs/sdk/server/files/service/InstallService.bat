@@ -1,0 +1,140 @@
+@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+
+ECHO Installing Windows Service (for 64-bit Intel/AMD architecture).
+
+
+:CHECKADMINPERMISSIONS
+NET SESSION >NUL 2>&1
+IF %ERRORLEVEL% == 0 (
+	ECHO Running script with administrative permissions.
+) ELSE (
+	ECHO. & ECHO ERROR: You must run this script with administrative permissions.
+	GOTO :ENDOFSCRIPT
+)
+
+
+:CHECKCPU
+IF NOT "AMD64" == "%PROCESSOR_ARCHITECTURE%" (
+	ECHO. & ECHO ERROR: Unsupported PROCESSOR_ARCHITECTURE: %PROCESSOR_ARCHITECTURE%
+	GOTO :ENDOFSCRIPT
+)
+
+
+:CHECKJAVA
+IF NOT EXIST "%JAVA_HOME%\bin\java.exe" (
+	ECHO. & ECHO ERROR: JAVA_HOME environment variable must defined correctly.
+	GOTO :ENDOFSCRIPT
+)
+SET JVM=%JAVA_HOME%\jre\bin\server\jvm.dll
+IF NOT EXIST "%JVM%" (
+	ECHO. & ECHO ERROR: Cannot find server JVM: %JVM%
+	GOTO :ENDOFSCRIPT
+)
+@"%JAVA_HOME%\bin\java.exe" -version >_tmp.txt 2>&1
+FINDSTR /m "64-Bit" _tmp.txt >NUL 2>&1
+IF %ERRORLEVEL% == 0 (
+	ECHO. & ECHO Using 64-bit JVM: %JAVA_HOME%
+	DEL _tmp.txt
+) ELSE (
+	ECHO. & ECHO ERROR: 64-bit JVM expected in: %JAVA_HOME%
+	DEL _tmp.txt
+	GOTO :ENDOFSCRIPT
+)
+
+
+:CHECKSERVICEIMAGE
+IF "%SERVICE_NAME%"=="" (
+	SET SERVICE_NAME=ViewShell
+)
+SET SERVICE_PATH=amd64
+SET SERVICE_IMAGE=ViewShell.exe
+IF NOT EXIST "%SERVICE_PATH%\%SERVICE_IMAGE%" (
+	ECHO. & ECHO ERROR: Cannot find "%SERVICE_IMAGE%" in: %CD%\%SERVICE_PATH%
+	GOTO :ENDOFSCRIPT
+)
+GOTO :DEFINEHOME
+
+
+:SETINSTALLDIR
+SET VSH_INST=%~dp1
+GOTO :eof
+
+
+:DEFINEHOME
+CALL :SETINSTALLDIR "%CD%"
+IF "%VSH_HOME%"=="" (
+	IF "%ProgramData%"=="" (
+		SET VSH_HOME=%VSH_INST%home
+	) ELSE (
+		SET VSH_HOME=%ProgramData%\%SERVICE_NAME%
+	)
+)
+ECHO Using VSH_HOME:   %VSH_HOME%
+IF NOT EXIST "%VSH_HOME%" (
+	ECHO [creating directory]
+	MKDIR "%VSH_HOME%"
+	IF NOT %ERRORLEVEL% == 0 (
+		ECHO. & ECHO ERROR^(%ERRORLEVEL%^): Cannot create directory %VSH_HOME%
+		GOTO :ENDOFSCRIPT
+	)
+)
+
+
+:DEFINELOGS
+SET PR_LOGPREFIX=service
+SET PR_LOGPATH=%VSH_HOME%\logs
+SET PR_STDOUTPUT=%PR_LOGPATH%\stdout.txt
+SET PR_STDERROR=%PR_LOGPATH%\stderr.txt
+SET PR_LOGLEVEL=Debug
+ECHO Using LOGPATH:    %PR_LOGPATH%
+IF NOT EXIST "%PR_LOGPATH%" (
+	ECHO [creating directory]
+	MKDIR "%PR_LOGPATH%"
+	IF NOT %ERRORLEVEL% == 0 (
+		ECHO. & ECHO ERROR^(%ERRORLEVEL%^): Cannot create directory %PR_LOGPATH%
+		GOTO :ENDOFSCRIPT
+	)
+)
+
+
+:DEFINEEXEC
+SET PR_DESCRIPTION=REFLEXE Technologies Agile Application Server
+SET PR_CLASSPATH=%VSH_INST%viewshell.jar
+SET PR_STARTUP=auto
+SET PR_STARTMODE=jvm
+SET PR_STARTCLASS=viewshell.application.WindowsService
+SET PR_STARTMETHOD=start
+SET PR_STOPMODE=jvm
+SET PR_STOPCLASS=viewshell.application.WindowsService
+SET PR_STOPMETHOD=stop
+ECHO Using CLASSPATH:  %PR_CLASSPATH%
+
+
+:DEFINEJAVA
+SET PR_JVM=%JVM%
+SET PR_JVMMS=512
+SET PR_JVMMX=1024
+SET PR_JVMSS=4096
+SET PR_JVMOPTIONS=-DVSH_HOME=%VSH_HOME%
+
+
+:INSTALLSERVICE
+ECHO. & ECHO Installing "%SERVICE_NAME%" service using %SERVICE_IMAGE%
+"%SERVICE_PATH%\%SERVICE_IMAGE%" //IS//%SERVICE_NAME%
+IF NOT %ERRORLEVEL% == 0 (
+	ECHO. & ECHO ERROR^(%ERRORLEVEL%^): Installation failed.
+	GOTO :ENDOFSCRIPT
+)
+ECHO Starting "%SERVICE_NAME%" service...
+"%SERVICE_PATH%\%SERVICE_IMAGE%" //ES//%SERVICE_NAME%
+IF NOT %ERRORLEVEL% == 0 (
+	ECHO. & ECHO ERROR^(%ERRORLEVEL%^): Startup failed, check log files for details ^(see %%LOGPATH%%, above^).
+	GOTO :ENDOFSCRIPT
+)
+ECHO. & ECHO Started service: check log files to confirm startup ^(see %%LOGPATH%%, above^).
+
+
+:ENDOFSCRIPT

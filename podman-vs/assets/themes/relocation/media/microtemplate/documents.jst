@@ -1,0 +1,144 @@
+<ul class="doc-menus"> <%
+    %><li class="doc-menu nav-selected" data-id="upload"><a><%- data.menuUploadDocument %></a><span class="counter">(<%- data.uploadCount %>)</span></li><%
+    %><li class="doc-menu" data-id="browse"><a><%- data.menuBrowseDocument %></a><span class="counter"></span>(<%- data.browseCount %>)</li><%
+%></ul><%
+
+_.each(data.documentBlocks, function(block) {
+
+    %><div class="document-cards dark-text-color <%- block.viewType %>" data-enable-filter="<%- block.enableFilter %>" "><%
+
+    %><select  class="doc-filters"><%
+          _.each(block.category, function(it) {
+              %><option class="doc-filter counter <%- it.id %>" data-id="<%- it.id %>" value="<%- it.id %>"><%- it.text %> (0)</option><%
+          })
+        %></select><%
+
+        %><ul class="doc-onglets"> <%
+        _.each(block.category, function(it) {
+            %><li class="doc-onglet <%if (it.selected) { %> nav-selected <%} %>" data-id=<%- it.id %>><a><%- it.text %></a><span class="counter <%- it.id %>"></span></li><%
+        })
+        %></ul><%
+
+
+    if (block.title) {
+        %><h3 class="primary document-block-title <%- block.viewType %>"><%- block.title %></h3><%
+    }
+    if (block.canAdd) {
+        if(data.isSfOrCt){
+	        %><div class="thumb document-card new-document-card" data-file="0" data-uuid="" title="<%- data.txt.expatRequestDocument  %>"<%
+	        %>><%
+	        %><span class="thumb-tools" title=""><%
+
+	        %><input type=file class="masked upload-document-file" ><% /* accept="image/*" capture  */
+
+	        %></span><%
+	        %><div data-action="requestDocument" class="card-img alt-accent-ghost"><%= data.images.requestDocument %></div><%
+
+	        %><span class="thumb-label-1"><%-  data.txt.expatRequestDocument %></span><%
+
+	        %></div><%
+        }
+
+    	%><div class="thumb document-card new-document-card " data-file="0" data-uuid="" title="<%- data.txt.dialogDocumentNew  %>"<%
+            _.each(block.category, function(c) { %><%= c.id %>=<%= docType[c.id] %><% });
+    	%>><%
+    	%><span class="thumb-tools" title=""><%
+
+
+    	%><input type=file class="masked dataActionUpload" ><% /* accept="image/*" capture  */
+    	%><div class="thumb-tool uploadDocument" data-action="upload" title="<%- data.txt.expatDocumentUpload %>" class="icon alt-accent-ghost"><%= data.images.upload %></div><%
+
+    	%></span><%
+    	%><div data-action="upload" class="card-img accent-ghost accent-light uploadDocument"><%= data.images.add_file %></div><%
+
+    	%><span class="thumb-label-1"><%-  data.txt.dialogDocumentNew %></span><%
+
+    	%></div><%
+    }
+
+    if(data.isSfOrCt && data.immigrationActive){
+            console.log('immigrationActive '+ data.immigrationActive)
+            %><div class="thumb document-card sizeablePaddingTop" data-enable-filter="true" title="<%- data.txt.toImmigration  %>"<%
+            %> isadmin = "false" ismoving = "false" isimmigration="true" ishousing = "false" ishealth = "false" isinvoice = "false"  ispersonnaldoc = "false"<%
+            %>><%
+
+            if(true){
+            %><div data-action="toImmigration" class="card-img accent-ghost accent-light"><%= data.images.toPanel %></div><%
+            }
+            %><span class="thumb-label-1"><%-  data.txt.toImmigrationPanel %></span><%
+
+            %></div><%
+        }
+	if (block.docs.length > 0) {
+		_.each(block.docs, function(p) {
+            console.log(block.title + '/' + p.has_file + '/' + block.showEmpty);
+
+            if (p.has_file || block.showEmpty) {
+                var docType = data.findDocumentTypeById(p.ref_type);
+
+                var title = !_.isEmpty(docType) ? docType.name : p.name;
+                if (title === null || title.length === 0) { title = block.emptyText;}
+                %><div class="thumb document-card <%if (p.required) { %> thumb-required <%} %> <%if (block.count) { %> card-count <%} %>" data-enable-filter="<%- block.enableFilter %>" data-file="<%= p.id %>" data-uuid="<%= p.uuid %>" data-url="<%= block.url %>" <%
+                _.each(block.category, function(c) { %> <%= c.id %>=<%= docType[c.id] %> <% });
+                %>><%
+
+                %><span class="thumb-tools" title=""><%
+                if (p.has_thumb || p.has_file) {
+
+                    if (block.canDelete) {
+                    %><div class="thumb-tool flex-left" data-action="delete" title="<%- data.txt.actionDelete %>" class="icon alt-accent-ghost"><%= data.images.deleteFile %></div><%
+                    }
+
+                    %><div class="thumb-tool filler"></div><%
+                    if (p.has_file) {
+                    %><div class="thumb-tool" data-action="showInfo" title="<%- data.txt.expatDocumentModify %>" class="icon alt-accent-ghost"><%= data.images.update %></div><%
+                    }
+                    if (block.canPrint) {
+                    %><div class="thumb-tool" data-action="print" title="<%- data.txt.expatDocumentPrint %>" class="icon alt-accent-ghost"><%= data.images.print %></div><%
+                    }
+                    if (block.canDownload) {
+                    %><div class="thumb-tool" data-action="download" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>" class="icon alt-accent-ghost"><%= data.images.download %></div><%
+                    }
+                }
+                if (block.canUpload) {
+                    %><input type=file class="masked upload-document-file"><%
+                    if (data.isSfOrCt) {
+                        %><div class="thumb-tool" data-action="removeRequiredDocument" title="<%- data.txt.expatUnRequestDocument %>" class="icon alt-accent-ghost"><%= data.images.delete %></div><%
+                    }
+                    %><div class="thumb-tool" data-action="upload" title="<%- data.txt.expatDocumentUpload %>" class="icon alt-accent-ghost"><%= data.images.upload %></div><%
+                }
+                %></span><%
+
+                if (p.has_file) {
+                    if (p.has_thumb) {//TODO : add block.canOpen as condition for data-action
+                        %><img data-action="open" class="card-img alt-accent-ghost" src="<%= block.url  + p.id %>/thumb?mtime=<%= p.mtime %>" ><%
+                    } else {
+                        %><div data-action="open" class="card-img alt-accent-ghost" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>"><%= data.images.file %></div><%
+                    }
+                } else {
+                    %><div data-action="upload" class="card-img-empty alt-accent-ghost"><%= data.images.empty_file %></div><%
+                }
+                %><span class="thumb-label-1"><%- title %></span><%
+
+                %><span class="thumb-visibility-text"><%
+                if (p.required) {
+                    data.txt.dialogRequired
+                }
+                %></span><%
+                if (docType !== null && !docType.hrVisible) {
+                %><div data-action="showInfo" class="card-visibility alt-accent-ghost"  title="<%- data.txt.expatNoRhVisibilty  %>"><%= data.images.visibility %><span><%- data.txt.expatDocumentHrVisibility %></span></div><%
+                }
+                if (docType !== null && !docType.expatVisible) {
+                    %><div data-action="showInfo" class="card-visibility alt-accent-ghost"  title="<%- data.txt.expatExpatRhVisibilty  %>"><%= data.images.visibility %><span><%- data.txt.expatDocumentExpatVisibility %></span></div><%
+                }
+                %></div><%
+            }
+		});
+	}
+	%></div><%
+});
+
+
+%><p class="strong rgpd"><%- data.txt.gdpr.expatDocs %></p><%
+
+%><div></div>

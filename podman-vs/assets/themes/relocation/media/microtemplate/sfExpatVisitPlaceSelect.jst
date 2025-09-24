@@ -1,0 +1,12 @@
+<div class="fit-container pad-container sf x-set-v-attr x-select-place secondary-text-color"><%
+
+%><div class="field stretch combo"><%
+%><label class="strong"><%- data.txt.sfVisitPlaceSetSupplierDesc %> :</label><br><%
+%><input type=text name="supplier" class="combo" value=""><%
+%></div><%
+
+%><div class="field vp-other link">→ <a href="#add-supplier" class="add-supplier underlined"><%- data.txt.sfVisitPlaceAddNewSupplier %></a></div><%
+
+%><div class="field vp-other"><%= data.toLocationPopup(data.place.location) %></div><%
+
+%></div>

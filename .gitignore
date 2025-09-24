@@ -51,4 +51,5 @@ podman-tomcat/openage/context/openage/install/upgrade/
 podman-tomcat/openage/context/openage/install/provisioning/
 openage/context/openage/install/licence.txt
 OpenAGE7-Connector/
+podman-vs/sdk/manual/
 

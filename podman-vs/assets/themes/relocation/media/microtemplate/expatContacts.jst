@@ -1,0 +1,98 @@
+<div class="card flat contacts"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navExpatContacts %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+if (_.isEmpty(data.contacts)){
+	%><p><%- data.txt.expatNoContacts %></p><%
+}
+else{
+	_.each(data.contacts, function(c){
+		var isWelcomer = !!(data.welcomer && data.welcomer.id === c.id);
+		var subjectCount = isWelcomer ? 1 : 0;
+		var serviceCount = _.isArray(c.services) && c.services.length ? c.services.length : 0;
+		if (serviceCount > 0) subjectCount += serviceCount;
+
+		%><article class="minicard contact" title="<%- c.cn %>"><%
+
+		%><div class="avatar default-primary-color text-primary-color"><%
+		%><img class="avatar" src="<%= data.route.staffAvatar + c.id %>"><%
+		%></div><% /* .avatar */
+
+		%><div class="detail"><%
+		%><h3 class="cn ellipsis"><%- c.cn %></h3><%
+		%><p><%- data.txt[subjectCount === 1 ? "welcomerMessage1":"welcomerMessageN"] %></p><%
+		%><div class="subjects"><%
+		if (isWelcomer){
+			%><span class="subject welcomer ellipsis alt-accent-border" title="<%- data.txt.expatWelcomer %>"><%- data.txt.expatWelcomer %></span><%
+		}
+		if (serviceCount > 0){
+			let immigration = false;
+			let immigrationFamily = false;
+			let expatSocialSec = false;
+			let familySocialSec = false;
+			let fiscality = false;
+			var services = [];
+			_.each(c.services, function(id){
+				var v = _.find(data.validatedServices, function(it){ return it.id === id; });
+				if (v) services.push(v.service);
+			});
+			if (services.length > 1){
+				services = _.sortBy(services, "name");
+			}
+			_.each(services, function(svc){
+				if(svc.serviceCode){
+					if(svc.serviceCode.includes("iscalite")){
+						if(!fiscality){
+							fiscality = true;
+							%><span class="subject ellipsis divider-color" title="<%= data.txt.serviceFiscalite%>"><%= data.txt.serviceFiscalite %></span><%
+						}
+					}
+					else if(svc.serviceCode.includes("SocialSec")){
+						if(svc.serviceCode.includes("amily") && !familySocialSec){
+							familySocialSec = true;
+							%><span class="subject ellipsis divider-color" title="<%= data.txt.serviceSocialSecurityFamily%>"><%= data.txt.serviceSocialSecurityFamily %></span><%
+						}
+						if(!svc.serviceCode.includes("expat") && !expatSocialSec){
+							expatSocialSec = true;
+							%><span class="subject ellipsis divider-color" title="<%=data.txt.serviceSocialSecurity%>"><%= data.txt.serviceSocialSecurity %></span><%
+						}
+					}
+					else if(svc.serviceCode.includes("mmigration")){
+						if(svc.serviceCode.includes("Family") && !immigrationFamily){
+							immigrationFamily = true;
+							%><span class="subject ellipsis divider-color" title="<%= data.txt.serviceImmigrationFamily%>"><%= data.txt.serviceImmigrationFamily %></span><%
+						}
+						if(!svc.serviceCode.includes("Family") && !immigration){
+							immigration = true;
+							%><span class="subject ellipsis divider-color" title="<%=data.txt.serviceImmigration%>"><%= data.txt.serviceImmigration %></span><%
+						}
+					}
+					else{
+						%><span class="subject ellipsis divider-color" title="<%- svc.localDesc %>"><%- svc.localDesc %></span><%
+					}
+				}
+				else{
+					%><span class="subject ellipsis divider-color" title="<%- svc.localDesc %>"><%- svc.localDesc %></span><%
+				}
+			});
+		}
+		%></div><% /* .subjects */
+
+		if (c.mail){
+			%><p class="contact ellipsis"><span class="tertiary-text-color"><%- data.txt.colMail %></span><br><a href="mailto:<%- c.mail %>"><%- c.mail %></a></p><%
+		}
+		if (c.tel){
+			%><p class="contact ellipsis"><span class="tertiary-text-color"><%- data.txt.colTelWhatsapp %></span><br><a href="tel:<%- c.tel %>"><%- c.tel %></a></p><%
+		}
+
+		%></div><% /* .detail */
+
+		%></article><% /* .minicard */
+	});
+}
+%></div><% /* .body */
+
+%></div>

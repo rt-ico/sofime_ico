@@ -1,0 +1,166 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Directory layout</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="ch02.html" title="Chapter&nbsp;2.&nbsp;Installing the Viewer application"><link rel="prev" href="ch02.html" title="Chapter&nbsp;2.&nbsp;Installing the Viewer application"><link rel="next" href="ch02s03.html" title="Running Viewer"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Directory layout</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch02.html">Prev</a>&nbsp;</td><th align="center" width="60%">Chapter&nbsp;2.&nbsp;Installing the Viewer application</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch02s03.html">Next</a></td></tr></table><hr></div><div class="sect1" title="Directory layout"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N20088"></a>Directory layout</h2></div></div></div>
+                
+                <div class="sect2" title="Application directory"><div class="titlepage"><div><div><h3 class="title"><a name="N2008D"></a>Application directory</h3></div></div></div>
+                    
+                    <p>OpenAGE Viewer is normally supplied as a compressed ZIP archive,
+                            "<code class="filename">ViewShell-0.10.0.SNAPSHOT.zip</code>". When decompressed,
+                        this creates a directory called "<code class="filename">viewshell</code>", containing:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+                                <p>"<code class="filename">viewshell.jar</code>"<a name="N200A3" class="indexterm"></a>, the executable Java archive containing the
+                                    application server.</p>
+                            </li><li class="listitem">
+                                <p>"<code class="filename">lib</code>"<a name="N200B8" class="indexterm"></a>, containing the third-party libraries required to
+                                    start the application server.</p>
+                            </li></ol></div><p>Please note that unlike OSGi bundles, these
+                            "<code class="filename">.jar</code>" files <span class="emphasis"><em>cannot</em></span> be
+                        replaced without stopping the Viewer application.</p>
+                    <p>When you start OpenAGE Viewer, it needs to be able to create several files
+                        in a specific place (all within the same directory, referred to from here on
+                        using Unix-style environment variable syntax as
+                            <code class="varname">$VSH_HOME</code>). Refer to <a class="xref" href="ch02s02.html#sect.app-home" title="Specifying VSH_HOME">the section called &ldquo;Specifying VSH_HOME&rdquo;</a> for details</p>
+                </div>
+                <div class="sect2" title="Viewer data directory"><div class="titlepage"><div><div><h3 class="title"><a name="N200D5"></a>Viewer data directory</h3></div></div></div>
+                    
+                    <div class="sect3" title="Specifying VSH_HOME"><div class="titlepage"><div><div><h4 class="title"><a name="sect.app-home"></a>Specifying VSH_HOME</h4></div></div></div>
+                        
+                        <p>OpenAGE Viewer uses a specific directory to store application data,
+                            including stylesheets, templates, runnable Java code, log files, and
+                            configuration. The directory used is referred to as
+                                <code class="varname">$VSH_HOME</code><a name="N200E4" class="indexterm"></a>; however the path of this directory is not fixed, and is
+                            selected according to the following rules:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+                                    <p>By using the value of the Java system property
+                                            <code class="varname">VSH_HOME</code><a name="N200F5" class="indexterm"></a>, if defined, or</p>
+                                </li><li class="listitem">
+                                    <p>By using the value of an environment variable
+                                            <code class="varname">VSH_HOME</code><a name="N20106" class="indexterm"></a>, if defined, or</p>
+                                </li><li class="listitem">
+                                    <p>By creating a "<code class="filename">VSH_HOME</code>"<a name="N20118" class="indexterm"></a> subdirectory in the working directory used to
+                                        start "<code class="filename">viewshell.jar</code>", if the user
+                                        starting the application has sufficient permissions,
+                                        or</p>
+                                </li><li class="listitem">
+                                    <p>By creating a "<code class="filename">VSH_HOME</code>"
+                                        subdirectory in the home directory of the user starting the
+                                        application, if the user starting the application has
+                                        sufficient permissions.</p>
+                                </li></ol></div><p>If none of these values can be used, the application will
+                            quit with an operating system error return code.</p>
+                        <p>If the application starts successfully, normally several directories,
+                            files (including log files and default configuration) will be created as
+                            necessary in the specified location. Care should be taken (depending
+                            upon the option selected) that the appropriate user is used, and that
+                            environment variables are defined as expected.</p>
+                    </div>
+                    <div class="sect3" title="The &quot;assets&quot; directory"><div class="titlepage"><div><div><h4 class="title"><a name="sect.assets-dir"></a>The "assets" directory</h4></div></div></div>
+                        
+                        <p>The <code class="filename">assets</code><a name="N2013F" class="indexterm"></a> directory contains two subdirectories:
+                                "<code class="filename">media</code>" and
+                            "<code class="filename">themes</code>".</p>
+                        <p>The <code class="filename">media</code><a name="N20153" class="indexterm"></a> directory contains files that are served from the
+                            application server using the "media" path (by default, the server runs
+                            on "<code class="filename">http://hostname:8086/front/</code>", so this would map
+                            to "<code class="filename">http://hostname:8086/front/media/*</code>"). Files in
+                            the <code class="filename">media</code> directory are therefore always accessible
+                            (unless specific security filters are installed by a plug-in component)
+                            for all visual themes.</p>
+                        <p>The <code class="filename">themes</code><a name="N2016A" class="indexterm"></a> directory contains <span class="emphasis"><em>theme packs</em></span>, which
+                            can either be <span class="emphasis"><em>imported</em></span><a name="N20178" class="indexterm"></a> "<code class="filename">.zip</code>" theme packages, or
+                                <span class="emphasis"><em>expanded</em></span><a name="N20186" class="indexterm"></a> directories. The structure of a theme pack depends on the
+                            type of theme pack; by default, an implementation based on <a class="ulink" href="http://freemarker.apache.org/" target="_top">FreeMarker</a><a name="N20192" class="indexterm"></a> is included, but other technologies can be used.</p><div class="caution" title="Caution" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Caution"><tr><td valign="top" align="center" rowspan="2" width="25"><img alt="[Caution]" src="images/caution.svg"></td><th align="left">Caution</th></tr><tr><td valign="top" align="left">
+                                <p>When exporting a theme pack from a development environment to
+                                    another environment (such as a production server), you should
+                                    use the export facilities provided by the OpenAGE Viewer
+                                    application API; this preserves the unique identifiers
+                                    associated with files, used when associating data and navigation
+                                    with visual themes.</p>
+                            </td></tr></table></div>
+                    </div>
+                    <div class="sect3" title="The &quot;system&quot; directory"><div class="titlepage"><div><div><h4 class="title"><a name="N2019F"></a>The "system" directory</h4></div></div></div>
+                        
+                        <p>The <code class="filename">system</code><a name="N201A8" class="indexterm"></a> directory contains the OSGi bundles required by the OpenAGE
+                            Viewer application server and the third-party libraries that these
+                            components require. These bundles are automatically deployed by
+                                <code class="filename">viewshell.jar</code> when it starts.</p>
+                        <p>The system bundles are versioned, and can be deleted and replaced
+                            dynamically at runtime, for example to perform live upgrades or apply
+                            hotfixes without stopping the server.</p><div class="caution" title="Caution" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Caution"><tr><td valign="top" align="center" rowspan="2" width="25"><img alt="[Caution]" src="images/caution.svg"></td><th align="left">Caution</th></tr><tr><td valign="top" align="left">
+                                <p>By default, when a system bundle is removed, the application
+                                    server automatically uninstalls the associated code objects
+                                        <span class="emphasis"><em>and</em></span> stops all other components
+                                    (including system bundles and plugin bundles) that have declared
+                                    dependencies. For example, removing the HTTP system bundle (or
+                                    any of its dependencies) makes the front-office unavailable
+                                    until it is reactivated (this requires that all of its
+                                    dependencies are satisfied).</p>
+                            </td></tr></table></div>
+                    </div>
+                    <div class="sect3" title="The &quot;plugins&quot; directory"><div class="titlepage"><div><div><h4 class="title"><a name="N201C1"></a>The "plugins" directory</h4></div></div></div>
+                        
+                        <p>The <code class="filename">plugins</code><a name="N201CA" class="indexterm"></a> directory can contain extra OSGi<a name="N201D3" class="indexterm"></a> bundles, if required by your application. Deploying a new
+                            bundle is as simple as copying the bundle "<code class="filename">.jar</code>"
+                            file into this directory.</p>
+                        <p>If your bundle needs to perform specific actions when it is started or
+                            stopped, you should add a class implementing the OSGi
+                                <code class="classname">BundleActivator</code><a name="N201E4" class="indexterm"></a> interface (and indicate this in the bundle's internal
+                            meta-data "<code class="filename">MANIFEST.MF</code>" file).</p>
+                    </div>
+                    <div class="sect3" title="The &quot;conf&quot; directory"><div class="titlepage"><div><div><h4 class="title"><a name="sect.app-home.conf"></a>The "conf" directory</h4></div></div></div>
+                        
+                        <p>The <code class="filename">conf</code><a name="N201FC" class="indexterm"></a> directory contains configuration files. The main
+                            configuration files are:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                                    <p><code class="filename">config-system.xml</code><a name="N2020C" class="indexterm"></a>: configures the HTTP server and other main
+                                        attributes. Changes to this file are immediately applied,
+                                        including server path, hostname, and port.</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">config-logging.xml</code><a name="N2021F" class="indexterm"></a>: configures logging. Most changes in this file
+                                        are immediately applied (however, a server restart may be
+                                        required in some cases).</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">config-mimetypes.xml</code><a name="N20232" class="indexterm"></a>: determines how filename extensions are
+                                        associated with IETF MIME types (HTTP content types).</p>
+                                </li></ul></div><p>Additional configuration files will be created in this
+                            directory. These configuration files generally reflect configuration
+                            settings applied via the application API or created on demand by plug-in
+                            components.</p>
+                    </div>
+                    <div class="sect3" title="The &quot;cache&quot; directory"><div class="titlepage"><div><div><h4 class="title"><a name="N20243"></a>The "cache" directory</h4></div></div></div>
+                        
+                        <p>The <code class="filename">cache</code><a name="N2024C" class="indexterm"></a> directory contains temporary files as required by the OSGi
+                            Framework used by the OpenAGE Viewer application server. These files are
+                            not intended for external tampering; all normal operations can be
+                            performed using the API and the other directories within
+                                <code class="varname">$VSH_HOME</code>.</p>
+                    </div>
+                    <div class="sect3" title="The &quot;logs&quot; directory"><div class="titlepage"><div><div><h4 class="title"><a name="sect.app-home.logs"></a>The "logs" directory</h4></div></div></div>
+                        
+                        <p>The <code class="filename">logs</code><a name="N20264" class="indexterm"></a> directory will by default contain 5 log files:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                                    <p><code class="filename">system.log</code><a name="N20274" class="indexterm"></a>: contains information from the OpenAGE Viewer
+                                        application shell and system components.</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">http.log</code><a name="N20287" class="indexterm"></a>: contains information from the HTTP component
+                                        to enable tracing of HTTP request and response processing.
+                                        The mapped diagnostic context (a unique request identifier
+                                        that tracks all log entries related to a unique request) is
+                                        applied to every HTTP call to facilitate tracking of all
+                                        user requests on the server side.</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">user.log</code><a name="N2029A" class="indexterm"></a>: exists to contain log entries from plug-in
+                                        components, should this be necessary, to easily distinguish
+                                        such tracing information from other log entries.</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">osgi.log</code><a name="N202AD" class="indexterm"></a>: contains log entries emitted using the OSGi
+                                            <code class="classname">LogService</code><a name="N202BB" class="indexterm"></a>.</p>
+                                </li><li class="listitem">
+                                    <p><code class="filename">library.log</code><a name="N202CB" class="indexterm"></a>: contains log entries emitted by third-party
+                                        libraries using system bundles or plug-in bundles. When
+                                        additional third-party libraries are added (for plug-in
+                                        components), output from these libraries can be added using
+                                        the <code class="varname">LIBRARY_NAMESPACES</code><a name="N202D9" class="indexterm"></a> property in the
+                                            "<code class="filename">config-logging.xml</code>"<a name="N202E5" class="indexterm"></a> configuration file.</p>
+                                </li></ul></div><p>Other options exist for managing log files, such as the
+                            quantity (level) of information (warning, information, debugging) in log
+                            files, and managing size, rollover, and backups.</p>
+                        <p>When running as a Windows&reg; service, additional log files will be
+                            generated.  Refer to "<a class="xref" href="ch02s03.html#running.winsvc" title="Using Microsoft&reg; Windows&reg; systems">the section called &ldquo;Using Microsoft&reg; Windows&reg; systems&rdquo;</a>".</p>
+                    </div>
+                </div>
+            </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch02.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="ch02.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch02s03.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Chapter&nbsp;2.&nbsp;Installing the Viewer application&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Running Viewer</td></tr></table></div></body></html>

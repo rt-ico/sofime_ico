@@ -1,0 +1,26 @@
+<div class="fit-container pad-container sf x-set-v-attr x-set-v-address secondary-text-color"><%
+
+var loc = data.appointment.location;
+var address = (loc ? loc.address : '') || data.appointment.address || '';
+var city = loc ? loc.city : '';
+var postcode = loc ? loc.postcode : '';
+
+%><div class="field stretch"><%
+%><label><span class="label strong"><%- data.txt.colAddress %> :</span> <input type=text name="address" value="<%- address %>"></label><%
+%></div><%
+
+%><div class="field stretch"><%
+%><label><span class="label strong"><%- data.txt.colCity %> :</span> <input type=text name="city" value="<%- city %>"></label><%
+%></div><%
+
+%><div class="field stretch"><%
+%><label><span class="label strong"><%- data.txt.colPostcode %> :</span> <input type=text name="postcode" size=5 maxlength=5 value="<%- postcode %>"></label><%
+%></div><%
+
+%><div class="field vp-other"><%
+	print(_.escape(data.appointment.localized));
+	print('<br>');
+	print(_.escape(data.appointment.localeDesc || data.appointment.subject));
+%></div><%
+
+%></div>

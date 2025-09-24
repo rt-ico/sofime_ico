@@ -1,0 +1,361 @@
+<div class="card flat staff expat-edit with-header with-footer"><%
+
+%><div class="header"><%
+let navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.expat.cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.expatId %>" title="<%- navMsg %>"><%- navMsg %> <%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a></div><%
+/*%><h2 class="primary"><%- data.expat.cn %></h2><%*/
+%></div><% /* .header */
+%><div class="body fit-container pad-container"><%
+
+%><div class="form staff-field"><%
+
+
+
+%><h3 class="alt-accent"><%- data.txt.colExpatName %></h3><%
+
+%><div class="sfSocialSecuritRowWrap extraPaddingTop"><%
+%><div class="field"><%
+%><label class=" "><%- data.txt.expatriateSurName %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input type=text maxlength=100 name="sn" value="<%- data.expat.sn %>" <%= data.locked ? 'readonly':'' %>><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class=""><%- data.txt.expatriateGivenName %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="gn" value="<%- data.expat.gn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+%></div><%
+
+
+%><div class="field"><%
+%><label class=""><%- data.txt.expatriateBirthDate %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="birthDate" id="accountBirthDate" class="date" value="<%- data.expat.birthDate ? data.cachedMoment(data.expat.birthDate).format("L"):"" %>" data-floor=1><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="accountBirthDate" data-pick-date-title="<%- data.txt.expatriateBirthDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.sfExpatAddressFinal %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=200 name="addressFinal" value="<%- data.expat.newAddress %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="field"><%
+%><label><%- data.txt.sfExpatIban %></label><%
+%><div class="input <%= data.smallScreen ? 'fullWidth':'mediumWidth' %>"><%
+%><input type=tel maxlength=40 name="iban" value="<%- data.expat.iban %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="sfSocialSecuritRowWrap"><%
+
+%><div class="field"><%
+%><label><%- data.txt.sfExpatSSN %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="SIN" value="<%- data.expat.SIN %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+                %><div class="field"><%
+                    %><label class=""><%- data.txt.expatAmeliMail %></label><%
+                    %><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+                        %><input type=text maxlength=100 name="expatAmeliMail" value="<%- data.expat.expatAmeliMail %>" <%= data.locked ? 'readonly':'' %> ><%
+                    %></div><% /* .input */
+                %></div><% /* .field */
+
+%><div class="field"><%
+%><label class=""><%- data.txt.ameliAuth %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input type=text maxlength=100 name="ameliAuth" value="<%- data.expat.ameliAuth %>" <%= data.locked ? 'readonly':'' %> ><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+
+%></div><% /* .row */
+
+
+if(data.expat.hasFamilyEnabled){ /*. socialSecurityFamilyEnabled */
+
+%><h3 class="alt-accent minorPaddingTop"><%- data.txt.spouse %></h3><%
+
+%><div class="sfSocialSecuritRowWrap extraPaddingTop"><%
+
+%><div class="field"><%
+%><label><%- data.txt.expatriateSurName %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="spouseSn" value="<%- data.expat.spouse.sn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.expatriateGivenName %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="spouseGn" value="<%- data.expat.spouse.gn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+%></div><% /* .row  */
+
+
+%><div class="field"><%
+%><label class=""><%- data.txt.expatriateBirthDate %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="spouseBirthDate" id="spouseBirthDate" class="date" value="<%- data.expat.spouse.birthDate ? data.cachedMoment(data.expat.spouse.birthDate).format("L"):"" %>" data-floor=1><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="spouseBirthDate" data-pick-date-title="<%- data.txt.spouseBirthDAte %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="sfSocialSecuritRowWrap"><%
+
+%><div class="field"><%
+%><label><%- data.txt.sfExpatSpouseSSN %></label><%
+%><div class="input sfSocialSecurityWidth width250  "><%
+%><input type=tel maxlength=40 name="spouseSIN" value="<%- data.expat.spouseSIN %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+                %><div class="field"><%
+                    %><label class=""><%- data.txt.expatAmeliMail %></label><%
+                    %><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+                        %><input type=text maxlength=100 name="spouseAmeliMail" value="<%- data.expat.spouseAmeliMail %>" <%= data.locked ? 'readonly':'' %> ><%
+                    %></div><% /* .input */
+                %></div><% /* .field */
+
+%><div class="field"><%
+%><label class=""><%- data.txt.ameliAuth %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input type=text maxlength=100 name="ameliAuthSpouse" value="<%- data.expat.ameliAuthSpouse %>" <%= data.locked ? 'readonly':'' %> ><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+
+%></div><% /* .row */
+
+%><h3 class="alt-accent"><%- data.txt.sfExpatChildren %></h3><%
+
+%><div class="family-members"><% /*.familyMembers */
+_.each(data.expat.familyMembers, function(fm){
+    if(fm.familyRelation != 1 ){
+        print(data.tpl.familyMember(data.defineFamilyMemberTemplateData(fm)));
+    }
+});
+if (!data.locked) {
+    %><a href="#add-family-member" class="text-primary-color dark-primary-color add" title="<%- data.txt.addFamilyRelation %>"><%= data.images.add %></a><%
+}
+
+%></div><% /*.familyMembers */
+
+} /*. socialSecurityFamilyEnabled */
+
+%><h3 class="alt-accent minorPaddingTop"><%- data.txt.sfSocialSecurityRemarks %></h3><%
+%><div class="field extraPaddingTop" title="<%- data.txt.socialSecurityRemark %>"><%
+%><div class="field-label" ><%
+%><label for="socialSecurityRemark"><%- data.txt.socialSecurityRemark %></label><%
+%><span class="expat-visibility alt-accent-ghost"  title="<%- data.txt.sfExpatNoVisibility  %>"><%= data.images.visibility %><span><%- data.txt.sfExpatNoVisibility %></span></span><%
+%></div><% /* .field-label */
+
+%><div class="input"><%
+%><textarea id="socialSecurityRemark" maxlength=1000  rows=3><%- data.expat.socialSecurityRemark %></textarea><%
+%></div><% /* .input */
+%></div><%/* .field */
+
+if(data.expat.hasFamilyEnabled){
+//%><div class="field" title="<%- data.txt.socialSecurityFamilyRemark %>"><%
+%><div class="field-label" ><%
+%><label for="socialSecurityFamilyRemark"><%- data.txt.socialSecurityFamilyRemark %></label><%
+%><span class="expat-visibility alt-accent-ghost"  title="<%- data.txt.sfExpatNoVisibility  %>"><%= data.images.visibility %><span><%- data.txt.sfExpatNoVisibility %></span></span><%
+%></div><% /* .field-label */
+
+%><div class="input"><%
+%><textarea id="socialSecurityFamilyRemark" maxlength=1000  rows=3><%- data.expat.socialSecurityFamilyRemark %></textarea><%
+%></div><% /* .input */
+%></div><%/* .field */
+}
+
+            %><h3 class="alt-accent minorPaddingTop"><%- data.txt.environment %></h3><%
+            %><div class="field extraPaddingTop column-block width250" ><%
+                %><label for="paperlessSocialSecurity"><%- data.txt.paperless %></label><%
+                    %><div class = "row-block alignCenter"><%
+                        %><input id="paperlessSocialSecurity" class="combo"  type=text title="<%= data.txt.paperLess %>" autocomplete = "off" value="<%=data.expat.refPaperlessSecu ? data.md.paperlessStatuses[data.expat.refPaperlessSecu].label : " " %>"> <%
+                        %><div class="width26 paperlessMissingIcon missingFieldIcon visibilityOff"><%= data.images.missing %></div><%
+                    %></div><%
+                %></div><%
+
+%><h3 class="alt-accent minorPaddingTop"><%- data.txt.qualifications %></h3><%
+
+%><div class="sfSocialSecuritRowWrap"><%
+
+%><div class="flag-group"><%
+    %><div class=""><label class="for-checkbox" title="<%- data.txt.sfExpatSocialSecurityIsSensitive %>"><%
+    %><input type="checkbox" name="isSensitive"  <%= data.expat.socialSecurityFlags.isSensitive ? "checked" : "" %>><%
+    %><span class=""><%- data.txt.sfExpatSocialSecurityIsSensitive  %></span><%
+    %></label></div><%
+%></div><%
+
+%><div class="flag-group"><%
+
+    %><div class=""><label class="for-checkbox" title="<%- data.txt.sfExpatSocialSecurityIsWaitingForExpat %>"><%
+    %><input type="checkbox" name="isWaitingForExpat"  <%= data.expat.socialSecurityFlags.isWaitingForExpat ? "checked" : "" %>><%
+    %><span class=""><%- data.txt.sfExpatSocialSecurityIsWaitingForExpat  %></span><%
+    %></label></div><%
+%></div><%
+
+%><div class="flag-group"><%
+
+    %><div class=""><label class="for-checkbox" title="<%- data.txt.sfExpatSocialSecurityIsWaitingForCpam %>"><%
+    %><input type="checkbox" name="isWaitingForCpam"  <%= data.expat.socialSecurityFlags.isWaitingForCpam ? "checked" : "" %>><%
+    %><span class=""><%- data.txt.sfExpatSocialSecurityIsWaitingForCpam  %></span><%
+    %></label></div><%
+%></div><%
+
+%></div><% /* .row*/
+
+%><h3 class="alt-accent minorPaddingTop"><%- data.txt.dates %></h3><%
+
+%><div class="sfSocialSecuritRowWrap extraPaddingTop"><%
+%><div class="field"><%
+%><label class="sfSocialSecurityWidth"><%- data.txt.expatFileLoadDate %></label><%
+%><div class="input  <%= data.locked||data.lockedInput.expatFileLoadDate ? 'readonly':'' %> "><%
+%><input  <%= data.locked||data.lockedInput.expatFileLoadDate ? 'readonly':'' %> type=text maxlength=10 name="expatFileLoadDate" id="expatFileLoadDate" class="date" value="<%- data.expat.expatFileLoadDate ? data.cachedMoment(data.expat.expatFileLoadDate).format("L"):"" %>" data-floor=1><%
+if (!(data.locked||data.lockedInput.expatFileLoadDate)) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="expatFileLoadDate" data-pick-date-title="<%- data.txt.expatFileLoadDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class=""><%- data.txt.temporaryNumberReceptionDate %></label><%
+%><div class="input  <%= data.locked||data.lockedInput.temporaryNumberReceptionDate ? 'readonly':'' %> "><%
+%><input  <%= data.locked||data.lockedInput.temporaryNumberReceptionDate ? 'readonly':'' %> type=text maxlength=10 name="temporaryNumberReceptionDate" id="temporaryNumberReceptionDate" class="date" value="<%- data.expat.temporaryNumberReceptionDate ? data.cachedMoment(data.expat.temporaryNumberReceptionDate).format("L"):"" %>" data-floor=0><%
+if (!(data.locked||data.lockedInput.temporaryNumberReceptionDate)) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="temporaryNumberReceptionDate" data-pick-date-title="<%- data.txt.temporaryNumberReceptionDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row*/
+
+%><div class="field"><%
+%><label class=""><%- data.txt.lastActionDate %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="lastActionDate" id="lastActionDate" class="date" value="<%- data.expat.lastActionDate ? data.cachedMoment(data.expat.lastActionDate).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="lastActionDate" data-pick-date-title="<%- data.txt.lastActionDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+if(!data.smallScreen){
+%><table class="sfToDoTable minorPaddingTop"><%
+    %><thead class="text-primary-color dark-primary-color"><%
+
+    %><tr><%
+
+    %><th class="socialSecurityTableTask" data-col=toDoTask><%= data.txt.colTaskLabel%><%
+
+    %></th><%
+
+    %><th class="socialSecurityTableDeadLine" data-col=toDoDeadline><%= data.txt.colTaskDeadline%><%
+
+    %></th><%
+
+    %><th class="socialSecurityTableRemarks" data-col=toDoRemarks><%= data.txt.colRemarks%><%
+
+    %></th><%
+    %><th class="socialSecurityMail"></th><%
+
+    %><th class="socialSecurityValidate">&nbsp;</th><%
+
+    %></tr><%
+    //insert
+        _.each(data.tasksTodo, function(it){
+            if( it.nextTask && it.isSocialSecurity ) { //!it.nextTask && ( it.expat.id == data.expat.id )
+
+            	let escTaskName;
+            	escTaskName = _.escape(it.task.localeName || it.task.name);
+
+                %><tr class="sfToDoTableRow" data-xt=<%= it.id %>><%
+
+
+                %><td class="centered" ><%=escTaskName%></td><%
+                %><td class="sfSocialSecurityCentered" ><%
+                    %><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="deadlineOf<%- it.id %>" id="deadlineOf<%- it.id %>" class="date" value="<%- it.deadline ? data.cachedMoment(it.deadline).format("L"):"" %>" data-floor=0><%
+                    if (!data.locked) {
+                    %><img class="datepicker-icon pick-birth-date" data-pick-date-for="deadlineOf<%- it.id %>"
+                		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+                	     srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+                    }
+                %></td><%
+                %><td class="centered" ><%
+                %><div class="input <%= data.locked ? 'readonly':'' %> "><%
+                %><input class = "fullWidth" type=text maxlength=200 name="remarksOf<%- it.id %>" value="<%- it.remarks %>" <%= data.locked ? 'readonly':'' %> ><%
+                %></div><% /* .input */
+                %></td><%
+                %><td class="centered" <%= it.outboxmailId ?  'data-action="sendMail" data-xt='+it.outboxmailId:''%> ><%= it.outboxmailId ? data.images.mail : ''%></td><%
+                %><td class="centered" data-action="validateTask" data-xt=<%= it.id %>><%=data.images.taskDone%></td><%
+                %></tr><%
+            }
+        });
+    //insert
+    %></thead><%
+
+
+
+    %><tbody><%
+    %></tbody><%
+%></table><%
+}else{
+%><h3 class="alt-accent minorPaddingTop"><%- data.txt.tasks %></h3><%
+    _.each(data.tasksTodo, function(it){
+        if( it.nextTask && it.isSocialSecurity ) {
+            let escTaskName = _.escape(it.task.localeName || it.task.name);
+            let escTaskDeadline = it.deadline ? data.cachedMoment(it.deadline).format("L"):"";
+
+
+        %><article class="minicard expat-task secondary-text-color" data-action="editTask" data-xt=<%= it.id %>><%
+        %><h4 title="<%= escTaskName %>"><%= escTaskName %></h4><%
+
+
+        %><span class="card-label"><%- data.txt.colTaskDeadline %></span><br><%
+        %><p class="ellipsis" title="<%= escTaskDeadline %>"><%= escTaskDeadline %></p><%
+
+        %></article><%
+        }
+    })
+}
+
+
+%></div><% /* .form */
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+%><a class="update ellipsis accent-border accent-color disabled"
+	 href="#sfExpat" title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+
+%></div><% /* .footer */
+
+%></div>

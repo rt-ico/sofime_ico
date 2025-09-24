@@ -1,0 +1,83 @@
+<div class="card flat staff expat-visits appointments with-header"><%
+
+%><div class="header"><%
+var navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.expat.cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.expatId %>" title="<%- navMsg %>"><%- navMsg %>&nbsp;<%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a></div><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container"><%
+
+if (_.isEmpty(data.visits)){
+	%><p><%- data.txt.noUpcomingAppointments %></p><%
+}
+else{
+	%><h3 class="primary"><%- data.txt.sfNextAppointments %></h3><%
+	_.each(data.visits, function(v,i){
+	    if(!v.past){
+		    %><article data-v=<%= v.id %> class="infocard pad-container visits dark-text-color <%= v.next ? 'alt-accent-border':'dark-divider-color' %>"><%
+		    if (false){
+			    %><p class="subject ellipsis" title="<%- v.subject %>"><%- v.subject %></p><%
+		    }
+		    if (true){
+			    %><p class="type ellipsis" title="<%- v.localeDesc %>"><%- v.localeDesc %></p><%
+		    }
+		    %><div class="about"><%
+		    %><p class="appointment" title="<%- v.localized %>"><%- v.localized %></p><%
+
+		    %><p class="location"><a class="attr-edit" href="#set-address"><%
+		    var escAddress;
+		    if (data.isLocation(v.location)){
+			    escAddress = data.toLocationText(v.location);
+		    }
+		    else if (v.address){ // poor-quality data!
+			    escAddress = _.escape(v.address);
+		    }
+		    else {
+			    escAddress = _.escape(data.txt.addressToComplete);
+		    }
+		    print(escAddress);
+		    %></a></p><%
+
+		    %></div><% /* .about */
+		    %><div class="extra"><%
+		    %><a class="attr-edit v-supplier" href="#set-supplier"><%- v.supplier ? v.supplier.name : data.txt.sfNoSupplierAgency %></a><%
+		    %> | <a class="attr-edit v-remarks" href="#set-remarks"><%- data.txt.colRemarks %></a><%
+		    %></div><% /* .extra */
+		    %></article><%
+		}
+	});
+	%><h3 class="primary"><%- data.txt.sfPastAppointments %></h3><%
+	_.each(data.visits, function(v,i){
+		if(v.past){
+            %><article data-v=<%= v.id %> class="infocard pad-container visits dark-text-color <%= v.next ? 'alt-accent-border':'dark-divider-color' %>"><%
+        	if (false){
+        	    %><p class="subject ellipsis" title="<%- v.subject %>"><%- v.subject %></p><%
+        	}
+        	if (true){
+        	    %><p class="type ellipsis" title="<%- v.localeDesc %>"><%- v.localeDesc %></p><%
+        	}
+        	%><div class="about"><%
+        	%><p class="appointment" title="<%- v.localized %>"><%- v.localized %></p><%
+            %><p class="location"><a class="attr-edit" ><%
+        	var escAddress;
+        	if (data.isLocation(v.location)){
+        	    escAddress = data.toLocationText(v.location);
+        	}
+        	else if (v.address){ // poor-quality data!
+        	escAddress = _.escape(v.address);
+        	}
+        	print(escAddress);
+        	%></a></p><%
+
+        	%></div><% /* .about */
+        	%><div class="extra"><%
+        	%><a class="attr-edit v-supplier" href="#set-supplier"><%- v.supplier ? v.supplier.name : data.txt.sfNoSupplierAgency %></a><%
+        	%> | <a class="attr-edit v-remarks" href="#set-remarks"><%- data.txt.colRemarks %></a><%
+        	%></div><% /* .extra */
+        	%></article><%
+        }
+	});
+}
+
+%></div><% /* .body */
+%></div>

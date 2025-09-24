@@ -1,0 +1,72 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Configuring the default connector</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Configuration"><link rel="prev" href="ch03s02.html" title="Configuring the HTTP server"><link rel="next" href="pt02.html" title="Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Configuring the default connector</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch03s02.html">Prev</a>&nbsp;</td><th align="center" width="60%">Chapter&nbsp;3.&nbsp;Configuration</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="pt02.html">Next</a></td></tr></table><hr></div><div class="sect1" title="Configuring the default connector"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="setup.defaultConnector"></a>Configuring the default connector</h2></div></div></div>
+                
+                <p>OpenAGE Viewer by default does not directly provide any data with which to
+                    populate the user interface.  Therefore, when installing the application, a key
+                    step involves setting up a connector to a data source.  The most common data
+                    source is an OpenAGE back-office server, and therefore you will need to indicate
+                    the <span class="emphasis"><em>endpoint URL</em></span>: this is generally the URL of the server
+                    and the OpenAGE context path.</p>
+                <p><a name="N2087F" class="indexterm"></a>To configure the connector, the most straightforward approach is to
+                    use a web browser and navigate to the default address of your OpenAGE Viewer
+                    installation:</p><pre class="screen">http://localhost:8086/front/</pre><p>At startup, the
+                    default address will be written to <code class="varname">http.log</code><a name="N2088D" class="indexterm"></a> (see <a class="xref" href="ch02s02.html#sect.app-home.logs" title="The &quot;logs&quot; directory">the section called &ldquo;The "logs" directory&rdquo;</a>). If you have entered an
+                    appropriate address, you will be redirected to a setup user interface. The setup
+                    user interface is only available when no connector is provided by either
+                    configuration or by any installed plugin; it is automatically uninstalled after
+                    a connector is installed.</p>
+                <p>The first step is to either upload a previously-exported connector definition
+                    file, or to type in the endpoint URL. If you are installing a production server
+                    to run an application prepared on another server, you should import the
+                    connector definition, so that you also import the appropriate identifiers that
+                    were used to associated the user interface with the data sources. If you enter
+                    the endpoint URL without importing a definition file, then a new unique
+                    identifier will be generated. You can override the endpoint URL defined in an
+                    imported file by specifying it at the same time as you import the file.</p><div class="figure"><a name="N2089F"></a><p class="title"><b>Figure&nbsp;3.1.&nbsp;Specifying or importing the back-office server</b></p><div class="figure-contents">
+                        
+                        <div class="mediaobject" align="center"><table cellpadding="0" cellspacing="0" summary="manufactured viewport for HTML img" border="0" width="90%"><tr><td align="center"><img src="media/setup.connector1.png" align="middle" width="100%" alt="Specifying or importing the back-office server"></td></tr></table></div>
+                    </div></div><p><br class="figure-break">Click "<span class="guibutton">Apply configuration</span>" to proceed to the
+                    next step. </p>
+                
+                <p>Before validating the connector definition, OpenAGE Viewer will attempt to
+                    contact the server at the specified endpoint URL.  If the definition is valid,
+                    this is normally as simple as displaying the detected version and asking you to
+                    confirm the setup.</p><div class="figure"><a name="N208BB"></a><p class="title"><b>Figure&nbsp;3.2.&nbsp;Confirming and applying the choice of the back-office server</b></p><div class="figure-contents">
+                        
+                        <div class="mediaobject" align="center"><table cellpadding="0" cellspacing="0" summary="manufactured viewport for HTML img" border="0" width="90%"><tr><td align="center"><img src="media/setup.connector2.png" align="middle" width="100%" alt="Confirming and applying the choice of the back-office server"></td></tr></table></div>
+                    </div></div><p><br class="figure-break">
+                </p>
+                <p>However, sometimes this step can lead to additional information and warnings
+                    being displayed.  In the event of a warning, you can still confirm your setup
+                    (if for example you are configuring OpenAGE Viewer prior to configuring the
+                    back-office server).  Possible situations include:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                            <p>Version incompatibility: OpenAGE Viewer knows what the minimum
+                                compatible version of the back-office server is, but can only guess
+                                what the upper limit is.</p>
+                        </li><li class="listitem">
+                            <p>Server unavailability: the back-office server may be currently
+                                unavailable.  In such cases, check your network configuration (host
+                                names, port numbers, firewalls, protocols), and ensure that you have
+                                specified the correct OpenAGE context path as part of the
+                                URL.</p>
+                        </li><li class="listitem">
+                            <p>Server certificate<a name="N208E4" class="indexterm"></a> validation failures: if you have installed an SSL<a name="N208EA" class="indexterm"></a>/TLS<a name="N208F0" class="indexterm"></a> certificate from some certificate authorities, or if
+                                you are using a self-signed certificate for testing HTTPS<a name="N208F6" class="indexterm"></a>, you may need to install the appropriate root
+                                certificate in the <code class="filename">cacerts</code><a name="N20901" class="indexterm"></a> file of the Java environment used to run OpenAGE
+                                Viewer.</p>
+                        </li></ul></div>
+                <p>Click "<span class="guibutton">Confirm</span>" to apply the configuration, or
+                        "<span class="guibutton">Cancel</span>" to return to the previous step.  Once the
+                    setup is confirmed, this interface uninstalls itself.</p>
+                <p>If this interface is not required, it can be deactivated via configuration
+                    (see <a class="xref" href="apa.html#config.connector.setupInterfaceEnable" title="Options for setup.interface.enable">Options for <code class="varname">setup.interface.enable</code></a>). Connectors can also be directly
+                    defined using configuration files or using a JMX console.</p>
+                <div class="caution" title="Caution" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Caution"><tr><td valign="top" align="center" rowspan="2" width="25"><img alt="[Caution]" src="images/caution.svg"></td><th align="left">Caution</th></tr><tr><td valign="top" align="left">
+                    <p>If OpenAGE Viewer is not installed on the same server as OpenAGE, ensure
+                        that both servers have synchronized clocks.  The connector will
+                        automatically detect clock synchronization problems which may adversely
+                        affect the consistency and reliability of resource processing, and beyond a
+                        configurable limit will deactivate various optimizations that depend upon
+                        clock synchronization.  In short, if clocks are not synchronized, then
+                        application performance will be degraded.</p>
+                </td></tr></table></div>
+            </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch03s02.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="ch03.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="pt02.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Configuring the HTTP server&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Part&nbsp;II.&nbsp;Customizing OpenAGE Viewer</td></tr></table></div></body></html>

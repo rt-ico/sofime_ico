@@ -1,0 +1,147 @@
+<div class="card flat staff todo-list with-header"><%
+
+
+if(data.filter.expat != null ){
+%><div class="header"><%
+let navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.md.expat[data.filter.expat].cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.filter.expat %>" title="<%- navMsg %>"><%- navMsg %> <%=data.md.expat[data.filter.expat].client ? "(" + data.md.expat[data.filter.expat].client.name+")" : ""%></a></div><%
+/*%><h2 class="primary"><%- data.md.expat[data.filter.expat].cn %></h2><%*/
+%></div><% /* .header */
+%><div class="body fit-container"><%
+%><div class="sfToDoWithExpatSelected"><%- data.txt.navSfTodo %></div><%
+}else{
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navSfTodo %></h2><%
+%></div><% /* .header */
+%><div class="body fit-container"><%
+}
+
+
+%><div class="filter"><%
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colCustomerName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-client combo"><input class="combo" type=text></div><%
+%><div class="pick-client icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colExpatName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-expat combo"><input class="combo" type=text></div><%
+%><div class="pick-expat icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%></div><% /* .filter */
+
+%><div class="todo-list"><%
+
+if (_.isArray(data.tasksTodo) && data.tasksTodo.length){
+    if(!data.smallScreen){
+
+        %><table class="sfToDoTable"><%
+        %><thead class="text-primary-color dark-primary-color"><%
+        %><tr><%
+        %><th class="sortable expat-name dark-primary-color sfToDoTableHead" data-col=expat><%//toDoTableExpatName
+        print(_.escape(data.txt.colExpatName));
+        if (data.sort.att === "expat"){
+        	%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+        }
+
+
+        %></th><%
+        %><th class="sortable dark-primary-color sfToDoTableHead toDoTableClient" data-col=client><%= data.txt.colCustomerName%><%
+        if (data.sort.att === "client"){
+        	%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+        }
+        %></th><%
+
+        %><th class="sortable dark-primary-color sfToDoTableHead toDoTableDeadLine" data-col=deadline><%= data.txt.colTaskDeadline%><%
+        if (data.sort.att === "deadline"){
+        	%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+        }
+        %></th><%
+
+        %><th class="sortable dark-primary-color sfToDoTableHead toDoTableTask" data-col=task><%= data.txt.colTaskLabel%><%
+        if (data.sort.att === "task"){
+        	%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+        }
+        %></th><%
+
+        %><th class="dark-primary-color sfToDoTableHead toDoTableRemarks" data-col=task><%= data.txt.colRemarks%><%
+
+        %></th><%
+
+        %><th class="dark-primary-color sfToDoTableHead toDoValidate">&nbsp;</th><%
+        %><th class="dark-primary-color sfToDoTableHead toDoValidate">&nbsp;</th><%
+
+        %></tr><%
+        %></thead><%
+        %><tbody><%
+        //insert
+        _.each(data.tasksTodo, function(it){
+        	var escExpatName = _.escape(it.expat.cn);
+        	var escClientName = it.expat.client && data.md.client[it.expat.client].name ? _.escape(data.md.client[it.expat.client].name) : " ";
+        	var escTaskName, escTaskTooltip;
+        	if (it.task.freeTask && it.remarks){
+        		escTaskTooltip = ' ';
+        		escTaskName = _.escape(it.remarks);
+        	}
+        	else{
+        		escTaskTooltip = _.escape(it.remarks);
+        		escTaskName = _.escape(it.task.localeName || it.task.name);
+        	}
+        	var escTaskDeadline = it.deadline ? data.cachedMoment(it.deadline).format("L") : "-";
+
+            %><tr class="expat-task" data-xt=<%= it.id %>><%
+            %><td class="centered sfToDoTableText" data-action="editTask"><%=escExpatName%></td><%
+            %><td class="centered sfToDoTableText" data-action="editTask"><%=escClientName%></td><%
+            %><td class="centered sfToDoTableText sfToDoDeadline <%= it.missedDeadline ? 'missedDeadline':'' %>" data-action="editTask"><%=escTaskDeadline%></td><%
+            %><td class="centered sfToDoTableText <%= it.isOnlyWelcomer ? 'sfWelcomer':''%> " data-action="editTask"><%=escTaskName%></td><%
+            %><td class="centered sfToDoTableText" data-action="editTask"><%=escTaskTooltip%></td><%
+            %><td class="centered" <%= it.outboxmailId ?  'data-action="sendMail" data-xt='+it.outboxmailId:''%> ><%= it.outboxmailId ? data.images.mail : ''%></td><%
+            %><td class="centered sfToDoTableText" data-action="validateTask" data-xt=<%= it.id %>><%=data.images.taskDone%></td><%
+            %></tr><%
+        });
+        //insert
+        %></tbody><%
+        %></table><%
+    }else{
+	    _.each(data.tasksTodo, function(it){
+		    var escExpatName = _.escape(it.expat.cn);
+		    let escClientName = it.expat.client && data.md.client[it.expat.client].name ? _.escape(data.md.client[it.expat.client].name) : " ";
+		    var escTaskName, escTaskTooltip;
+		    if (it.task.freeTask && it.remarks){
+    			escTaskTooltip = _.escape(it.task.localeName || it.task.name);
+	    		escTaskName = _.escape(it.remarks);
+		    	escTaskTooltip += "\n" + escTaskName;
+    		}
+	    	else{
+		    	escTaskTooltip = escTaskName = _.escape(it.task.localeName || it.task.name);
+		    }
+    		var escTaskDeadline = it.deadline ? data.cachedMoment(it.deadline).format("L") : "-";
+    		%><article class="minicard expat-task secondary-text-color" data-action="editTask" data-xt=<%= it.id %>><%
+	    	%><h3 class="primary" title="<%= escExpatName %>"><%= escExpatName %></h3><%
+		    %><h4 title="<%= escClientName %>"><%= escClientName %></h4><%
+    		%><p title="<%= escTaskTooltip %>"><%= escTaskName %></p><%
+
+    	    %><span class="card-label"><%- data.txt.colTaskDeadline %></span><%
+	    	%><p class="ellipsis" title="<%= escTaskDeadline %>"><%= escTaskDeadline %></p><%
+
+		    %></article><%
+	    });
+	}
+}
+else{
+	%><p><%- data.txt.noTodoTasks %></p><%
+}
+
+
+
+%></div><% /* .todo-list */
+%></div><% /* .body */
+
+%></div>

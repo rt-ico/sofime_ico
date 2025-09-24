@@ -1,0 +1,60 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter&nbsp;1.&nbsp;Understanding the Viewer application</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="pt01.html" title="Part&nbsp;I.&nbsp;Getting started"><link rel="prev" href="pt01.html" title="Part&nbsp;I.&nbsp;Getting started"><link rel="next" href="ch02.html" title="Chapter&nbsp;2.&nbsp;Installing the Viewer application"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Chapter&nbsp;1.&nbsp;Understanding the Viewer application</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="pt01.html">Prev</a>&nbsp;</td><th align="center" width="60%">Part&nbsp;I.&nbsp;Getting started</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch02.html">Next</a></td></tr></table><hr></div><div class="chapter" title="Chapter&nbsp;1.&nbsp;Understanding the Viewer application"><div class="titlepage"><div><div><h2 class="title"><a name="N20030"></a>Chapter&nbsp;1.&nbsp;Understanding the Viewer application</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="ch01.html#N20035">Goals of the application</a></span></dt><dd><dl><dt><span class="sect2"><a href="ch01.html#N2003A">Create front-office applications for OpenAGE</a></span></dt><dt><span class="sect2"><a href="ch01.html#N20063">Create applications with the tools you prefer</a></span></dt></dl></dd></dl></div>
+            
+            <div class="sect1" title="Goals of the application"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N20035"></a>Goals of the application</h2></div></div></div>
+                
+                <div class="sect2" title="Create front-office applications for OpenAGE"><div class="titlepage"><div><div><h3 class="title"><a name="N2003A"></a>Create front-office applications for OpenAGE</h3></div></div></div>
+                    
+                    <p>OpenAGE enables an agile approach for building business applications. This
+                        approach implies a "back-office" approach with standardized navigation and a
+                        standardized look-and-feel built using a standard set of user interface
+                        widgets arranged around a master-detail style user interface.</p>
+                    <p>Despite being standardized, forms and lists in the OpenAGE back-office are
+                        often flexible enough for many applications, and are augmented by extension
+                        points for implementing business rules and workflow, as well as using
+                        built-in security profiles for controlling access and visibility of
+                        information, and flexible searching tools (free-text search and structured
+                        advanced search).</p>
+                    <p>OpenAGE Viewer is primarily designed to add flexibility to the way in
+                        which information is made available, modified, and to the way in which users
+                        can navigate, search, and display information. Whereas the back-office is
+                        designed for productivity in terms of structuring data, the front-office is
+                        designed for productivity in customizing presentation and navigation (whilst
+                        leveraging all the advantages of security profiles and business rules
+                        handled by the back-office).</p>
+                    <p>The front-office delegates data access, security profiles, and business
+                        rules to the back-office. It provides several levels of customization:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                                <p>CSS stylesheet modifications for basic visual theming.</p>
+                            </li><li class="listitem">
+                                <p>HTML template modifications for customizing the way in which
+                                    information is presented and the way in which the user can
+                                    navigate.</p>
+                            </li><li class="listitem">
+                                <p><a class="ulink" href="http://www.osgi.org/" target="_top">OSGi</a> plug-ins: requiring some Java development skills, these
+                                    plug-ins can be added, modified, and removed without stopping
+                                    the OpenAGE Viewer application, enabling more advanced
+                                    customization (enhancing business rules, modifying page
+                                    processing, integrating other components of your information
+                                    system, for example).</p>
+                            </li></ul></div>
+                </div>
+                <div class="sect2" title="Create applications with the tools you prefer"><div class="titlepage"><div><div><h3 class="title"><a name="N20063"></a>Create applications with the tools you prefer</h3></div></div></div>
+                    
+                    <p>OpenAGE Viewer is aimed at front-end developers and graphic designers. As
+                        such, it is designed to make it easy to get instant feedback on design
+                        changes, as well as to deploy them.</p>
+                    <p>Shared media files (such as pictures, video, and audio) can be dropped in
+                        and made instantly available. Visual themes can be easily organized into
+                        packages of templates, each with their own collection of packages of
+                        stylesheets. These templates and stylesheets are easy to edit directly with
+                        existing visual design tools and text editors, whatever you prefer. When you
+                        are satisfied with the result, it is easy to package up and deploy these
+                        design assets on a production server.</p>
+                    <p>When you need to go even further and add customized behavior (security
+                        profiles, business logic, or navigation), this can be done using robust
+                        industry-standard OSGi Java-based plug-in technology. Java code using our
+                        documented API can be compiled and deployed without having to restart the
+                        OpenAGE Viewer server, and can even be modified and replaced as many times
+                        as you need, without needing to restart the server.</p>
+                </div>
+            </div>
+        </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="pt01.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="pt01.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch02.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Part&nbsp;I.&nbsp;Getting started&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Chapter&nbsp;2.&nbsp;Installing the Viewer application</td></tr></table></div></body></html>

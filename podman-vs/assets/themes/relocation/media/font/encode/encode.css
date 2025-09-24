@@ -1,0 +1,34 @@
+@font-face {
+	font-family: 'EncodeSans';
+	src: url('EncodeSans-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'EncodeSans';
+	src: url('EncodeSans-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'EncodeSans';
+	src: url('EncodeSans-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'EncodeSans';
+	src: url('EncodeSans-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'EncodeSans';
+	src: url('EncodeSans-Black.ttf') format('truetype');
+	font-weight: 800;
+	font-style: normal;
+}

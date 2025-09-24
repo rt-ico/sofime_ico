@@ -1,0 +1,91 @@
+<%
+
+_.each(data.expats, function(x){
+	%><article class="minicard dark-text-color" data-id=<%= x.id %>><%
+	%><div class="cardtitle" title="<%- x.cn %>"><%
+	%><div class="icon alt-accent-ghost"><%= data.images.folder %></div><%
+	%><div class="id"><%
+	%><span class="cn ellipsis"><%- x.cn %></span><%
+	%><span class="arrival tertiary-text-color"><%- data.txt.reloArrival %> : <%= x.arrival ? _.escape(data.cachedMoment(x.arrival).format("L")) : '-' %></span><%
+	%></div><% /* .id */
+	%><div class="indicator info text-primary-color accent-color"><span class="value"><%= x.uncheckedDocuments || 0 %></span></div><%
+	%><div class="indicator warn primary-text-color"><span class="value"><%=x.missingRequiredDocuments || 0 %></span><span class="bg"><%= data.images.triangle %></span></div><%
+	%></div><% /* .cardtitle */
+
+	var escText;
+	if (x.visit || x.prefecture || x.consulate){
+		%><h4><%- data.txt.reloAppointments %></h4><%
+		%><div class="rdv"><%
+		if (x.visit){
+			escText = _.escape(data.txt.reloVisit +" : "+ data.cachedMoment(x.visit).format("L"));
+			%><span class="ellipsis dt visit accent-ghost" title="<%= escText %>"><%= escText %></span><%
+		}
+		if (x.prefecture){
+			escText = _.escape(data.txt.reloPrefecture +" : "+ data.cachedMoment(x.prefecture).format("L"));
+			%><span class="ellipsis dt prefecture" title="<%= escText %>"><%= escText %></span><%
+		}
+		else if (x.consulate){
+			escText = _.escape(data.txt.reloConsulate +" : "+ data.cachedMoment(x.consulate).format("L"));
+			%><span class="ellipsis dt consulate" title="<%= escText %>"><%= escText %></span><%
+		}
+		%></div><% /* .rdv */
+	}
+	let services = _.chain(x.taskShownInMyRelocation)
+		.map(function(id){
+			return data.service[id];
+		})
+		.filter(_.identity)
+		.orderBy(function(svc){
+			return svc.localeName || svc.name;
+		}).value();
+	if (!_.isEmpty(services)){
+		%><h4><%- data.txt.reloServices %></h4><%
+		%><div class="svc"><%
+		let immigration = false;
+		let immigrationFamily = false;
+		let expatSocialSec = false;
+		let familySocialSec = false;
+		let fiscality = false;
+		_.each(services, function(svc){
+			escText = _.escape(svc.localeName || svc.name);
+			if(svc.serviceCode){
+				if(svc.serviceCode.includes("iscalite")){
+					if(!fiscality){
+					fiscality = true;
+					%><span class="service ellipsis divider-color" title="<%= data.txt.serviceFiscalite%>"><%= data.txt.serviceFiscalite %></span><%
+					}
+				}
+				else if(svc.serviceCode.includes("SocialSec")){
+					if(svc.serviceCode.includes("amily") && !familySocialSec){
+						familySocialSec = true;
+						%><span class="service ellipsis divider-color" title="<%= data.txt.serviceSocialSecurityFamily%>"><%= data.txt.serviceSocialSecurityFamily %></span><%
+					}
+					if(!svc.serviceCode.includes("expat") && !expatSocialSec){
+						expatSocialSec = true;
+						%><span class="service ellipsis divider-color" title="<%=data.txt.serviceSocialSecurity%>"><%= data.txt.serviceSocialSecurity %></span><%
+					}
+				}
+				else if(svc.serviceCode.includes("mmigration")){
+					if(svc.serviceCode.includes("Family") && !immigrationFamily){
+						immigrationFamily = true;
+						%><span class="service ellipsis divider-color" title="<%= data.txt.serviceImmigrationFamily%>"><%= data.txt.serviceImmigrationFamily %></span><%
+					}
+					if(!svc.serviceCode.includes("Family") && !immigration){
+						immigration = true;
+						%><span class="service ellipsis divider-color" title="<%=data.txt.serviceImmigration%>"><%= data.txt.serviceImmigration %></span><%
+					}
+				}
+				else{
+				%><span class="service ellipsis divider-color" title="<%= escText %>"><%= escText %></span><%
+				}
+			}
+			else{
+				%><span class="service ellipsis divider-color" title="<%= escText %>"><%= escText %></span><%
+			}
+		});
+		%></div><% /* .svc */
+	}
+
+	%></article><%
+});
+%>

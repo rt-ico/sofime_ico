@@ -1,0 +1,282 @@
+<div class="card expat surveys with-header <% if (data.sections && data.sections.isNavigable()){ print('with-footer'); } %>"><%
+
+%><div class="header text-primary-color default-primary-color"><%
+%><h2><%
+if (data.survey){
+	print(_.escape(data.survey.name));
+	if (data.section){
+		print(" - " + _.escape(data.section.name));
+	}
+}
+else{
+	print(_.escape(data.txt.surveysAvailable));
+}
+%></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+if (data.survey){
+	var surveyUri = data.fmt.sprintf("#expatSurveys/%s/%s/", (data.user.expat ? data.user.id : "-"), data.survey.id);
+	if (data.section){
+		var surveyQuestions = _.chain(data.section.surveyQuestions)
+			.filter(function(sq){
+				var q = data.survey.questions[sq.questionId];
+				if (q){
+					if (q.type === "Radio" || q.type === "Checkbox") {
+						if (_.isEmpty(q.selectableOptions)) return false;
+					}
+					if (q.type === "DateField") {
+						if (_.isEmpty(q.selectableDaysOfWeek)) return false;
+					}
+				}
+				return !sq.archived || _.isArray(sq.answers);
+			}).orderBy(["displayOrder", "name"]).value();
+		%><ul class="questions"><%
+		_.each(surveyQuestions, function(sq){
+			var q = data.survey.questions[sq.questionId];
+			%><li class="q-<%= q.type.toLowerCase() %>" data-id=<%= sq.id %> data-qid=<%= q.id %>><%
+			%><div class="ellipsis q-label<% if (q.mandatory){ print(" required"); } %>"><%- q.name %></div><%
+
+			switch(q.type){
+				case "TextField":{
+					var l = sq.answers ? sq.answers.length : 0;
+					var n = Math.max(q.cardinality || 1, l);
+					for(var i=0; i<n; i++){
+						var answer = i < l ? sq.answers[i] : null;
+						%><div class="q-field"><%
+						%><input type=text data-i=<%= i %> autocomplete="off"<%
+						if (!q.cardinality){
+							%> data-repeatable<%
+						}
+						if (answer){
+							%> data-a=<%= answer.id %> value="<%- answer.value %>"<%
+						}
+						if (data.locked){
+							%> readonly<%
+						}
+						%>></div><% /* .q-field */
+					}
+					break;
+				}
+				case "DateField":{
+					var l = sq.answers ? sq.answers.length : 0;
+					var n = Math.max(q.cardinality || 1, l);
+					for(var i=0; i<n; i++){
+						var answer = i < l ? sq.answers[i] : null;
+						var domId = _.uniqueId(q.type);
+						%><div class="q-field"><%
+						%><input type=text id="<%= domId %>" class="<%= q.type.toLowerCase() %>" data-i=<%= i %> maxlength=10 placeholder="<%- data.txt.calendarDigitDateMask %>"<%
+						if (!q.cardinality){
+							%> data-repeatable<%
+						}
+						if (answer){
+							%> data-a=<%= answer.id %> value="<%- data.cachedMoment(answer.value).format("L") %>"<%
+						}
+						if (data.locked){
+							%> readonly<%
+						}
+						%>><%
+						if (!data.locked){
+							%><img class="datepicker-icon" data-pick-date-for="<%= domId %>" data-pick-date-title="<%- q.name %>"
+									 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+								  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+						}
+						%></div><% /* .q-field */
+					}
+					break;
+				}
+				case "TextArea":{
+					var l = sq.answers ? sq.answers.length : 0;
+					var n = Math.max(q.cardinality || 1, l);
+					for(var i=0; i<n; i++){
+						var answer = i < l ? sq.answers[i] : null;
+						%><div class="q-field"><%
+						%><textarea data-i=<%= i %> rows=4 cols=40<%
+						if (!q.cardinality){
+							%> data-repeatable<%
+						}
+						if (answer){
+							%> data-a=<%= answer.id %><%
+						}
+						if (data.locked){
+							%> readonly<%
+						}
+						%>><%
+						if (answer){
+							print(_.escape(answer.value));
+						}
+						%></textarea></div><% /* .q-field */
+					}
+					break;
+				}
+				case "IntField":{
+					var l = sq.answers ? sq.answers.length : 0;
+					var n = Math.max(q.cardinality || 1, l);
+					for(var i=0; i<n; i++){
+						var answer = i < l ? sq.answers[i] : null;
+						%><div class="q-field"><%
+						%><input type=number class="<%= q.type.toLowerCase() %>" data-i=<%= i %> step=1<%
+						if (_.isInteger(q.minInt)){
+							print(' min='+q.minInt);
+						}
+						if (_.isInteger(q.maxInt)){
+							print(' max='+q.maxInt);
+						}
+						if (!q.cardinality){
+							%> data-repeatable<%
+						}
+						if (answer){
+							%> data-a=<%= answer.id %> value="<%- answer.value %>"<%
+						}
+						if (data.locked){
+							%> readonly<%
+						}
+						%>></div><% /* .q-field */
+					}
+					break;
+				}
+				case "Radio":{
+					(function(){
+						var answer = sq.answers ? sq.answers[0] : null;
+						var options = _.chain(q.selectableOptions)
+							.orderBy(["displayOrder","name"]).value();
+						_.each(options, function(o){
+							%><div class="q-field secondary-text-color"><label class="for-radio" title="<%- o.name %>"><%
+							%><input class="option predefined" type="radio" name="sq-<%= sq.id %>" value=<%= o.id %><%
+							if (answer){
+								print(' data-a='+answer.id);
+								var choice = answer.choices ? _.find(answer.choices, function(c){ return o.id===c.optionId; }) : null;
+								if (choice){
+									print(' checked');
+								}
+								else if (data.locked){
+									print(' disabled');
+								}
+							}
+							%>><%
+							%><span class="field-title"><%- o.name %></span><%
+							%></label></div><% /* .q-field */
+						});
+						if (q.selectableOther){
+							var domId = _.uniqueId(q.type+"Other");
+							var otherChoice;
+							%><div class="q-field secondary-text-color"><label class="for-radio"><%
+							%><input class="option other" type="radio" id="<%= domId %>" name="sq-<%= sq.id %>" value="other"<%
+							if (answer){
+								print(' data-a='+answer.id);
+								otherChoice = answer.choices ? _.find(answer.choices, function(c){ return !!c.other; }) : null;
+								if (otherChoice){
+									print(' checked');
+								}
+								else if (data.locked){
+									print(' disabled');
+								}
+							}
+							%>><%
+							%><input type=text class="other secondary-text-color" data-for="<%= domId %>" autocomplete="off" placeholder="<%- data.txt.otherChoicePlaceholder %>"<%
+							if (otherChoice){
+								print(' value="'+_.escape(otherChoice.other)+'"');
+							}
+							if (data.locked){
+								%> readonly<%
+							}
+							%>><%
+							%></label></div><% /* .q-field */
+						}
+					})();
+					break;
+				}
+				case "Checkbox":{
+					(function(){
+						var answer = sq.answers ? sq.answers[0] : null;
+						var options = _.chain(q.selectableOptions)
+							.orderBy(["displayOrder","name"]).value();
+						_.each(options, function(o){
+							%><div class="q-field secondary-text-color"><label class="for-checkbox" title="<%- o.name %>"><%
+							%><input class="option predefined" type="checkbox" name="sq-<%= sq.id %>" value=<%= o.id %><%
+							if (answer){
+								print(' data-a='+answer.id);
+								var choice = answer.choices ? _.find(answer.choices, function(c){ return o.id===c.optionId; }) : null;
+								if (choice){
+									print(' checked');
+								}
+								if (data.locked){
+									print(' disabled');
+								}
+							}
+							%>><%
+							%><span class="field-title"><%- o.name %></span><%
+							%></label></div><% /* .q-field */
+						});
+						if (q.selectableOther){
+							var domId = _.uniqueId(q.type+"Other");
+							var otherChoice;
+							%><div class="q-field secondary-text-color"><label class="for-checkbox"><%
+							%><input class="option other" type="checkbox" id="<%= domId %>" name="sq-<%= sq.id %>" value="other"<%
+							if (answer){
+								print(' data-a='+answer.id);
+								otherChoice = answer.choices ? _.find(answer.choices, function(c){ return !!c.other; }) : null;
+								if (otherChoice){
+									print(' checked');
+								}
+								if (data.locked){
+									print(' disabled');
+								}
+							}
+							%>><%
+							%><input type=text class="other secondary-text-color" data-for="<%= domId %>" autocomplete="off" placeholder="<%- data.txt.otherChoicePlaceholder %>"<%
+							if (otherChoice){
+								print(' value="'+_.escape(otherChoice.other)+'"');
+							}
+							if (data.locked){
+								%> readonly<%
+							}
+							%>><%
+							%></label></div><% /* .q-field */
+						}
+					})();
+					break;
+				}
+				default:
+					throw new Error("question("+sq.questionId+"): type: "+q.type);
+			}
+
+			%></li><%
+		});
+		%></ul><% /* .questions */
+	}
+}
+else{
+	%><p><%- data.txt.noSurveysAvailable %></p><%
+}
+%></div><% /* .body */
+
+if (data.sections && data.sections.isNavigable()){
+	var done = !!(data.response && data.response.done);
+	var hasNext = !!(data.sections.next || data.sections.nextConditional);
+
+	%><div class="footer"><%
+
+	%><a class="nav ellipsis accent-border accent-ghost prev disabled"
+		 href="<%= surveyUri %>prev" title="<%- data.txt.actionPrev %>"><%- data.txt.actionPrev %></a><%
+
+	if (hasNext){
+		%><a class="nav ellipsis accent-border <%= done ? 'accent-ghost':'accent-color' %> next disabled"
+			 href="<%= surveyUri %>next" title="<%- data.txt.actionNext %>"><%- data.txt.actionNext %></a><%
+	}
+
+	if (done){
+		%><a class="nav ellipsis accent-border accent-color"
+		     href="#expatSurveys" title="<%- data.txt.actionClose %>"><%- data.txt.actionClose %></a><%
+	}
+	else if (!hasNext) {
+		%><a class="nav ellipsis accent-border accent-ghost last disabled" data-action="actionFinishLater"
+		     href="<%= surveyUri %>" title="<%- data.txt.actionFinishLater %>"><%- data.txt.actionFinishLater %></a><%
+		%><a class="nav ellipsis accent-border accent-color last disabled" data-action="actionIveFinished"
+		     href="<%= surveyUri %>" title="<%- data.txt.actionIveFinished %>"><%- data.txt.actionIveFinished %></a><%
+	}
+	%></div><% /* .footer */
+}
+
+%></div>

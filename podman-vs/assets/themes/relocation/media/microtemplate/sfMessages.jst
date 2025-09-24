@@ -1,0 +1,21 @@
+<div class="card flat staff messages with-header"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navSfMessages %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="sf-tiles"><%
+_.each(data.tiles, function(t){
+	%><article class="sf-tile"><%
+	%><div class="filler"> </div><%
+	%><a href="<%= t.uri %>"><%- t.label %></a><%
+	%><div class="filler"> </div><%
+	%></article><%
+});
+%></div><% /* .sf-tiles */
+
+%></div><% /* .body */
+
+%></div>

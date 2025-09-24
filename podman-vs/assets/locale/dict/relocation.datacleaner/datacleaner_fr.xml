@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="dashboardTitle">BRIEF MINUTE DRIVE - %1$s</entry>
+	<entry key="dashboardFilenamePrefix">Tableau de bord</entry>
+	<entry key="dashboardOpDate">Du %1$s au %2$s</entry>
+	<entry key="dashboardEmptyOp">** Vide **</entry>
+	<entry key="dashboardEventTitle">BOUTIQUE</entry>
+	<entry key="dashboardSpecialOfferTitle">PROMOTION</entry>
+	<entry key="dashboardSpecialOffer1">PUBLICATION PROMO</entry>
+	<entry key="dashboardSpecialOffer2">PRIX / MECANIQUES</entry>
+	<entry key="dashboardSpecialOffer3">BLOCAGE FID	</entry>
+	<entry key="dashboardSpecialOffer4">DATES</entry>
+	<entry key="dashboardSpecialOffer5">PANIER RECETTES</entry>
+	<entry key="dashboardSpecialOfferStatusText">A compléter</entry>
+
+	<entry key="dashboardTicketTitle">PRIORITES ENGAGEES</entry>
+	<entry key="dashboardTicketNumber">xxXX - N° ticket	</entry>
+	<entry key="dashboardTicketResp">Resp.</entry>
+	<entry key="dashboardMedia3list">ANIMATION COMMERCIALE</entry>
+
+
+	<entry key="dashboardNC">N/C</entry>
+	<entry key="dashboardOk">OK</entry>
+	<entry key="dashboardWatch">A surveiller</entry>
+	<entry key="dashboardKo">KO</entry>
+
+	<entry key="dashboardLegendNC">Non contrôlé</entry>
+	<entry key="dashboardLegendOk">Bannière / boutique O.K et lien O.K</entry>
+	<entry key="dashboardLegendWatch">Bannière / boutique O.K mais lien "pauvre"</entry>
+	<entry key="dashboardLegendKo">Bannière / boutique K.O ou lien K.O</entry>
+
+	<entry key="dashboardNoSummaries">Aucun indicateur pour le tableau de bord en ce moment.</entry>
+	<entry key="dashboardNoStores">Aucun magasin n'est chargé dans le référentiel en ce moment.</entry>
+	<entry key="dashboardNoEvent">Pas d'événement associé</entry>
+	<entry key="dashboardDownloading">Téléchargement du tableau de bord...</entry>
+
+</properties>

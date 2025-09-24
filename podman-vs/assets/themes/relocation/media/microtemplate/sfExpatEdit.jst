@@ -1,0 +1,235 @@
+<div class="card flat staff expat-edit with-header with-footer"><%
+
+%><div class="header"><%
+let navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.expat.cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.expatId %>" title="<%- navMsg %>"><%- navMsg %> <%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a></div><%
+/*%><h2 class="primary"><%- data.expat.cn %></h2><%*/
+%></div><% /* .header */
+%><div class="body fit-container pad-container"><%
+
+%><div class="form staff-field"><%
+
+%><h3 class="alt-accent"><%- data.txt.yourIdentity %></h3><%
+
+let escCurrentLocale;
+if(data.currentLocale === 'fr_FR'){
+    escCurrentLocale = _.escape(data.txt.expatLocaleFrench);
+}else if(data.currentLocale === 'en_GB'){
+    escCurrentLocale = _.escape(data.txt.expatLocaleEnglish);
+}
+
+%><div class="field"><%
+
+%><label class="required"><%- data.txt.expatriateLocale %></label><%
+%><div class="expatEditLocaleInput"><%
+_.each(data.localesList, function(loc){
+    let a = data.txt['expatLocale_'+loc];
+    let localeName = _.escape(window['a']);
+	%><label class="<%- data.smallScreen ? 'for-radio-with-flags-smallscreen':'for-radio-with-flags' %> secondary-text-color  <%= data.locked ? 'readonly':'' %> "><%
+	%><input class="expatEditLocaleCheckbox " <%= data.locked ? 'disabled':'' %> type="radio" name="locale" value=<%= loc %><% if(loc===data.expat.locale){ print(' checked'); } %>><%
+	%><img class="expatEditLocaleFlag" <%= 'src="'+data.flagRoute+loc+'.png"'%> ></img><%
+	%><span class="rightPadding expatEditLocaleText <%- data.smallScreen ? 'smallScreen':'' %>"><%- a %></span><%
+	%></label><%
+});
+%></div><%
+%></div><%  /* .field */
+
+
+%><label class="required"><%- data.txt.expatriateGender %></label><%
+%><div class="expatEditLocaleInput"><%
+
+_.each(data.gender, function(g){
+	%><label class="for-radio-for-gender secondary-text-color  <%= data.locked ? 'readonly':'' %> "><%
+	%><input  class="expatEditLocaleCheckbox" <%= data.locked ? 'disabled':'' %> type="radio" name="gender" value=<%= g.id %><% if(g.id===data.expat.gender){ print(' checked'); } %>><%
+	%><span class="rightPadding expatEditGender"><%- g.name %></span><%
+	%></label><%
+});
+%></div><% /* .field */
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field column-block"><%
+%><label class="required"><%- data.txt.expatriateSurName %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="sn" value="<%- data.expat.sn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="field column-block"><%
+%><label class="required"><%- data.txt.expatriateGivenName %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="gn" value="<%- data.expat.gn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+%></div><% /* .row-block */
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+
+%><div class="field column-block"><%
+%><label class="required"><%- data.txt.expatriateBirthDate %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="birthDate" id="accountBirthDate" class="date" value="<%- data.expat.birthDate ? data.cachedMoment(data.expat.birthDate).format("L"):"" %>" data-floor=1><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="accountBirthDate" data-pick-date-title="<%- data.txt.expatriateBirthDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.expatriateBirthPlace %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="birthPlace" value="<%- data.expat.birthPlace %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label class="required"><%- data.txt.expatriateNationality %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 class="combo" name="birthCountry" value=""><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateWorkMail %></label><%
+%><div class="input <%- data.smallScreen ? 'fullWidth':'expatEditMail' %>  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=email maxlength=100 name="workMail" value="<%- data.expat.workMail %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label class="required"><%- data.txt.expatriateHomeMail %></label><%
+%><div class="input <%- data.smallScreen ? 'fullWidth':'expatEditMail' %>"><%
+%><input type=email maxlength=100 name="homeMail" value="<%- data.expat.homeMail %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateTelZone1 %></label><%
+%><div class="input expatEditTelPrefix"><%
+%><input type=text maxlength=100 class="combo" name="telZone1"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateTel1 %></label><%
+%><div class="input <%- data.smallScreen ? 'fullWidth':'expatEditTel' %>"><%
+%><input type=tel maxlength=20 name="tel1" value="<%- data.expat.tel1 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+%><div class="field"><%
+%><label><%- data.txt.expatriateTelZone2 %></label><%
+%><div class="input expatEditTelPrefix"><%
+%><input type=text maxlength=100 class="combo" name="telZone2"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.expatriateTel2 %></label><%
+%><div class="input <%- data.smallScreen ? 'fullWidth':'expatEditTel' %>"><%
+%><input type=tel maxlength=20 name="tel2" value="<%- data.expat.tel2 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+
+%><div class="field"><%
+%><label><%- data.txt.sfExpatIban %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="iban" value="<%- data.expat.iban %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field extraPaddingTop"><%
+%><label><%- data.txt.sfExpatAddressStart %></label><%
+%><div class="input"><%
+%><textarea id="addressStart" maxlength=255  rows=2><%- data.expat.oldAddress %></textarea><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="<%- data.smallScreen ? '':'row-block' %>"><%
+%><div class="field extraPaddingTop <%- data.smallScreen ? 'fullWidth':'width40' %>"><%
+%><label><%- data.txt.sfExpatAddressJob %></label><%
+%><div class="input"><%
+%><textarea id="addressJob" maxlength=255  rows=2><%- data.expat.job.location.address %></textarea><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="column-block extraPaddingTop"><%
+%><div class="field <%- data.smallScreen ? 'space-between':'row-block extraPaddingLeft' %>  alignItemsCenter"><%
+%><label><%- data.txt.sfExpatJobPostcode %></label><%
+%><div class="input <%- data.smallScreen ? 'expatEditTelPrefix':'extraPaddingLeft' %>"><%
+%><input type=tel maxlength=40 name="jobPostcode" value="<%- data.expat.job.location.postCode %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? 'space-between':'row-block extraPaddingLeft' %> alignItemsCenter"><%
+%><label><%- data.txt.sfExpatJobCity %></label><%
+%><div class="input <%- data.smallScreen ? 'expatEditTelPrefix':'extraPaddingLeft expatEditInputJobcity' %> "><%
+%><input type=tel maxlength=40 name="jobCity" value="<%- data.expat.job.location.city %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+%></div><% /* .columnblock */
+%></div><% /* .rowblock */
+
+
+
+%><div class="field extraPaddingTop"><%
+%><label><%- data.txt.sfExpatAddressTemp %></label><%
+%><div class="input"><%
+%><textarea id="addressTemp" maxlength=255  rows=2><%- data.expat.addressTemp %></textarea><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field" title="<%- data.txt.colRemarks %>"><%
+%><div class="field-label" ><%
+%><label for="expat-remarks"><%- data.txt.colRemarks %></label><%
+%><span class="expat-visibility alt-accent-ghost"  title="<%- data.txt.sfExpatNoVisibility  %>"><%= data.images.visibility %><span><%- data.txt.sfExpatNoVisibility %></span></span><%
+%></div><% /* .field-label */
+
+%><div class="input"><%
+%><textarea id="expat-remarks" maxlength=255  rows=3><%- data.expat.remarks %></textarea><%
+%></div><% /* .input */
+%></div><%/* .field */
+
+%><h3 class="alt-accent"><%- data.txt.sfExpatFamily %></h3><%
+
+%><div class="family-members"><%
+_.each(data.expat.familyMembers, function(fm){
+	print(data.tpl.familyMember(data.defineFamilyMemberTemplateData(fm)));
+});
+if (!data.locked) {
+    %><a href="#add-family-member" class="text-primary-color dark-primary-color add" title="<%- data.txt.addFamilyRelation %>"><%= data.images.add %></a><%
+}
+
+%></div><%
+
+%></div><% /* .form */
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+%><a class="update ellipsis accent-border accent-color disabled"
+	 href="#sfExpat" title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+
+%></div><% /* .footer */
+
+%></div>

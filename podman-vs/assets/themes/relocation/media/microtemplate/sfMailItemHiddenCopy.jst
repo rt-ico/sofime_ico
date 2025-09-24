@@ -1,0 +1,34 @@
+<%
+var r = data.recipient;
+
+var posId = "am-p-"+r.id;
+var domId = "am-r-"+r.id;
+var addrLabel, addrValue, position;
+if (r.TO){
+	addrLabel = data.txt.mailRecipientTO || "-";
+	addrValue = r.TO;
+	position = 'TO';
+}
+else if (r.CC){
+	addrLabel = data.txt.mailRecipientCC || "-";
+	addrValue = r.CC;
+	position = 'CC';
+}
+else if (r.BCC || r.BCC === ""){
+	addrLabel = data.txt.mailRecipientBCC || "-";
+	addrValue = r.BCC;
+	position = 'BCC';
+}
+else{
+	console.warn("recipient[%s]: unknown address position.", r.id);
+	return; // continue
+}
+
+%><div class="field recipient mh" data-id="<%= r.id %>"><%
+%><input class="position masked" id="<%= posId %>" name="<%= posId %>" type=text value="<%- position %>" <%=r.dateSent ? 'disabled':''%>><%
+%><label for="<%= domId %>"><%- addrLabel %> :</label><%
+%><input class="address" id="<%= domId %>" name="<%= domId %>" type=text value="<%- addrValue %>"<%=r.dateSent ? 'disabled':''%>><%
+if (r.BCC && !r.dateSent){
+    %><div href="#remove-recipient" class="sfMailItemButton removeWithHover remove" title="<%- data.txt.removeRecipient %>"><%= data.images.remove %></div><%
+}
+%></div>

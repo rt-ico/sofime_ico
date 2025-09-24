@@ -1,0 +1,10 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0,0,24,24">
+	<g fill="none" fill-rule="nonzero" class="mix-blend-normal"
+	   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+	   stroke-linejoin="round">
+		<path d="M6 9V2H18V9"/>
+		<path d="M6 18H4C2.89543 18 2 17.1046 2 16V11C2 9.89543 2.89543 9 4 9H20C21.1046 9 22 9.89543 22 11V16C22 17.1046 21.1046 18 20 18H18"/>
+		<path fill-rule="evenodd" clip-rule="evenodd"
+			  d="M6 14H18V22H6V14Z"/>
+	</g>
+</svg>

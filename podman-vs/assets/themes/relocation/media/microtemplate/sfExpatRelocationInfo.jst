@@ -1,0 +1,246 @@
+<div class="card flat staff expat-edit with-header with-footer"><%
+
+%><div class="row-block alignItemsTop"><%
+%><div class="header"><%
+let navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.expat.cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.expatId %>" title="<%- navMsg %>"><%- navMsg %> <%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a></div><%
+/*%><h2 class="primary"><%- data.expat.cn %></h2><%*/
+%><div class="width22">&nbsp</div><%
+if(!data.locked){
+%><div data-action="changePassword" class="changePassword sfExpatRelocationActionButton" title="<%- data.txt.changePassword %>"><%= data.images.changePassword %></div><%
+
+}
+%></div><% /* .header */
+
+
+%></div><% /* rowBlock */
+
+
+
+%><div class="body fit-container pad-container"><%
+
+%><div class="form staff-field"><%
+
+            %><h3 class="alt-accent"><%- data.txt.sfExpatRelocationActions %></h3><%
+
+            %><div class="row-block"><%
+                %><div disabled="true" class="requestGDPRClean sfExpatRelocationActionButton actionRelocation disabled" title="<%- data.txt.sfExpatRelocationRequestGDPRClean %>"><%= data.images.requestGDPRClean %></div><%
+
+                %><div class="width48">&nbsp</div><%
+                %><div class="duplicateRelocation sfExpatRelocationActionButton actionRelocation" title="<%- data.txt.actionDuplicate %>"><%= data.images.duplicate %></div><%
+
+                %><div class="width48">&nbsp</div><%
+                %><div class="cancelRelocation sfExpatRelocationActionButton actionRelocationStop" title="<%- data.txt.actionAbandonRelocation %>"><%= data.images.stop %></div><%
+
+                %><div class="width48">&nbsp</div><%
+                %><div class="terminateRelocation sfExpatRelocationActionButton actionRelocation" title="<%- data.txt.actionTerminateRelocation %>"><%= data.images.abandon %></div><%
+            %></div><% /* rowBlock */
+
+%><h3 class="alt-accent extraPaddingTop"><%- data.txt.colExpatName %></h3><%
+
+%><div class="row-block extraPaddingTop"><%
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatWelcomer %></label><%
+%><div class="input welcomer  <%= data.locked ? 'readonly':'' %> "><%
+%><input <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="welcomer" value="<%- data.expat.welcomer.gn + ' ' + data.expat.welcomer.sn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field extraPaddingLeft"><%
+%><label class=""><%- data.txt.expatriateArrivalDate %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? '':'readonly' %> type=text maxlength=10 name="arrivalDate" id="arrivalDate" class="date" value="<%- data.expat.arrivalDate ? data.cachedMoment(data.expat.arrivalDate).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="arrivalDate" data-pick-date-title="<%- data.txt.expatriateArrivalDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+
+%></div><% /* .row-block */
+
+
+%><div class="row-block extraPaddingTop"><%
+%><div class="field expatRelocationClientField"><%
+%><label class="required"><%- data.txt.colCustomerName %></label><%
+%><div class="input pick-client combo  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="client" value="<%- data.expat.client.name %>"><% /**/
+%></div><% /* .input */
+%></div><% /* .field */
+
+if(!data.locked){
+%><div class="field"><%
+%><label class="required extraPaddingLeft"><%- data.txt.expatRelocationContact %></label><%
+%><div class="input contactRh  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="contactRh" value="<%- data.expat.customerContactName %>"><% /**/
+%></div><% /* .input */
+%></div><% /* .field */
+}
+%></div><% /* .row-block */
+
+
+if(data.expat.relocationStatus.isAbandonedStatus){
+%><div class="field extraPaddingTop expatRelocationClientField"><%
+%><label class="required" type=text maxlength=100 ><%- data.txt.relocationStatus %></label><%
+%><div class="input extraPaddingTop"><%
+%><input disabled type=text value="<%- data.txt.relocationAbandoned %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+}
+
+if(data.expat.relocationStatus.isFinishedStatus){
+%><div class="field extraPaddingTop expatRelocationClientField"><%
+%><label class="required"><%- data.txt.relocationStatus %></label><%
+%><div class="input extraPaddingTop"><%
+%><input disabled type=text maxlength=100 value="<%- data.txt.relocationFinished %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+}
+
+
+%><table class="sfToDoTable sizeablePaddingTop"><%
+    %><thead class="text-primary-color dark-primary-color"><%
+
+    %><tr><%
+
+    %><th class="expatRelocationService expatTableHead" >&nbsp;<%= data.txt.expatRelocationService%><%
+
+    %></th><%
+
+    %><th class="expatRelocationServiceManager expatTableHead">&nbsp;<%= data.txt.expatRelocationServiceManager%><%
+
+    %></th><%
+
+    %><th class="expatRelocationValidate expatTableHead"><%
+    %><div class="row-block alignItemsCenter"><%
+    %><div class="width82">&nbsp;<%= data.txt.sfExpatReloValidateService%></div><%
+    %><div class="secondary-text-color"><label class="for-checkbox"><%
+    %><input  type="checkbox" name="validateAll"  <%= "" %>><%
+    %></label></div><%
+    %></div><%
+    %></th><%
+
+    %><th class="expatRelocationDelete expatTableHead row-block"><div class = "width10" >&nbsp</div><div><div class = "tinyHeightDiv" ></div><div class="expatRelocationDelete-icon"><%=data.images.delete%></div></div></th><%
+
+    %></tr><%
+    %></thead><%
+    %><tbody><%
+
+        _.each(data.expat.sortedServices, function(it){
+            if( !it.isFreeTask  ) {
+
+                %><tr class="sfToDoTableRow" ><%
+
+                %><td class="centered" ><%- it.name%></td><%
+
+                %><td class="sfSocialSecurityCentered" ><%
+
+                %><div class="field"><%
+
+                %><input <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name=<%-'managerOf'+it.id %> value="<%- it.staff.gn + ' ' + it.staff.sn %>"><%
+
+                %></div><% /* .field */
+
+
+                %></td><%
+
+                if(!it.isCreated){
+                %><td class="centered"><%
+                %><div class="row-block"><%
+                %><div class = "width82" >&nbsp</div><%
+                %><div class="secondary-text-color"><label class="for-checkbox"><%
+                %><input type="checkbox" name=<%-'validate'+it.id %>  <%= "" %>><%
+                %></label></div><%
+                %></div><%
+                %></td><%
+                }else{
+                %><td class="centered"><%
+                %><div class="row-block"><%
+                %><div class = "width80" >&nbsp</div><%
+                %><div class="expatRelocationActionService-icon"><%=data.images.validated%></div><%
+                %></div><%
+                %></td><%
+
+                }
+
+                %><td class=""><%
+                %><div class ="row-block"><%
+                %><div class = "width16" >&nbsp</div><%
+                %><div class="secondary-text-color "><label class="for-checkbox"><%
+                %><input type="checkbox" name=<%-'remove'+it.id %>  <%= "" %>><%
+                %></label></div><%
+                %></div><%
+                %></td><%
+
+                %></tr><%
+            }
+        });
+
+    %></tbody><%
+%></table><%
+if (!data.locked) {
+    %><a class="addNewService sfExpatRelocationAddNewService text-primary-color dark-primary-color" title="<%- data.txt.expatRelocationAddService %>"><div class="sfExpatRelocationAddNewService-icon"></div><%= data.images.add %></a><%
+}
+
+
+%><label class="required sizeablePaddingTop"><%- data.txt.sfExpatRelocationCause %></label><%
+%><div class="expatRelocationRadioInput extraPaddingTop"><%
+_.each(data.reloReasonsId, function(rr){
+    let reasonLabel = _.escape(data.reloReasonsLabel[rr]);
+    //alert('rr ' + rr + ' data.expat.reloReasonId ' + data.expat.reloReasonId+ ' ' + reasonLabel);
+	%><label class="for-radio-relocation  <%= data.locked ? 'readonly':'' %> "><%
+	%><input class="expatRelocationRadio" <%= data.locked ? 'disabled':'' %> type="radio" name="reloReason" value=<%= rr %><% if( rr === data.expat.reloReasonId ){ print(' checked'); } %>><%
+	%><span class="expatEditLocaleText extraPaddingLeft"><%- reasonLabel %></span><%
+	%></label><%
+});
+%></div><%
+
+
+%><div class="flag-group extraPaddingTop"><%
+    %><div class=""><label class="for-checkbox" title="<%- data.txt.trialPeriod%>"><%
+    %><input type="checkbox" <%= data.locked ? 'disabled':'' %> name="trialPeriod"  <%= data.expat.hasTrialPeriod ? "checked" : "" %>><%
+    %><span class=""><%- data.txt.sfExpatRelocationTrialPeriod  %></span><%
+    %></label></div><%
+%></div><%
+
+            %><h3 class="alt-accent extraPaddingTop"><%- data.txt.sfExpatRelocationGDPR %></h3><%
+
+            %><div class="row-block extraPaddingTop"><%
+
+                %><div class="field"><%
+                    %><label ><%- data.txt.dateGPDRCleared %></label><%
+                    %><div class="input readonly %> "><%
+                        %><input readonly class="date" type=text maxlength=100 name="dateGPDRCleared" value="<%- data.expat.dateGPDRCleared ? data.cachedMoment(data.expat.dateGPDRCleared).format("L"):"" %>"><%
+                        %></div><% /* .input */
+                    %></div><% /* .field */
+
+            %><div class="flag-group sizeablePaddingLeft"><%
+                %><div class=""><label class="for-checkbox" title="<%- data.txt.dataConversationAuthorization%>"><%
+                    %><input type="checkbox" <%= data.locked ? 'disabled':'' %> name="dataConservationAuthorization"  <%= data.expat.dataConservationAuthorization ? "checked" : "" %>><%
+                    %><span class=""><%- data.txt.dataConversationAuthorization  %></span><%
+                    %></label><%
+                    %></div><%
+                %></div><%
+
+            %></div><% /* .row-block */
+
+
+%></div><% /* .form */
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+    /*if(!data.locked){*/
+
+        %><a class="update ellipsis accent-border accent-color disabled"
+             title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+    /*}*/
+
+
+%></div><% /* .footer */
+
+%></div>

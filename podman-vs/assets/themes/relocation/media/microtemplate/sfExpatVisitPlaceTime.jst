@@ -1,0 +1,14 @@
+<div class="fit-container pad-container sf x-set-vp-time secondary-text-color"><%
+
+%><div class="field"><%
+%><label class="strong"><%- data.txt.colTime %> : <input type=text name=time size=5 maxlength=5 value="<% if(data.place.time){ print(_.escape(data.place.time.substring(0,5))); } %>" placeholder="<%- data.txt.timeMask %>" title="<%- data.txt.timeMask %>"></label><%
+%></div><%
+
+if (data.fields.date){
+	%><div class="field vp-other"><%- data.fields.date %></div><%
+}
+if (data.fields.address){
+	%><div class="field vp-other"><%= data.fmt.nl2br(_.escape(data.fields.address)) %></div><%
+}
+
+%></div>

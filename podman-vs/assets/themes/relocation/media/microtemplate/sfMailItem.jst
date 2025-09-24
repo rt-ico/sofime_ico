@@ -1,0 +1,210 @@
+<div class="card flat staff mail outbox item with-header with-footer"><%
+    %><div class="header "><%
+        let navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.item.expatCn);
+        %><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.item.refExpat %>" title="<%- navMsg %>"><%- navMsg %> <%= data.item.expatCustomer ? "(" + data.item.expatCustomer+")" : ""%></a></div><%
+
+%></div><%/* .header */
+
+var escTitle;
+if (data.item.dateSent){
+	escTitle = _.escape(data.fmt.sprintf(data.txt.mailStateSent, data.cachedMoment(data.item.dateSent).format("L")));
+}
+else if (data.item.sendRequested){
+	escTitle = _.escape(data.txt.mailStateQueued);
+}
+else{
+	escTitle = _.escape(data.txt.mailStateDraft);
+}
+
+    %><div class="body fit-container"><%
+        %><h2 class="sfToDoWithExpatSelected"><%
+            %><a href="#sfMessages/" class="underlined"><%- data.txt.navSfMessages %></a> > <%
+            %><a href= "<%-data.navBack%>" class="underlined"><%- data.txt.navMailSend %></a> > <%
+            %><%= escTitle %><%
+            %></h2><%
+
+
+
+
+
+%><div class="body fit-container"><%
+
+%><div class="field mh"><%
+%><label for="am-sender"><%- data.txt.mailSender %> :</label><%
+%><input  id="am-sender" name="am-sender" type=text value="<%- data.item.sender || "-" %>"><%
+%></div><%
+
+_.each(data.item.recipients, function(r){
+            if(r.TO){
+                print(data.tpl.recipient(data.defineRecipientTemplateData(r)));
+            }
+});
+            %><div href="#add-recipient" data-type="TO" class="add sfMailItemButton sfMailItemButtonAvailable addTO" title="<%- data.txt.addrecipientTO %>"><%= data.images.add %>TO </div><%
+_.each(data.item.recipients, function(r){
+    if(r.CC){
+        print(data.tpl.recipient(data.defineRecipientTemplateData(r)));
+    }
+});
+            %><div href="#add-recipient" data-type="CC" class="add sfMailItemButton sfMailItemButtonAvailable addCC" title="<%- data.txt.addrecipientCC %>"><%= data.images.add %>CC</div><%
+_.each(data.item.recipients, function(r){
+    if(r.BCC){
+        print(data.tpl.recipient(data.defineRecipientTemplateData(r)));
+    }
+});
+            %><div href="#add-recipient" data-type="BCC" class="add sfMailItemButton sfMailItemButtonAvailable addBCC" title="<%- data.txt.addrecipientBCC %>"><%= data.images.add %>BCC</div><%
+
+%><div class="field mh"><%
+%><label for="am-subject"><%- data.txt.mailSubject %> :</label><%
+%><input  id="am-subject" name="am-subject" type=text value="<%- data.item.subject || "-" %>"><%
+%></div><%
+            %><div id="editor"></div><%
+
+                %><div class = "row-block"><%
+                %><div class = "width160"></div><%
+                %><div class = "fullWidth height20p100"><%
+                    %><textarea id="mailBody" class="field mb pad-container divider-color am-body sizeablePaddingLeft"><%
+                    %></textarea><%
+                    %></div><%
+                %></div><%
+
+            %><div class = "sfMailItemLabel" ><%- data.txt.mailSignature %> :</div><%
+%><div class="field mh"><%
+
+
+%><div class="signature-picker"><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-signature combo"><input class="combo" type=text></div><%
+%><div class="pick-signature icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+
+%></div><% /* .field */
+
+
+%></div><%
+            %><div class = "sfMailItemLabel extraPaddingTop" ><%- data.txt.mailDocument %> :</div><%
+
+        %><div class="row-block"><%
+            %><div class=" fullWidth"><%
+
+	            %><div class="row-block "><%
+                        %><div class="field ma"><%
+                    %><div class="row-block document-picker addExpatDocument attachmentTarget"><%
+
+                        %><div class="input-box dark-divider-color extraMarginRight"><%
+                            %><div class="pick-attachment combo"><input class="combo-expat" type=text></div><%
+                            %><div class="pick-attachment icon dark-text-color expat-hook"><%= data.images.expand %></div><%
+                        %></div><% /* .input-box */
+
+                            %><div href="<%= data.route.sfAutoMailOutboxFile+data.item.id+"/add" %>" class="attachment expatButton sfMailItemButton default-primary-color text-primary-color add-document addExpatDocument underlined" title="<%= data.txt.actionAdd %>"><%= data.images.add %></div><%
+
+                            %></div><%
+                            if (!_.isEmpty(data.item.attachments)){
+                                _.each(data.item.attachments, function(a){
+                                    if (a.source == "expat") {
+                                        print(data.tpl.attachment(data.defineAttachmentTemplateData(a)));
+                                    }
+                                });
+                            }
+                            %></div><% /* field ma */
+
+                        %><div class = "row-block smallMarginTop"><%
+
+                            %><div class="primary-text-color width82 text-only justifyTextCenter extraPaddingTop" ><%- data.txt.or %></div><%
+
+                            %><div data-action="upload" class="attachment sfMailItemButton sfMailItemButtonAvailable" title="<%= data.txt.actionAdd %>"><%= data.images.add %></div><%
+
+                            %><div class=""><%
+                                %><input type=file class="masked dataActionUpload" ><%
+                                %><div class=""><%
+                                    %><a data-action="upload" title= "<%- data.txt.dialogAddNewDocument %>" class="attachment accent-ghost accent-light extraPaddingLeft" ><%= data.txt.dialogAddNewDocument %></a><%
+                                    %></div><%
+                                %></div><%
+
+                            %></div><%
+
+
+
+                %></div><% /* .field */
+
+                    %><div class="row-block"><%
+                        %><div class="field ma"><%
+                            %><div class="row-block document-picker attachmentTarget"><%
+
+                                %><div class="input-box dark-divider-color"><%
+                                    %><div class="pick-attachment combo"><input class="combo-customer" type=text></div><%
+                                    %><div class="pick-attachment icon dark-text-color customer-hook"><%= data.images.expand %></div><%
+                                    %></div><% /* .input-box */
+
+                                %><div href="<%= data.route.sfAutoMailOutboxFile+data.item.id+"/add" %>" class="attachment customerButton sfMailItemButton default-primary-color text-primary-color add-document underlined" title="<%= data.txt.actionAdd %>"><%= data.images.add %></div><%
+
+                                %></div><%
+                            if (!_.isEmpty(data.item.attachments)){
+                                _.each(data.item.attachments, function(a){
+                                    if (a.source == "customer") {
+                                        print(data.tpl.attachment(data.defineAttachmentTemplateData(a)));
+                                    }
+                                });
+                            }
+                            %></div><% /* field ma */
+
+
+
+                        %></div><% /* .field */
+
+                    %><div class="row-block"><%
+                        %><div class="field ma"><%
+                            %><div class="row-block document-picker attachmentTarget"><%
+
+                                %><div class="input-box dark-divider-color"><%
+                                    %><div class="pick-attachment combo"><input class="combo-generic" type=text></div><%
+                                    %><div class="pick-attachment icon dark-text-color generic-hook"><%= data.images.expand %></div><%
+                                    %></div><% /* .input-box */
+                                %><div href="<%= data.route.sfAutoMailOutboxFile+data.item.id+"/add" %>" class="attachment genericButton sfMailItemButton default-primary-color text-primary-color add-document underlined" title="<%= data.txt.actionAdd %>"><%= data.images.add %></div><%
+
+                                %></div><%
+                            if (!_.isEmpty(data.item.attachments)){
+                            _.each(data.item.attachments, function(a){
+                            if (a.source == "generic") {
+                            print(data.tpl.attachment(data.defineAttachmentTemplateData(a)));
+                            }
+                            });
+                            }
+                            %></div><% /* field ma */
+
+
+
+                        %></div><% /* .field */
+
+
+
+
+
+            %></div><%
+
+
+    %></div><%
+
+%></div><% /**/
+
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+if (!data.item.sendRequested) {
+%><a class="ellipsis accent-border accent-color update"
+     title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+
+%><a class="ellipsis secondaryFooter send"
+	  title="<%- data.txt.actionRequestSending %>"><%- data.txt.actionRequestSending %></a><%
+
+%><a class="ellipsis ellipsis tertiaryFooter delete"
+    title="<%- data.txt.actionDelete %>"><%- data.txt.actionDelete %></a><%
+} else {
+%><a class="cancel ellipsis tertiaryFooter"
+	 title="<%- data.txt.actionCancelSending %>"><%- data.txt.actionCancelSending %></a><%
+}
+
+%></div><% /* .footer */
+
+%></div>

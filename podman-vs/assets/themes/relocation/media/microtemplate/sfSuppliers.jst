@@ -1,0 +1,67 @@
+<div class="card flat staff suppliers memo with-header with-footer"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navSfSuppliers %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="filter"><%
+
+%><div class="field"><%
+/*%><p class="label dark-text-color"><%- data.txt.colSupplierType %></p><%*/
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-supplier-type combo"><input class="combo" type=text></div><%
+%><div class="pick-supplier-type icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+
+%><div class="field"><%
+/*%><p class="label dark-text-color"><%- data.txt.colSupplier %></p><%*/
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-supplier combo"><input class="combo" type=text></div><%
+%><div class="pick-supplier icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+
+%><div class="field"><%
+/*%><p class="label dark-text-color"><%- data.txt.colSupplierContact %></p><%*/
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-supplier-contact combo"><input class="combo" type=text></div><%
+%><div class="pick-supplier-contact icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+
+%><div class="field"><%
+/*%><p class="label dark-text-color"><%- data.txt.colSupplierFlag %></p><%*/
+
+%><div class="input-flag-box dark-divider-color flag-selection-<%= data.flagMask & 1 ? 'open' : 'closed'%>"><%
+    %><div class="pick-supplier-flag summary"><%- data.txt.colSupplierFlag %></div><%
+    %><div class="pick-supplier-flag icon dark-text-color"><%= data.images.expand %></div><%
+        %><div class="pick-supplier-flag selection"><%
+            var flags = data.supplierFlags;
+            var maskIdx = 2;
+
+            _.each(data.supplierFlags, function(group) {
+                %><div class="flag-group"><%
+                _.each(group, function(field) {
+
+                    %><div class="primary-text-color"><label class="for-checkbox" title="<%- data.txt["sfSupplierF" + field.substring(1)] %>"><%
+                    %><input type="checkbox" name="<%- field %>" data-idx=<%- maskIdx %> <%= data.flagMask & maskIdx ? 'checked' : ''%>><%
+                    maskIdx = maskIdx << 1;
+                    %><span ><%- data.txt["sfSupplierF" + field.substring(1)]  %></span><%
+                    %></label></div><%
+                });
+                %></div><% /* .flag-group */
+            });
+        %></div><% /*  .pick-supplier-flag */
+
+%></div><% /* .input-box */
+%></div><% /* .field */
+%></div><% /* .filter */
+
+%><div class="suppliers-card"></div><%
+
+%></div><% /* .body */
+
+%></div>

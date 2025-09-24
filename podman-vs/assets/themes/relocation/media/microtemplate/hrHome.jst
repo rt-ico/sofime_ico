@@ -1,0 +1,28 @@
+<div class="card flat hr home relo-track "><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navHome %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><h3 class="primary no-margin"><%- data.txt.hrCurrentRelos %></h3><%
+if (_.isEmpty(data.expats)){
+	%><p class="dark-text-color"><%- data.txt.emptyList %></p><%
+}
+else{
+	%><div class="expats cards"><%
+			print(data.tpl.minicards(_.pick(data, ["expats", "service", "images", "cachedMoment", "txt", "fmt"])));
+	%></div><% /* .expats.cards */
+
+	//hrShowAllRelos
+	%><p class="dark-text-color aftercards"><a href="#hrReloTrack" class="underlined"><%- data.txt.hrShowAllRelos %></a></p><%
+}
+
+%><h3 class="primary"><%- data.txt.hrRequiredDocs %></h3><%
+
+%><div class="documents-pane" id="documents-pane"><%
+
+%></div><% /* .body */
+
+%></div>

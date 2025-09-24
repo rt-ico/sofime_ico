@@ -1,0 +1,260 @@
+<div class="card flat hr relo-setup with-footer"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navHrReloSetup %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="setup-1"><%
+%><h3 class="primary"><%- data.txt.reloSetup1 %></h3><%
+%><p><%- data.txt.reloSetup1a %></p><%
+%><div class="flatcard"><%
+
+if (data.doPickClient){
+	%><div class="hr-field divider-color pick-client" title="<%- data.txt.reloSetupClient %>"><%
+	%><label for="rs-client"><%- data.txt.reloSetupClient %></label><%
+	%><input  id="rs-client" class="combo" type=text maxlength=255><%
+	%></div><%/* .hr-field */
+}
+
+%><div class="pick-pack"><%
+%><div class="service-pack sp1 transparent ellipsis dark-divider-color dark-text-color" data-active-class="applied dark-primary-color"> </div><%
+%><div class="service-pack sp2 transparent ellipsis alt-accent-border alt-accent-ghost" data-active-class="applied alt-accent-color"> </div><%
+%></div><% /* .pick-pack */
+
+_.each(data.selectableCategories, function(sc){
+	%><div class="category"><%
+	%><div class="cat-desc"><%
+	%><h4 class="no-margin dark-text-color dark-divider-color"><%- sc.localeName || sc.name %></h4><%
+	%></div><% /* .cat-desc */
+	%><div class="services"><%
+	_.each(sc.services, function(svc){
+		var escSvcName = _.escape(svc.localeName || svc.name);
+		var escSvcDesc = svc.localeDesc ? _.escape(svc.localeDesc) : "";
+		%><div class="service" title="<%= escSvcName %>"><%
+		%><label class="for-checkbox"><%
+		%><input type="checkbox" name="svc-<%= svc.id %>"><%
+		%><span class="field-title ellipsis"><%= escSvcName %></span><%
+		%></label><%
+		%><div class="detail<%= escSvcDesc ? '':' disabled' %>" title="<%= escSvcDesc %>"><%= data.images.info %></div><% /* .detail */
+		%></div><% /* .service */
+	});
+	%></div><% /* .services */
+	%></div><% /* .category */
+});
+%></div><% /* .plaincard */
+%><p><%= _.escape(data.txt.reloSetup1b).replace('[/contact]', '</a>').replace('[contact]', '<a href="#hrContacts" class="underlined">') %></p><%
+%></div><% /* .setup-1 */
+
+
+%><div class="setup-2 masked"><%
+%><h3 class="primary"><%- data.txt.reloSetup2 %></h3><%
+%><div class="plaincard pad-container secondary-text-color"><%
+
+%><div class="pick-gender radiobox"><%
+_.each(data.gender, function(g){
+	var escName = _.escape(g.localeName || g.name);
+	%><label class="for-radio" title="<%= escName %>"><%
+	%><input type="radio" name="s2-gender" value="<%= g.id %>"><%= escName %><%
+	%></label><%
+});
+%></div><%/* .pick-gender */
+
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateSurName %>"><%
+%><label for="rs-sn" class="required"><%- data.txt.expatriateSurName %></label><%
+%><input  id="rs-sn" type=text maxlength=255><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateGivenName %>"><%
+%><label for="rs-gn" class="required"><%- data.txt.expatriateGivenName %></label><%
+%><input  id="rs-gn" type=text maxlength=255><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateMail %>"><%
+%><label for="rs-mail" class="required"><%- data.txt.expatriateMail %></label><%
+%><input  id="rs-mail" type=email maxlength=255><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field divider-color" title="<%- data.txt.expatriateTel1 %>"><%
+%><label for="rs-telZone1"><%- data.txt.expatriateTelZone1 %></label><%
+%><input  id="rs-telZone1" class="combo" type=text maxlength=255><%
+%><label for="rs-tel1"><%- data.txt.expatriateTel1 %></label><%
+%><input  id="rs-tel1" type=tel maxlength=20><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field divider-color" title="<%- data.txt.colRemarks %>"><%
+%><label for="rs-remarks"><%- data.txt.colRemarks %></label><%
+%><textarea id="rs-remarks" maxlength=255 cols=20 rows=3></textarea><%
+%></div><%/* .hr-field */
+
+%></div><% /* .plaincard */
+%></div><% /* .setup-2 */
+
+
+%><div class="setup-3 masked"><%
+%><h3 class="primary"><%- data.txt.reloSetup3 %></h3><%
+%><div class="plaincard pad-container secondary-text-color"><%
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch" title="<%- data.txt.reloSetupHireOrTransfer %>"><%
+%><label><%- data.txt.reloSetupHireOrTransfer %></label><%
+_.each(data.reason, function(it){
+	var escName = _.escape(it.localeName || it.name);
+	%><label class="for-radio" title="<%= escName %>"><%
+	%><input type="radio" name="s3-reason" value="<%= it.id %>"><%= escName %><%
+	%></label><%
+});
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch" title="<%- data.txt.reloSetupTrialPeriod %>"><%
+%><label><%- data.txt.reloSetupTrialPeriod %></label><%
+_.each(data.yesNo, function(it){
+	var escName = _.escape(it.label);
+	%><label class="for-radio" title="<%= escName %>"><%
+	%><input type="radio" name="s3-trialPeriod" value="<%= it.value %>"><%= escName %><%
+	%></label><%
+});
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch" title="<%- data.txt.reloSetupArrivalSalary %>"><%
+%><label><%- data.txt.reloSetupArrivalSalary %><br><%
+%><input type="number" class="outlined" name="s3-arrivalSalary" data-unsigned="true" min=0 placeholder="€"><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch" title="<%- data.txt.reloSetupAgencyPayer %>"><%
+%><label><%- data.txt.reloSetupAgencyPayer %></label><%
+_.each(data.agencyPayer, function(it){
+	var escName = _.escape(it.localeName || it.name);
+	%><label class="for-radio" title="<%= escName %>"><%
+	%><input type="radio" name="s3-agencyPayer" value="<%= it.id %>"><%= escName %><%
+	%></label><%
+});
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch" title="<%- data.txt.reloSetupLeaseType %>" data-modes="homeSearch"><%
+%><label><%- data.txt.reloSetupLeaseType %></label><%
+_.each(data.leaseType, function(it){
+	var escName = _.escape(it.localeName || it.name);
+	%><label class="for-radio" title="<%= escName %>"><%
+	%><input type="radio" name="s3-leaseType" value="<%= it.id %>"><%= escName %><%
+	%></label><%
+});
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch budget-indication" title="<%- data.txt.reloSetupHousingBudget %>"><%
+%><label><%- data.txt.reloSetupHousingBudget %><br><%
+%><input type="number" class="outlined" id="s3-housingBudget" data-unsigned="true" min=0 placeholder="€"><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch company-budget-indication" title="<%- data.txt.reloSetupHousingCompanyBudget %>"><%
+%><label><%- data.txt.reloSetupHousingCompanyBudget %><br><%
+%><input type="number" class="outlined" id="s3-housingCompanyBudget" data-unsigned="true" min=0 placeholder="€"><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-homeSearch grant-indication" title="<%- data.txt.reloSetupHousingGrant %>"><%
+%><label><%- data.txt.reloSetupHousingGrant %><br><%
+%><input type="number" class="outlined" id="s3-housingGrant" data-unsigned="true" min=0 placeholder="€"><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-tempHomeSearch" title="<%- data.txt.reloSetupHousingTempBudget %>"><%
+%><label><%- data.txt.reloSetupHousingTempBudget %><br><%
+%><input type="number" class="outlined" id="s3-housingTempBudget" data-unsigned="true" min=0 placeholder="€"><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked deprecated-conditional mode-tempHomeSearch" title="<%- data.txt.reloSetupTempHousingStart %>"><%
+%><label for="s3-housingStart"><%- data.txt.reloSetupTempHousingStart %></label><%
+%><div class="input"><%
+%><input type=text maxlength=10 id="s3-housingStart" class="date outlined" placeholder="<%- data.txt.calendarDigitDateMask %>"><%
+%><img class="datepicker-icon temp-housing" data-pick-date-for="s3-housingStart" data-pick-date-title="<%- data.txt.reloSetupTempHousingStart %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked deprecated-conditional mode-tempHomeSearch" title="<%- data.txt.reloSetupTempHousingEnd %>"><%
+%><label for="s3-housingEnd"><%- data.txt.reloSetupTempHousingEnd %></label><%
+%><div class="input"><%
+%><input type=text maxlength=10 id="s3-housingEnd" class="date outlined" placeholder="<%- data.txt.calendarDigitDateMask %>"><%
+%><img class="datepicker-icon temp-housing" data-pick-date-for="s3-housingEnd" data-pick-date-title="<%- data.txt.reloSetupTempHousingEnd %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-tempHomeSearch" title="<%- data.txt.reloSetupTempHousingDuration %>"><%
+%><label><%- data.txt.reloSetupTempHousingDuration %><br><%
+%><input type="number" class="outlined" id="s3-housingTempDuration" data-unsigned="true" min=0 max=60><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-departureHelp" title="<%- data.txt.reloSetupDepartureHelpInventoryDate %>"><%
+%><label for="s3-inventoryDate"><%- data.txt.reloSetupDepartureHelpInventoryDate %></label><%
+%><div class="input disabled-but-willreturn-or-not"><%
+%><input type=text maxlength=10 id="s3-inventoryDate" class="date outlined disabled-but-willreturn-or-not" placeholder="<%- data.txt.calendarDigitDateMask %>"><%
+%><img class="datepicker-icon departure-help disabled-but-willreturn-or-not" data-pick-date-for="s3-inventoryDate" data-pick-date-title="<%- data.txt.reloSetupDepartureHelpInventoryDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%><label class="hint" for="s3-leavingDtEstimate"><%= data.fmt.nl2br(_.escape(data.txt.reloSetupDepartureHelpInventoryDateHint)) %></label><br><%
+%><input type="text" class="outlined stretch" id="s3-leavingDtEstimate"><%
+%></div><%/* .hr-field */
+
+if (!_.isEmpty(data.rentTerminationSender)){
+	%><div class="hr-field radiobox masked conditional mode-departureHelp" title="<%- data.txt.reloSetupDepartureHelpNotificationSender %>"><%
+	%><label><%- data.txt.reloSetupDepartureHelpNotificationSender %></label><%
+	_.each(data.rentTerminationSender, function(it){
+		var escName = _.escape(it.localeName || it.name);
+		%><label class="for-radio" title="<%= escName %>"><%
+		%><input type="radio" name="s3-rentTerminationSender" value="<%= it.id %>"><%= escName %><%
+		%></label><%
+	});
+	%></div><%/* .hr-field */
+}
+
+%><div class="hr-field radiobox masked conditional mode-intlSchool" title="<%- data.txt.reloSetupIntlSchoolNumberOfChildren %>"><%
+%><label><%- data.txt.reloSetupIntlSchoolNumberOfChildren %><br><%
+%><input type="number" class="outlined" id="s3-intlSchoolNumberOfChildren" data-unsigned="true" min=0><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="hr-field radiobox masked conditional mode-intlSchool" title="<%- data.txt.reloSetupIntlSchoolAnnualPerChildBudget %>"><%
+%><label><%- data.txt.reloSetupIntlSchoolAnnualPerChildBudget %><br><%
+%><input type="number" class="outlined" id="s3-intlSchoolAnnualPerChildBudget" data-unsigned="true" min=0 placeholder="€"><%
+%></label><%
+%></div><%/* .hr-field */
+
+%><div class="masked conditional mode-void"><%
+%><p><%- data.txt.reloSetupNoExtraQuestions %></p><%
+%></div><%/* .mode-void */
+
+%></div><% /* .plaincard */
+
+%><p class="mobilipass-requested"><%- data.txt.reloSetupMobilipassRequested %></p><%
+%></div><% /* .setup-3 */
+
+
+%><div class="setup-4 masked"><%
+%><h3 class="primary"><%- data.txt.reloSetup4 %></h3><%
+%><div class="plaincard pad-container"><%
+%><h2><%- data.txt.reloSetup4a %></h2><%
+%><p><%- data.txt.reloSetup4b %></p><%
+%><p class="mobilipass-requested"><%- data.txt.reloSetupMobilipassRequested %></p><%
+%></div><% /* .plaincard */
+%></div><% /* .setup-4 */
+
+%></div><% /* .body */
+
+
+%><div class="footer"><%
+%><a class="nav ellipsis accent-border accent-ghost disabled"
+	 href="#prev" title="<%- data.txt.actionPrev %>"><%- data.txt.actionPrev %></a><%
+%><a class="nav ellipsis accent-border accent-color disabled"
+	 href="#next" title="<%- data.txt.actionNext %>"><%- data.txt.actionNext %></a><%
+%></div><% /* .footer */
+
+%></div>

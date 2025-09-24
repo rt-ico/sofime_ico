@@ -1,0 +1,16 @@
+<div class="card flat staff expat-docs with-header"><%
+
+%><div class="header"><%
+/*%><h2 class="primary"><%- data.expat.cn %></h2><%*/
+var navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.expat.cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.expatId %>" title="<%- navMsg %>"><%- navMsg %>&nbsp;(<%= data.expat.client.name%>)</a></div><%
+%></div><% /* .header */
+
+
+%><div class="body fit-container"><%
+
+%><div class="documents-pane" id="documents-pane"><%
+
+%></div><% /* .body */
+
+%></div>

@@ -1,0 +1,132 @@
+<div class="flat card visits with-header"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%
+%><%-data.txt.homecard_visits%><%
+/*
+print(_.escape(data.expat.cn));
+if (data.expat.client){
+	print(" - ");
+	if (data.jobLocation){
+		%><a class="underlined job" href="#"><%- data.expat.client.name %></a><%
+	}
+	else{
+		print(_.escape(data.expat.client.name));
+	}
+}*/
+%></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+%><div class="map visits divider-color" id="map-visits-<%= data.expatId %>"></div><%
+
+var places = [];
+_.each(data.visits, function(v){
+	_.each(v.places, function(p){
+		if (!p.archived) places.push(p);
+	});
+});
+if (places.length > 1){
+	places.sort(function(a,b){
+		return a.datetime < b.datetime ? -1 : a.datetime > b.datetime ? 1 : a.id - b.id;
+	});
+}
+
+%><div class="visitcards"><%
+_.each(places, function(p){
+if (p.time){
+	var escSummary = p.summary ? _.escape(p.summary) : "";
+
+	if (!p.location) p.location = {};
+
+	var escAddress = "";
+	var escAddressTitle = "";
+	if (p.location.address){
+		escAddress = p.location.address;
+		escAddressTitle = p.location.address;
+	}
+	if (p.location.postCode){
+		escAddress += (escAddress ? ", " : "") + p.location.postCode;
+		escAddressTitle += (escAddressTitle ? "\n" : "") + p.location.postCode;
+	}
+	if (p.location.city){
+		escAddress += " " + p.location.city;
+		escAddressTitle += " " + p.location.city;
+	}
+	escAddress = escAddress ? _.escape(escAddress) : "-";
+	if (escAddressTitle) escAddressTitle = _.escape(escAddressTitle);
+
+	%><article class="visitcard secondary-text-color pad-container <%= !p.time ? 'notScheduled':'' %>" data-v=<%= p.visitId %> data-p=<%= p.id %>><%
+
+		%><p class="dark-text-color visit-time"><%- p.localizedTime || p.time %></p><%
+
+	if (p.date){
+		%><p class="dark-text-color visit-date"><%- data.txt.onDate %> <%- /*p.localizedDate ||*/ data.cachedMoment(p.date).format("L") %></p><%
+	}
+
+	%><p class="visit-address" title="<%= escAddressTitle %>"><span class="label"><%- data.txt.colAddress %> :</span> <%
+	if (p.location.coords){
+		%><a class="underlined" href="#"><%= escAddress %></a><%
+	}
+	else{
+		print(escAddress);
+	}
+	%></p><%
+
+	if (_.isNumber(p.surface)){
+		%><p class="visit-surface"><span class="label"><%- data.txt.colSurface %> :</span> <%
+		print(data.fmt.formatDecimal(p.surface));
+		%></p><%
+	}
+	if (_.isNumber(p.price)){
+		%><p class="visit-price"><span class="label"><%- data.txt.colPrice %> :</span> <%
+		print(data.fmt.formatDecimal(p.price));
+		%></p><%
+	}
+	if (p.floor){
+		%><p class="visit-floor"><span class="label"><%- data.txt.colFloor %> :</span> <%
+		print(_.escape(p.elevator ? p.floor+", "+data.txt.elevator : p.floor));
+		%></p><%
+	}
+    if (p.summary){
+        %><p class="visit-summary"><span class="label"><%- data.txt.colRemarks %> :</span> <%
+        print(_.escape(p.summary));
+        %></p><%
+    }
+	if (p.url){
+		%><p class="visit-url"><span class="label"><%- data.txt.colUrl %> :</span> <%
+		%><a class="underlined ellipsis" href="<%- p.url %>" target="expat_visit_place('+p.id+')" title="<%- p.url %>"><%- p.url %></a><%
+		%></p><%
+	}
+
+	if (data.user.expat){
+		%><div class="action-box"><%
+		%><a class="text-primary-color dark-primary-color visit-remarks" title="<%- data.txt.colRemarks %>"><%= data.images.comment %></a><%
+		%><a class="text-primary-color dark-primary-color visit-photo" title="<%- data.txt.colPhoto %>"><%= data.images.photo %></a><%
+		%></div><% /* .action-box */
+
+		/* %><div class="action-box"><%
+		%><a class="text-primary-color alt-accent-color visit-choice" title="<%- data.txt.colChoice %>"><%
+		if (p.choice1){
+			print('1');
+		}
+		else if (p.choice2){
+			print('2');
+		}
+		else if (p.choice3){
+			print('3');
+		}
+		else{
+			print(_.escape(data.txt.actionChoose));
+		}
+		%></a><%
+		%></div><% */
+	}
+
+	%></article><%
+}});
+%></div><% /* .visitcards */
+
+%></div><% /* .body */
+
+%></div>

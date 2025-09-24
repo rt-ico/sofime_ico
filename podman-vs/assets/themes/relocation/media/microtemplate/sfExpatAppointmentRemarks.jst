@@ -1,0 +1,14 @@
+<div class="fit-container pad-container sf x-set-v-attr x-set-v-remarks secondary-text-color"><%
+
+%><div class="field stretch"><%
+%><label class="strong"><%- data.txt.colRemarks %> :</label><br><%
+%><textarea name="remarks" rows=4 cols=40><%- data.appointment.remarks %></textarea><%
+%></div><%
+
+%><div class="field vp-other"><%
+	print(_.escape(data.appointment.localized));
+	print('<br>');
+	print(_.escape(data.appointment.localeDesc || data.appointment.subject));
+%></div><%
+
+%></div>

@@ -1,0 +1,31 @@
+<div class="card flat expat surveys sections"><%
+
+var surveyUri = data.fmt.sprintf("#expatSurveys/%s/%s/", (data.user.expat ? data.user.id : "-"), data.survey.id);
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.survey.name %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+if (data.response.done){
+	%><article class="infocard pad-container <%= data.response.locked ? 'alt-accent-border':'accent-border' %>"><%
+	%><p class="secondary-text-color strong"><%= data.fmt.nl2br(_.escape(data.txt.expatSurveyDoneMessage)) %></p><%
+	if(!data.response.locked){
+		%><button type="button" class="accent-color action unlock"><%- data.txt.expatSurveyDoneUnlockAction %></button><%
+	}
+	%></article><%
+}
+
+%><h3 class="primary"><%- data.txt.expatSurveySectionAccess %></h3><%
+%><ul class="sections"><%
+_.each(data.sections.selectable, function(section){
+	%><li class="secondary-text-color divider-color"><%
+	%><a href="#expatSurveys/<%= (data.user.expat ? data.user.id : "-") +"/"+ data.survey.id +"/"+ section.id %>"><%- section.name %></a><%
+	%></li><%
+});
+%></ul><% /* .sections */
+
+%></div><% /* .body */
+
+%></div>

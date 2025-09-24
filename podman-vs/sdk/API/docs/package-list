@@ -1,0 +1,16 @@
+fr.reflexe.viewshell.api
+fr.reflexe.viewshell.api.activation
+fr.reflexe.viewshell.api.auth
+fr.reflexe.viewshell.api.config
+fr.reflexe.viewshell.api.connector
+fr.reflexe.viewshell.api.data
+fr.reflexe.viewshell.api.data.filter
+fr.reflexe.viewshell.api.data.sort
+fr.reflexe.viewshell.api.data.time
+fr.reflexe.viewshell.api.data.types
+fr.reflexe.viewshell.api.data.views
+fr.reflexe.viewshell.api.design
+fr.reflexe.viewshell.api.fs
+fr.reflexe.viewshell.api.http
+fr.reflexe.viewshell.api.locale
+fr.reflexe.viewshell.api.themes

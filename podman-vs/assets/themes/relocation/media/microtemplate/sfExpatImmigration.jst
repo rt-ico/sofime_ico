@@ -1,0 +1,406 @@
+<div class="card flat staff expat-immigration with-header with-footer"><%
+
+%><div class="header"><%
+let navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.expat.cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.expatId %>" title="<%- navMsg %>"><%- navMsg %> <%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a></div><%
+/*%><h2 class="primary"><%- data.expat.cn %></h2><%*/
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container"><%
+
+%><div class="field extraPaddingTop"><%
+%><label><%- data.txt.reloPrefecture %></label><%
+%><div class="input"><%
+%><textarea class="<%- data.smallScreen ? 'max-width':'width754' %>" id="prefecture" maxlength=255  rows=3><%- data.expat.prefecture %></textarea><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+        %><h3 class="alt-accent minorPaddingTop"><%- data.txt.environment %></h3><%
+%><div class="field column-block extraPaddingTop width328" ><%
+    %><label for="paperLessImmigration"><%- data.txt.immigrationStatus %></label><%
+            %><div class = "row-block alignCenter"><%
+    %><input id="paperLessImmigration" class="combo"  type=text title="<%= data.txt.paperLess %>" autocomplete = "off" value="<%=data.expat.refPaperlessImmig ? data.md.paperlessStatuses[data.expat.refPaperlessImmig].label : " " %>"> <%
+            %><div class="width26 paperlessMissingIcon visibilityOff missingFieldIcon"><%= data.images.missing %></div><%
+                %></div><%
+%></div><%
+
+
+
+%><h3 class="alt-accent extraPaddingTop"><%- data.txt.colExpatName %></h3><%
+        %><div class="field width250 "><%
+            %><label for="immigrationStatusExpat"><%- data.txt.immigrationStatusExpat %></label><%
+
+                %><input id="immigrationStatusExpat" class="combo"  type=text title="<%= data.txt.immigrationStatusExpat %>" autocomplete = "off" value="<%=data.expat.refImmigrationStatusExpat ? data.md.immigrationStatuses[data.expat.refImmigrationStatusExpat].label : " " %>"> <%
+
+            %></div><%
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field"><%
+%><label><%- data.txt.colMail %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="immigId" value="<%- data.expat.immigId %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationForeignNumber %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="expatForeignNumber" value="<%- data.expat.foreignNumber %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationAnefPass %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="anefPass" value="<%- data.expat.anefPass %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.telephone %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="expatTel" value="<%- data.expat.immigTelExpat %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%></div><% /* .row-block */
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field "><%
+%><label class=""><%- data.txt.sfImmigrationEndStay %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="dateEndResPermit" id="dateEndResPermit" class="date" value="<%- data.expat.dateEndResPermit ? data.cachedMoment(data.expat.dateEndResPermit).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateEndResPermit" data-pick-date-title="<%- data.txt.sfImmigrationEndStay %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+            %><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+                %><label class=""><%- data.txt.sfImmigrationStartVisa %></label><%
+                %><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+                    %><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="dateStartVisa" id="dateStartVisa" class="date" value="<%- data.expat.dateStartVisa ? data.cachedMoment(data.expat.dateStartVisa).format("L"):"" %>" data-floor=0><%
+                    if (!data.locked) {
+                    %><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateStartVisa" data-pick-date-title="<%- data.txt.sfImmigrationStartVisa %>"
+                           src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+                           srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+                    }
+                    %></div><% /* .input */
+                %></div><% /* .field */
+
+
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label class=""><%- data.txt.sfImmigrationEndVisa %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="dateEndVisa" id="dateEndVisa" class="date" value="<%- data.expat.dateEndVisa ? data.cachedMoment(data.expat.dateEndVisa).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateEndVisa" data-pick-date-title="<%- data.txt.sfImmigrationEndVisa %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+
+%></div><% /* .row-block */
+
+
+if(data.familyServiceActivated){
+
+%><h3 class="alt-accent minorPaddingTop"><%- data.txt.spouse %></h3><%
+
+        %><div class="field column-block width250" ><%
+            %><label for="immigrationStatusSpouse"><%- data.txt.immigrationStatusSpouse %></label><%
+
+                %><input id="immigrationStatusSpouse" class="combo"  type=text title="<%= data.txt.immigrationStatusSpouse %>" autocomplete = "off" value="<%=data.expat.refImmigrationStatusSpouse ? data.md.immigrationStatuses[data.expat.refImmigrationStatusSpouse].label : " " %>"> <%
+
+            %></div><%
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field"><%
+%><label><%- data.txt.colMail %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="spouseImmigId" value="<%- data.expat.immigIdSpouse %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationForeignNumber %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="spouseForeignNumber" value="<%- data.expat.spouseForeignNumber %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationAnefPass %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="spouseAnefPass" value="<%- data.expat.immigPwdSpouse %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.telephone %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="spouseTel" value="<%- data.expat.immigTelSpouse %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+%></div><% /* .row-block */
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field"><%
+%><label class=""><%- data.txt.sfImmigrationEndStay %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="dateSpouseEndResPermit" id="dateSpouseEndResPermit" class="date" value="<%- data.expat.dateSpouseEndResPermit ? data.cachedMoment(data.expat.dateSpouseEndResPermit).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateSpouseEndResPermit" data-pick-date-title="<%- data.txt.sfImmigrationEndStay %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label class=""><%- data.txt.sfImmigrationEndVisaSpouse %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="dateEndVisaSpouse" id="dateEndVisaSpouse" class="date" value="<%- data.expat.dateEndVisaSpouse ? data.cachedMoment(data.expat.dateEndVisaSpouse).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateEndVisaSpouse" data-pick-date-title="<%- data.txt.sfImmigrationEndVisaSpouse %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+
+%></div><% /* .row-block */
+}
+
+if(data.familyServiceActivated){
+
+%><h3 class="alt-accent minorPaddingTop"><%- data.txt.children %></h3><%
+
+        %><div class="field column-block width250" ><%
+            %><label for="immigrationStatusChildren"><%- data.txt.immigrationStatusChildren %></label><%
+            %><input id="immigrationStatusChildren" class="combo"  type=text title="<%= data.txt.immigrationStatusChildren %>" autocomplete = "off" value="<%=data.expat.refImmigrationStatusChildren ? data.md.immigrationStatuses[data.expat.refImmigrationStatusChildren].label : " " %>"> <%
+            %></div><%
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field"><%
+%><label><%- data.txt.colMail %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child1ImmigId" value="<%- data.expat.immigIdChild1 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationForeignNumber %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child1ForeignNumber" value="<%- data.expat.child1ForeignNumber %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationAnefPass %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child1AnefPass" value="<%- data.expat.immigPwdChild1 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.telephone %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child1Tel" value="<%- data.expat.immigTelChild1 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+
+%></div><% /* .row-block */
+
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field "><%
+%><label><%- data.txt.colMail %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child2ImmigId" value="<%- data.expat.immigIdChild2 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationForeignNumber %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child2ForeignNumber" value="<%- data.expat.child2ForeignNumber %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.sfImmigrationAnefPass %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child2AnefPass" value="<%- data.expat.immigPwdChild2 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="field <%- data.smallScreen ? '':'extraPaddingLeft' %>"><%
+%><label><%- data.txt.telephone %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=40 name="child2Tel" value="<%- data.expat.immigTelChild2 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+}
+
+%><h3 class="alt-accent sizeablePaddingTop"><%- data.txt.appointment %></h3><%
+
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field width250"><%
+%><label class=""><%- data.txt.sfImmigrationRDVConsulate %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="dateConsulate" id="dateConsulate" class="date" value="<%- data.expat.dateConsulate ? data.cachedMoment(data.expat.dateConsulate).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateConsulate" data-pick-date-title="<%- data.txt.sfImmigrationRDVConsulate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field width250"><%
+%><label class=""><%- data.txt.sfImmigrationRDVPrefecture %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="datePrefecture" id="datePrefecture" class="date" value="<%- data.expat.datePrefecture ? data.cachedMoment(data.expat.datePrefecture).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="datePrefecture" data-pick-date-title="<%- data.txt.sfImmigrationRDVPrefecture %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+
+        if(data.familyServiceActivated){
+%><div class="<%- data.smallScreen ? '':'row-block' %> extraPaddingTop"><%
+
+%><div class="field width250"><%
+%><label class=""><%- data.txt.sfImmigrationRDVConsulateFamily %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="dateConsulateFamily" id="dateConsulateFamily" class="date" value="<%- data.expat.dateConsulateFamily ? data.cachedMoment(data.expat.dateConsulateFamily).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateConsulateFamily" data-pick-date-title="<%- data.txt.sfImmigrationRDVConsulateFamily %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field width250"><%
+%><label class=""><%- data.txt.sfImmigrationRDVPrefectureFamily %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="datePrefectureFamily" id="datePrefectureFamily" class="date" value="<%- data.expat.datePrefectureFamily ? data.cachedMoment(data.expat.datePrefectureFamily).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="datePrefectureFamily" data-pick-date-title="<%- data.txt.sfImmigrationRDVPrefectureFamily %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+        }
+
+if(!data.smallScreen){
+%><table class="sfToDoTable sizeablePaddingTop"><%
+    %><thead class="text-primary-color dark-primary-color"><%
+
+    %><tr><%
+
+    %><th class="expatRelocationService expatTableHead" >&nbsp;<%= data.txt.expatRelocationService%><%
+
+    %></th><%
+
+    %><th class="expatRelocationServiceManager expatTableHead">&nbsp;<%= data.txt.expatRelocationServiceManager%><%
+
+    %></th><%
+
+    %></tr><%
+    %></thead><%
+    %><tbody><%
+
+        _.each(data.expat.sortedServices, function(it){
+            if( it.isImmigration ) {
+
+                %><tr class="sfToDoTableRow" ><%
+
+                %><td class="centered" ><%- it.name%></td><%
+
+                %><td class="sfSocialSecurityCentered" ><%
+
+                %><div class="field"><%
+
+                %><input <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name=<%-'managerOf'+it.id %> value="<%- it.staff.gn + ' ' + it.staff.sn %>"><%
+
+                %></div><% /* .field */
+
+
+                %></td><%
+
+
+                %></tr><%
+            }
+        });
+
+
+    %></tbody><%
+
+%></table><%
+}
+else{
+    %><h3 class="alt-accent sizeablePaddingTop"><%- data.txt.expatRelocationService %></h3><%
+    _.each(data.expat.sortedServices, function(it){
+        if(it.isImmigration){
+            %><article class="minicard expat-task secondary-text-color " ><%
+            %><h4 title="<%= it.name %>"><%= it.name %></h4><%
+            %><span class="card-label extraPaddingTop"><%= data.txt.expatRelocationServiceManager%></span><%
+            %><div class="field "><%
+
+            %><input <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name=<%-'managerOf'+it.id %> value="<%- it.staff.gn + ' ' + it.staff.sn %>"><%
+
+            %></div><% /* .field */
+            %><div class="field">&nbsp</div><%
+
+            %></article><%
+        }
+    });
+
+}
+
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+        %><a class="update ellipsis accent-border accent-color disabled"
+             title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+
+        %><a class="toImmigrationDocuments ellipsis secondaryFooter"
+	        title="<%- data.txt.documentRedirection %>"><%- data.txt.toImmigrationDocuments %></a><%
+
+%></div><% /* .footer */
+
+%></div>

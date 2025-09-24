@@ -1,0 +1,46 @@
+<div class="body fit-container pad-container photo-thumbs"><%
+	var files = data.documents.files;
+	var place = data.place;
+
+	%><span class="photo-thumb photo" data-file="0" data-uuid="" title="<%- data.txt.dialogDocumentNew  %>"><%
+	%><img src="<%= data.route.themeStyleUri %>media/white2x/add_a_photo.png" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+	%><span class="photo-thumb-label"><%- data.txt.dialogDocumentNew %></span><%
+	%><span class="photo-thumb-tools" title=""><%
+	%><input type=file class="masked upload-document-file" /*accept="image/*" capture*/ ><%
+	%><img data-action="upload" title="<%- data.txt.expatDocumentUpload %>" src="<%= data.route.themeStyleUri %>media/white2x/add.png"><%
+	%></span><%
+	%></span><%
+
+
+	if (files.length > 0) {
+		_.each(files, function(p) {
+                var title = p.name;
+                %><span class="photo-thumb photo" data-file="<%= p.id %>" data-uuid="<%= p.uuid %>" title="<%- title %>"><%
+                if (p.has_thumb) {
+                    %><img src="<%= data.route.visitsDocuments + place.id + '/' + p.id %>/thumb?mtime=<%= p.mtime.getTime() %>" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+                } else if (p.has_file) {
+                    %><img src="<%= data.route.themeStyleUri %>media/white2x/form.png" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+                } else {
+                    %><img src="<%= data.route.themeStyleUri %>media/white2x/cloud_upload_photo-thumb<%if (p.required) {%>_required<%} %>.png" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+                }
+
+                %><span class="photo-thumb-label"><%- title %></span><%
+                %><span class="photo-thumb-tools" title=""><%
+                if (p.has_thumb || p.has_file) {
+                    %><img data-action="showinfo" title="<%- data.txt.expatDocumentShowInfo %>" src="<%= data.route.themeStyleUri %>media/white2x/information.png"><%
+                    %><img data-action="delete"title="<%- data.txt.expatDocumentUpload %>" src="<%= data.route.themeStyleUri %>media/white2x/delete.png"><%
+                    %><img data-action="download" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>" src="<%= data.route.themeStyleUri %>media/white2x/cloud_download.png"><%
+                    %><img data-action="open" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>" src="<%= data.route.themeStyleUri %>media/white2x/magnifying_glass.png"><%
+                    %><img data-action="print" title="<%- data.txt.expatDocumentPrint %>" src="<%= data.route.themeStyleUri %>media/white2x/print.png"><%
+                }
+                %><input type=file class="masked upload-document-file"><%
+                %><img data-action="upload" title="<%- data.txt.expatDocumentUpload %>" src="<%= data.route.themeStyleUri %>media/white2x/cloud_upload.png"><%
+                %></span><%
+                %></span><%
+
+		});
+	}
+
+%><p class="strong rgpd"><%- data.txt.gdpr.expatDocs %></p><%
+
+%></div>

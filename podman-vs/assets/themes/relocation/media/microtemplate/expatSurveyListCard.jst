@@ -1,0 +1,16 @@
+<div class="card flat expat relocation surveys"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navExpatSurveys %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+if (_.isEmpty(data.surveys)){
+	%><p><%- data.txt.noSurveysAvailable %></p><%
+}
+else {
+	print(data.tpl.surveyListPane(data));
+}
+%></div><% /* .body */
+
+%></div>

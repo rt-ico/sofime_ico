@@ -1,0 +1,114 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Chapter&nbsp;3.&nbsp;Configuration</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="pt01.html" title="Part&nbsp;I.&nbsp;Getting started"><link rel="prev" href="ch02s03.html" title="Running Viewer"><link rel="next" href="ch03s02.html" title="Configuring the HTTP server"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Chapter&nbsp;3.&nbsp;Configuration</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch02s03.html">Prev</a>&nbsp;</td><th align="center" width="60%">Part&nbsp;I.&nbsp;Getting started</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch03s02.html">Next</a></td></tr></table><hr></div><div class="chapter" title="Chapter&nbsp;3.&nbsp;Configuration"><div class="titlepage"><div><div><h2 class="title"><a name="N20575"></a>Chapter&nbsp;3.&nbsp;Configuration</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="ch03.html#N2057A">Configuring logging</a></span></dt><dt><span class="sect1"><a href="ch03s02.html">Configuring the HTTP server</a></span></dt><dt><span class="sect1"><a href="ch03s03.html">Configuring the default connector</a></span></dt></dl></div>
+            
+            <div class="sect1" title="Configuring logging"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N2057A"></a>Configuring logging</h2></div></div></div>
+                
+                <p><a name="N20580" class="indexterm"></a>OpenAGE Viewer writes information to log files in
+                        <code class="filename">$VSH_HOME/logs</code><a name="N20588" class="indexterm"></a> as a way of monitoring correct operation and diagnosing any
+                    problems that may occur. The amount of information written to these files
+                    depends upon configuration settings which are read when the application
+                    starts.</p>
+                <p>These configuration settings are defined in the file
+                        <code class="filename">$VSH_HOME/conf/config-logging.xml</code><a name="N20596" class="indexterm"></a>, which will by default look similar to the following
+                    example:</p><pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;comment&gt;ViewShell logging configuration&lt;/comment&gt;
+&lt;entry key="LOG_ROLL_TYPE"&gt;DATE&lt;/entry&gt;
+&lt;entry key="LOG_LEVEL"&gt;INFO&lt;/entry&gt;
+&lt;entry key="LIBRARY_NAMESPACES"&gt;com.teamdev,com.jniwrapper,freemarker&lt;/entry&gt;
+&lt;entry key="LOG_APPEND"&gt;true&lt;/entry&gt;
+&lt;entry key="LOG_ROLL_COUNT"&gt;7&lt;/entry&gt;
+&lt;entry key="LOG_ROLL_SIZE_MB"&gt;1&lt;/entry&gt;
+&lt;/properties&gt;</pre>
+                <p>The default settings therefore indicate that each of the standard logfiles
+                    (see <a class="xref" href="ch02s02.html#sect.app-home.logs" title="The &quot;logs&quot; directory">the section called &ldquo;The "logs" directory&rdquo;</a>) will be archived once per day, with
+                    up to 7 backup copies (the size of log files is ignored when the "date" rollover
+                    policy is used). If the application is restarted, then new log entries are
+                    appended to any existing log entries. The level of information is "informative"
+                    (therefore excluding debugging information for plug-in developers). Finally,
+                    logging output from the specified third-party libraries is configured here to be
+                    recorded in the <code class="filename">library.log</code><a name="N205AC" class="indexterm"></a> file.</p>
+                <p>
+                    </p><div class="variablelist" title="Options for LOG_ROLL_TYPE"><p class="title"><b>Options for <code class="varname">LOG_ROLL_TYPE</code><a name="N205C0" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">NONE</code></span></dt><dd><p>Indicates that log files continue to grow indefinitely.</p></dd><dt><span class="term"><code class="varname">DATE</code></span></dt><dd><p>Indicates that a new log file will be started once per day.
+                            Old log files are backed up within the limit of <code class="varname">LOG_ROLL_COUNT</code>,
+                            are renamed to include the date, and are compressed in GZIP format.</p></dd><dt><span class="term"><code class="varname">SIZE</code></span></dt><dd><p>Indicates that a new log file will be started when the size limit (in megabytes, as a positive
+                                    integer) defined by <code class="varname">LOG_ROLL_SIZE_MB</code> is
+                                    reached. Old log files are backed up within the limit of
+                                        <code class="varname">LOG_ROLL_COUNT</code>, are renamed to include
+                                    the date, and are compressed in GZIP format.</p></dd></dl></div><p>
+                    </p><div class="variablelist" title="Options for LOG_LEVEL"><p class="title"><b>Options for <code class="varname">LOG_LEVEL</code><a name="N205F7" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">ERROR</code></span></dt><dd><p>Only <span class="emphasis"><em>errors</em></span> (failure to perform normal operations) are recorded in log
+                                    files with this setting.</p></dd><dt><span class="term"><code class="varname">WARN</code></span></dt><dd><p>Both <span class="emphasis"><em>warnings</em></span> and <span class="emphasis"><em>errors</em></span> are recorded in log files
+                                    with this setting. A warning indicates that an abnormal
+                                    condition was detected (such as an incorrect configuration
+                                    setting), or that some other unexpected situation arose during
+                                    processing. Unlike an error, processing is generally able to
+                                    continue in such cases (although perhaps not as expected,
+                                    possibly indicating that a more serious error condition will
+                                    occur later).</p></dd><dt><span class="term"><code class="varname">INFO</code></span></dt><dd><p>This is the default setting, and also includes <span class="emphasis"><em>error</em></span> and
+                                        <span class="emphasis"><em>warning</em></span> messages. Informational
+                                    messages will for example echo effective configurations settings
+                                    (such as version information, lifecycle status of various
+                                    components, detection of normal changes such as the addition of
+                                    new content), and are therefore useful to verify that the
+                                    application is behaving as expected.</p></dd><dt><span class="term"><code class="varname">DEBUG</code></span></dt><dd><p>This level should not be used in production unless a specific issue is encountered that
+                                    requires additional problem analysis, as it generates much more
+                                    additional information and therefore requires more disk space
+                                    (the exact amount will depend upon your configuration and your
+                                    usage scenarios).  It includes messages from all of the above
+                                    levels, and adds many more additional messages such as echoing
+                                    the values of default settings and recording information
+                                    exchanges between internal components.  However, it
+                                        <span class="emphasis"><em>can</em></span> be very useful when creating
+                                    applications using OpenAGE Viewer, especially when manipulating
+                                    theme packs, style packs, and OSGi plug-in components.</p></dd><dt><span class="term"><code class="varname">TRACE</code></span></dt><dd><p>This level generates the most information of all, tracing much more detail about how internal
+                                    components are behaving.</p></dd></dl></div><p>
+
+                </p>
+                <p>The other settings can be configured as follows:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                            <p><code class="varname">LIBRARY_NAMESPACES</code><a name="N20650" class="indexterm"></a>: this is a comma-separated list (containing by default
+                                the package namespaces of the default set of embedded libraries) of
+                                third-party libraries that can add log messages to the
+                                    <code class="filename">library.log</code> file. If you add plug-ins that
+                                have dependencies on the <a class="ulink" href="http://www.slf4j.org/" target="_top">SLF4J</a> or <a class="ulink" href="http://commons.apache.org/logging/" target="_top">Commons
+                                    Logging</a> APIs, you may add the associated logging
+                                namespaces here. This may in turn increase the size of log files,
+                                and it should be noted that third-party libraries do not necessarily
+                                choose logging levels for messages using the above criteria.
+                                Furthermore, note that there is no requirement to add additional
+                                logging configuration files traditionally associated with these
+                                API.</p>
+                        </li><li class="listitem">
+                        <p><code class="varname">LIBRARY_INFO</code><a name="N2066B" class="indexterm"></a>: this, if present, is a comma-separated list of
+                                third-party libraries that are restricted to logging at
+                                    <code class="varname">INFO</code> level (or more severe levels, such as
+                                    <code class="varname">WARN</code> or <code class="varname">ERROR</code>).  Some
+                                third-party libraries generate a large volume of debugging messages
+                                in <code class="varname">DEBUG</code> mode, which can be counter-productive;
+                                this option provides a solution to suppress such behavior.</p>
+                    </li><li class="listitem">
+                            <p><code class="varname">LOG_APPEND</code><a name="N20687" class="indexterm"></a>: when <code class="varname">true</code> (the default), new log
+                                messages are always appended to the current log file (if it exists).
+                                When <code class="varname">false</code>, any current log file will be
+                                overwritten when the application is restarted (this can be helpful
+                                when testing an application in a development environment).</p>
+                        </li><li class="listitem">
+                            <p><code class="varname">LOG_ROLL_COUNT</code><a name="N2069D" class="indexterm"></a>: this determines how many log file backups should be
+                                maintained when <code class="varname">LOG_ROLL_TYPE</code> is set to either
+                                    <code class="varname">DATE</code> or <code class="varname">SIZE</code>. The value
+                                can be either <code class="varname">0</code> (zero, no backups), a positive
+                                integer, or "<code class="varname">UNLIMITED</code>". With any value other
+                                than "UNLIMITED", the application will automatically delete old log
+                                files when the number of archived copies for a log file exceeds the
+                                limit defined here.</p>
+                        </li><li class="listitem">
+                            <p><code class="varname">LOG_ROLL_SIZE</code><a name="N206BC" class="indexterm"></a>: this is only used when
+                                    <code class="varname">LOG_ROLL_TYPE</code> is set to
+                                    <code class="varname">SIZE</code>, and determines the size threshold (as a
+                                positive integer, in megabytes) that triggers archiving of each
+                                current log file and the creation of new log files.</p>
+                        </li></ul></div>
+            </div>
+            
+            
+            
+        </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch02s03.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="pt01.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch03s02.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Running Viewer&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Configuring the HTTP server</td></tr></table></div></body></html>

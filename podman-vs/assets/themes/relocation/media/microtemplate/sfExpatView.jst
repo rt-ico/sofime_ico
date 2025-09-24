@@ -1,0 +1,35 @@
+<div class="card flat staff expat-overview with-header"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%
+
+if (data.housingMode){
+	%><a href="#sfExpatView/<%= data.expat.id %>" class="underlined"><%- data.expat.cn %>&nbsp;<%=data.expat.client ? "( " + data.expat.client.name+" )" : ""%></a> &gt; <%- data.txt.sfExpatHome %><%
+}
+else{
+	print(_.escape(data.expat.cn));
+	%><a>&nbsp;<%=data.expat.client ? "( " + data.expat.client.name+" )" : ""%>&nbsp;</a><%
+}
+%></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="sf-tiles"><%
+_.each(data.tiles, function(t){
+
+    let escLabel = _.escape(t.label);
+
+    %><div class="expatViewCard <%= t.activate ? 'expatViewPalette':'disabled expatViewPaletteDisabled' %>  width30p100  " href="<%= t.uri %>" title="<%= t.label %>"><%
+    %><div class="extraPaddingLeft extraPaddingTop indicator"><%
+    %><div class=" primary-text-color"><%= t.label %></div><%
+    %><div class="info><span class="value">&nbsp</span></div><%
+
+    %></div><% /* .indicator */
+    %><div class="icon "><%= data.images[t.thumb] %></div><% /* .icon accent-light*/
+    %></div><% /* .homecard */
+});
+%></div><% /* .sf-tiles */
+
+%></div><% /* .body */
+%></div>

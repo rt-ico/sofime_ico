@@ -1,0 +1,98 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Configuring the HTTP server</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Configuration"><link rel="prev" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Configuration"><link rel="next" href="ch03s03.html" title="Configuring the default connector"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Configuring the HTTP server</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch03.html">Prev</a>&nbsp;</td><th align="center" width="60%">Chapter&nbsp;3.&nbsp;Configuration</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="sect1" title="Configuring the HTTP server"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N206CF"></a>Configuring the HTTP server</h2></div></div></div>
+                
+                <p>OpenAGE Viewer starts the embedded HTTP server using the settings defined in
+                        <code class="filename">$VSH_HOME/conf/config-system.xml</code><a name="N206D8" class="indexterm"></a> and will attempt to update these settings dynamically if a change
+                    to this file is detected while the application is running.</p>
+                <p>By default, this file will look similar to the following example:</p>
+                <p>
+                    </p><pre class="screen">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+&lt;entry key="server.protocol"&gt;http&lt;/entry&gt;
+&lt;entry key="server.hostname"&gt;localhost&lt;/entry&gt;
+&lt;entry key="server.port"&gt;8086&lt;/entry&gt;
+&lt;entry key="server.path"&gt;/front&lt;/entry&gt;
+&lt;entry key="server.session-timeout"&gt;30&lt;/entry&gt;
+&lt;entry key="server.using-session-cookies"&gt;false&lt;/entry&gt;
+&lt;entry key="server.signal.uri-enabled"&gt;false&lt;/entry&gt;
+&lt;/properties&gt;</pre><p>
+                </p>
+                <p>The default settings generally start the server using the HTTP protocol using
+                    all available local host names, on TCP port 8086, with a base URI of "/front".
+                    Additionally, by default, the server does <span class="emphasis"><em>not</em></span> enable HTTP
+                    session cookies (for compliance with the <span class="emphasis"><em>European "e-Privacy"
+                        Directive 2009/136/EC</em></span>): you can either enable them by replacing
+                    the default value, or use URL-encoded session identifiers in web content served
+                    by OpenAGE Viewer.  For applications that require sessions, it is recommended
+                    (where possible) to enable session cookies to improve protection against
+                        <span class="emphasis"><em>session hijacking</em></span> and <span class="emphasis"><em>session
+                        fixation</em></span> attacks.</p>
+                <p>
+                    </p><div class="variablelist" title="Options for server.protocol"><a name="config.system.server.protocol"></a><p class="title"><b>Options for <code class="varname">server.protocol</code><a name="N20705" class="indexterm"></a><a name="N2070D" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">http</code><a name="N20718" class="indexterm"></a><a name="N2071D" class="indexterm"></a><a name="N20722" class="indexterm"></a><a name="N20727" class="indexterm"></a></span></dt><dd><p>In version 0.10.0, this is the only valid setting, and indicates that the server will
+                                    use unencrypted HTTP/1.1 as the transport format.  You may use a
+                                    reverse-proxy configuration if you require HTTPS (SSL/TLS)
+                                    support.</p></dd></dl></div><p>
+                    </p><div class="variablelist" title="Options for server.hostname"><a name="config.system.server.hostname"></a><p class="title"><b>Options for <code class="varname">server.hostname</code><a name="N20739" class="indexterm"></a><a name="N20741" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>hostName</code></em></code></span></dt><dd><p>In version 0.10.0, although only one specific hostname binding may be specified for
+                                    starting the server, by default an attempt is made to bind to
+                                    all available hostnames on all available network interfaces
+                                    provided by the computer's network configuration, using the
+                                    address "<code class="varname">0.0.0.0</code>". This will generally be
+                                    acceptable for testing on a local network but may need to be
+                                    changed to enable only appropriate access to the application
+                                    server from the Internet.  If a reverse-proxy is used, it is
+                                    usually desirable to restrict access to use only the loopback
+                                    network interface.</p>
+                                <p>At startup, the server will emit <code class="varname">DEBUG</code>
+                                    messages to echo information relating to the local host and all
+                                    discoverable network interfaces.</p>
+                                <p>Note that if your server uses an IDN<a name="N2075D" class="indexterm"></a> (International Domain Name<a name="N20763" class="indexterm"></a>), you can directly enter the Unicode form here (as
+                                    you would enter it in a browser address bar). It will be
+                                    converted as appropriate, and this can be verified in
+                                        <code class="filename">http.log</code>. </p></dd></dl></div><p>
+                    </p><div class="variablelist" title="Options for server.port"><a name="config.system.server.port"></a><p class="title"><b>Options for <code class="varname">server.port</code><a name="N20775" class="indexterm"></a><a name="N2077D" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>portNumber</code></em></code></span></dt><dd><p>The port number must be a valid TCP port number in the range 0-65535 as defined by the IANA
+                                authority.  A HTTP web server will typically use port 80 (443
+                                for SSL/TLS), although on Unix systems such as Linux, this
+                                requires root permissions (therefore, use of a reverse-proxy is
+                                recommended in such cases).  The default port of 8086 is chosen
+                                to avoid conflicts with well-known HTTP services but may already
+                                be used on some servers and workstations and should generally be
+                                changed to meet your requirements.</p></dd></dl></div><p>
+                    </p><div class="variablelist" title="Options for server.path"><a name="config.system.server.path"></a><p class="title"><b>Options for <code class="varname">server.path</code><a name="N20796" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>/uri</code></em></code></span></dt><dd><p>Specifies the base path to the content provided by OpenAGE Viewer.  This can be "/" if the
+                                root path (no subdirectory) is preferred, or can indicate the
+                                base path, such as "/front" (the default setting).  This must
+                                never be undefined, and must always start with "/" (it may not
+                                contain any additional "/" characters thereafter).</p></dd></dl></div><p>
+                    </p><div class="variablelist" title="Options for server.session-timeout"><a name="config.system.server.session-timeout"></a><p class="title"><b>Options for <code class="varname">server.session-timeout</code><a name="N207B2" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname"><em class="replaceable"><code>timeout</code></em></code></span></dt><dd><p>Specifies the number of <span class="emphasis"><em>seconds</em></span> of inactivity before automatic
+                                    termination of a browser session.  Negative values are
+                                    interpreted as "no timeout".  By default, session timeout occurs
+                                    after 30 minutes.</p></dd></dl></div><p>
+                    </p><div class="variablelist" title="Options for server.using-session-cookies"><a name="config.system.server.using-session-cookies"></a><p class="title"><b>Options for <code class="varname">server.using-session-cookies</code><a name="N207D1" class="indexterm"></a><a name="N207D9" class="indexterm"></a><a name="N207E1" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">true</code></span></dt><dd><p>This setting enables session cookies wherever browsers support cookies.  With most browsers,
+                                    when session cookies are enabled, it is not possible to have
+                                    more than one active session at a time (even when using multiple
+                                    windows or browser tabs).</p></dd><dt><span class="term"><code class="varname">false</code></span></dt><dd><p>This is the default setting, selected for compliance with the <span class="emphasis"><em>European "e-Privacy"
+                                        Directive 2009/136/EC</em></span>. When this setting is
+                                    active, you must URL-encode<a name="N207FE" class="indexterm"></a>
+                                    <span class="emphasis"><em>all</em></span> links within content served by the
+                                    OpenAGE Viewer application server. The standard template engine
+                                    makes this relatively easy, as a "<code class="varname">sid()</code>"<a name="N2080A" class="indexterm"></a> (session ID<a name="N20816" class="indexterm"></a>) template function is provided to
+                                    simplify such URL-encoding (refer to <a class="xref" href="ch05s03.html#IHttpTemplateFunction.sid" title="sid">the section called &ldquo;sid&rdquo;</a>). This mode also makes
+                                    it possible for a user to open multiple simultaneous sessions in
+                                    the same browser (with browser tabs, for example) each with a
+                                    different user account.</p>
+                                <p>Note that this setting only affects <span class="emphasis"><em>session
+                                        cookies</em></span>.  It does not in any way prevent working
+                                    with other cookies.</p></dd></dl></div><p>
+                    </p><div class="variablelist" title="Options for server.signal.uri-enabled"><a name="config.system.server.signal.uri-enabled"></a><p class="title"><b>Options for <code class="varname">server.signal.uri-enabled</code><a name="N20831" class="indexterm"></a></b></p><dl><dt><span class="term"><code class="varname">true</code></span></dt><dd><p>This setting enables a basic shutdown interface using HTTP. When enabled, it can be used as
+                                    described in <a class="xref" href="ch02s03.html#running.stop.uri" title="Stopping the server using a browser">the section called &ldquo;Stopping the server using a browser&rdquo;</a>.</p></dd><dt><span class="term"><code class="varname">false</code></span></dt><dd><p>This is the default setting, and recommended for production, to prevent <span class="emphasis"><em>denial of
+                                        service</em></span> attacks using the <code class="varname">TERM</code>
+                                    application signal (note that this is not related to the Unix
+                                    operating system signal with the same name). Other (more secure)
+                                    shutdown procedures should be used instead with this
+                                    setting.</p></dd></dl></div><p>
+                </p>
+                <p>The effective settings selected by the application are written to
+                        <code class="filename">http.log</code><a name="N2085F" class="indexterm"></a> at <code class="varname">INFO</code> level upon startup, and also whenever
+                    these settings are modified when the application is running. If the server fails
+                    to start (for example, incorrect hostname or a port already in use), the failure
+                    reason is normally recorded in this log file.</p>
+            </div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch03.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="ch03.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Chapter&nbsp;3.&nbsp;Configuration&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Configuring the default connector</td></tr></table></div></body></html>

@@ -1,0 +1,220 @@
+<div class="card staff surveys with-header <% if (data.response){ print('with-footer'); } %>"><%
+
+var r = data.response;
+var surveyUri = r ? data.fmt.sprintf("#expatSurveys/%s/%s/", r.expat.id, r.survey.id) : null;
+
+%><div class="header text-primary-color default-primary-color"><%
+%><h2><%
+if (data.survey){
+	print(_.escape(r.survey.name));
+}
+else{
+	print(_.escape(data.txt.surveysAvailable));
+}
+%></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+if (r){
+	%><h3 class="divider-color"><%
+	print(_.escape(r.expat.cn));
+	if (r.expat.client){
+		print(" ("+ _.escape(r.expat.client.name) +")");
+	}
+	%></h3><%
+
+	var selectSurveyQuestions = function(section){
+		return _.chain(section.surveyQuestions)
+			.filter(function(sq){
+				return _.isArray(sq.answers) && !!sq.answers.length;
+			})
+			.orderBy(["displayOrder",function(sq){
+				var q = r.survey.questions[sq.questionId];
+				return q.name;
+			}],["asc","asc"])
+			.value();
+	};
+
+	var sections = _.chain(r.survey.sections)
+		.filter(function(section){
+			var surveyQuestions = selectSurveyQuestions(section);
+			return _.isArray(surveyQuestions) && !!surveyQuestions.length;
+		})
+		.orderBy(["displayOrder","name"],["asc","asc"])
+		.value();
+
+	_.each(sections, function(section){
+		%><h4 class="accent ellipsis"><%- section.name %></h4><%
+		%><ul class="questions"><%
+
+		var surveyQuestions = selectSurveyQuestions(section);
+		_.each(surveyQuestions, function(sq){
+			var q = r.survey.questions[sq.questionId];
+
+			%><li class="q-<%= q.type.toLowerCase() %>" data-id=<%= sq.id %> data-qid=<%= q.id %>><%
+			%><div class="ellipsis q-label"><%- q.name %></div><%
+
+			switch(q.type){
+				case "TextField":{
+					for(var i=0; i<sq.answers.length; i++){
+						var answer = sq.answers[i];
+						%><div class="q-field"><%
+						%><input type=text data-a=<%= answer.id %> value="<%- answer.value %>" readonly><%
+						%></div><% /* .q-field */
+					}
+					break;
+				}
+				case "DateField":{
+					for(var i=0; i<sq.answers.length; i++){
+						var answer = sq.answers[i];
+						%><div class="q-field"><%
+						%><input type=text class="<%= q.type.toLowerCase() %>" data-a=<%= answer.id %> value="<%- data.cachedMoment(answer.value).format("L") %>" readonly><%
+						%></div><% /* .q-field */
+					}
+					break;
+				}
+				case "TextArea":{
+					for(var i=0; i<sq.answers.length; i++){
+						var answer = sq.answers[i];
+						%><div class="q-field"><%
+						%><textarea rows=4 cols=40 data-a=<%= answer.id %> readonly><%- answer.value %></textarea><%
+						%></div><% /* .q-field */
+					}
+					break;
+				}
+				case "IntField":{
+					for(var i=0; i<sq.answers.length; i++){
+						var answer = sq.answers[i];
+						%><div class="q-field"><%
+						%><input type=text class="<%= q.type.toLowerCase() %>" data-i=<%= i %> data-a=<%= answer.id %> value="<%- answer.value %>" readonly><%
+						%></div><% /* .q-field */
+					}
+					break;
+				}
+				case "Radio":{
+					(function(){
+						var options = _.chain(q.selectableOptions)
+							.orderBy(["name"]).value();
+
+						var answer = sq.answers[0];
+						var choice, otherChoice;
+
+						_.each(options, function(o){
+							choice = answer.choices ? _.find(answer.choices, function(c){ return o.id===c.optionId; }) : null;
+							if (!choice) return; // continue
+
+							%><div class="q-field secondary-text-color"><label class="for-radio" title="<%- o.name %>"><%
+							%><input type="radio" name="sq-<%= sq.id %>" value=<%= o.id %> data-a=<%= answer.id %> checked disabled><%
+							%><span class="field-title"><%- o.name %></span><%
+							%></label></div><% /* .q-field */
+						});
+
+						otherChoice = q.selectableOther ? _.find(answer.choices, function(c){ return !!c.other; }) : null;
+						if (otherChoice){
+							%><div class="q-field secondary-text-color"><label class="for-radio"><%
+							%><input type="radio" name="sq-<%= sq.id %>" value="other" data-a=<%= answer.id %> checked disabled><%
+							%><input type=text class="other secondary-text-color" value="<%- otherChoice.other %>" readonly><%
+							%></label></div><% /* .q-field */
+						}
+					})();
+					break;
+				}
+				case "Checkbox":{
+					(function(){
+						var options = _.chain(q.selectableOptions)
+							.orderBy(["name"]).value();
+
+						var answer = sq.answers[0];
+						var choice, otherChoice;
+
+						_.each(options, function(o){
+							choice = answer.choices ? _.find(answer.choices, function(c){ return o.id===c.optionId; }) : null;
+							if (!choice) return; // continue
+
+							%><div class="q-field secondary-text-color"><label class="for-checkbox" title="<%- o.name %>"><%
+							%><input type="checkbox" name="sq-<%= sq.id %>" value=<%= o.id %> data-a=<%= answer.id %> checked disabled><%
+							%><span class="field-title"><%- o.name %></span><%
+							%></label></div><% /* .q-field */
+						});
+
+						otherChoice = q.selectableOther ? _.find(answer.choices, function(c){ return !!c.other; }) : null;
+						if (otherChoice){
+							%><div class="q-field secondary-text-color"><label class="for-checkbox"><%
+							%><input type="checkbox" name="sq-<%= sq.id %>" value="other" data-a=<%= answer.id %> checked disabled><%
+							%><input type=text class="other secondary-text-color" value="<%- otherChoice.other %>" readonly><%
+							%></label></div><% /* .q-field */
+						}
+					})();
+					break;
+				}
+				default:
+					throw new Error("question("+sq.questionId+"): type: "+q.type);
+			}
+
+			var reviewAnswer = null;
+			var reviewObject = null;
+			_.each(sq.answers, function(a){
+				if (_.isObject(a.remarks)){
+					reviewObject = _.find(a.remarks, function(r){
+						return r.reviewer.id === data.user.id;
+					});
+					if (_.isObject(reviewObject)) reviewAnswer = a;
+				}
+				return !(reviewAnswer && reviewObject);
+			});
+
+			%><div class="review box light-primary-color"><%
+			%><input type=text data-a=<%= (reviewAnswer || sq.answers[0]).id %> data-s=<%= data.user.id %> class="answer-remarks" maxlength=1000 value="<%= reviewObject ? _.escape(reviewObject.text) : '' %>" placeholder="<%- data.txt.surveyAnswerRemarksPlaceholder %>"><%
+			%></div><% /* .review.box */
+
+			%></li><%
+		});
+
+		%></ul><% /* .questions */
+	});
+
+	%><div class="review box light-primary-color"><%
+	%><h3 class="divider-color"><%- data.txt.surveyRemarks %> - <%- data.user.cn %></h3><%
+	%><textarea class="review" rows=10 cols=40><%
+	if (data.review){
+		print(_.escape(data.review.text));
+	}
+	%></textarea><%
+	%></div><% /* .review.box */
+}
+else if (_.isArray(data.responses) && data.responses.length){
+	%><table class="sf-default responses"><%
+	%><tr class="light-primary-color"><%
+	%><th class="survey-name"><%- data.txt.colSurveyName %></th><%
+	%><th class="expat-name"><%- data.txt.colExpatName %></th><%
+	%><th class="customer-name"><%- data.txt.colCustomerName %></th><%
+	%><th class="review-status centered"><%- data.txt.colReviewed %></th><%
+	%></tr><%
+	_.each(data.responses, function(it){
+		%><tr class="response" data-review=<%= it.review ? 1:0 %> data-survey=<%= it.survey.id %>><%
+		%><td class="survey-name"><%- it.survey.name %></td><%
+		%><td class="expat-name"><%- it.expat.cn %></td><%
+		%><td class="customer-name"><%- it.expat.client ? it.expat.client.name : '-' %></td><%
+		%><td class="review-status centered"><a href="#reviewSurveys/<%= it.expat.id %>/<%= it.survey.id %>"><%- it.expat.review ? data.txt.yes : data.txt.no %></a></td><%
+		%></tr><%
+	});
+	%></table><%
+}
+else{
+	%><p><%- data.txt.noSurveysDone %></p><%
+}
+%></div><% /* .body */
+
+if (r){
+	%><div class="footer"><%
+	%><a class="nav ellipsis accent-border accent-color disabled" data-action="review"
+		 href="<%= surveyUri %>" title="<%- data.txt.actionSubmit %>"><%- data.txt.actionSubmit %></a><%
+     %><a class="nav ellipsis accent-border accent-color disabled" data-action="review-toExpat"
+             href="<%= surveyUri %>" title="<%- data.txt.actionSubmitAndRedirect %>"><%- data.txt.actionSubmitAndRedirect %></a><%
+	%><a class="nav ellipsis accent-border accent-color disabled" data-action="review-undo"
+		 href="<%= surveyUri %>" title="<%- data.txt.saveReviewAndUndo %>"><%- data.txt.saveReviewAndUndo %></a><%
+	%></div><% /* .footer */
+}
+
+%></div>

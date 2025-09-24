@@ -1,0 +1,1265 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Template syntax with FreeMarker</title><link href="manual.css" type="text/css" rel="stylesheet"><meta content="DocBook XSL Stylesheets V1.76.1" name="generator"><link rel="home" href="index.html" title="OpenAGE Viewer 0.10.0 Manual"><link rel="up" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Creating custom templates"><link rel="prev" href="ch05.html" title="Chapter&nbsp;5.&nbsp;Creating custom templates"><link rel="next" href="ch05s03.html" title="Template functions"><meta content="NOINDEX, NOFOLLOW" name="ROBOTS"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Template syntax with FreeMarker</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ch05.html">Prev</a>&nbsp;</td><th align="center" width="60%">Chapter&nbsp;5.&nbsp;Creating custom templates</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ch05s03.html">Next</a></td></tr></table><hr></div><div class="sect1" title="Template syntax with FreeMarker"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N20AB3"></a>Template syntax with FreeMarker</h2></div></div></div>
+                
+                <div class="sect2" title="Default settings for templates"><div class="titlepage"><div><div><h3 class="title"><a name="N20AB8"></a>Default settings for templates</h3></div></div></div>
+                    
+                    <p>OpenAGE Viewer applies the following default settings<a name="N20ABF" class="indexterm"></a> when working with FreeMarker templates:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+                                <p>The character encoding for input and output files is
+                                    UTF-8.</p>
+                            </li><li class="listitem">
+                                <p><a name="N20AD3" class="indexterm"></a>The Java locale (regional settings) is
+                                        <code class="code">Locale.UK</code>, used when formatting dates and
+                                    numbers. This can be overridden using template settings.</p>
+                            </li><li class="listitem">
+                                <p>Dates and times are formatted in the UTC time zone.</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+                                            <p><a name="N20AEA" class="indexterm"></a>The default date format is
+                                                  <code class="code">yyyy-MM-dd</code>, which will output (for
+                                                example) <code class="code">2008-10-04</code>.</p>
+                                        </li><li class="listitem">
+                                            <p><a name="N20B01" class="indexterm"></a>The default time format is
+                                                  <code class="code">HH:mm:ssz</code>, which will output (for
+                                                example) <code class="code">18:15:00UTC</code>.</p>
+                                        </li></ul></div>
+                            </li><li class="listitem">
+                                <p><a name="N20B1A" class="indexterm"></a>Numbers are formatted (unless overridden) using ","
+                                    as the thousands separator (the digital grouping delimiter), and
+                                    "." as the decimal mark (to separate the integer part of a whole
+                                    number from the fractional part). This is a display-oriented
+                                    default behavior of FreeMarker, so take care to use the "<code class="code">?c<a name="N20B28" class="indexterm"></a></code>" built-in when including numbers that
+                                    requiring further processing (such as including identity numbers
+                                    in hyperlinks), to prevent unexpected behavior with numbers
+                                    greater than 999.</p>
+                            </li><li class="listitem">
+                                <p><a name="N20B39" class="indexterm"></a>There is no default boolean formatting. See
+                                    <a class="xref" href="ch05s02.html#ftl.types.boolean" title="Boolean variables">the section called &ldquo;Boolean variables&rdquo;</a>.</p>
+                            </li></ul></div>
+                </div>
+                <div class="sect2" title="Template file structure"><div class="titlepage"><div><div><h3 class="title"><a name="ftl.structure"></a>Template file structure</h3></div></div></div>
+                    
+                    <p>Let's start by looking at a trivial example of a FreeMarker file that
+                        could be used to generate a simple HTML document. In this example, the
+                        template expects two template variables, "<code class="varname">listOfItems</code>" (a
+                        sequence) and "<code class="varname">title</code>" (a string):</p>
+                    <pre class="programlisting"><span class="bold"><strong>[#ftl]</strong></span><a class="co" name="ftl.structure.ftldir-co" href="ch05s02.html#ftl.structure.ftldir"><img border="0" alt="1" src="images/callouts/1.svg"></a>
+<span class="bold"><strong>[#setting locale="fr_FR"]</strong></span><a name="N20B66" class="indexterm"></a><a class="co" name="ftl.structure.settingdir-co" href="ch05s02.html#ftl.structure.settingdir"><img border="0" alt="2" src="images/callouts/2.svg"></a>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;<span class="bold"><strong>${title?html}</strong></span><a class="co" name="ftl.structure.tplvar-co" href="ch05s02.html#ftl.structure.tplvar"><img border="0" alt="3" src="images/callouts/3.svg"></a>&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;<span class="bold"><strong>${title?html}</strong></span>&lt;/h1&gt;
+
+<span class="bold"><strong>[#if listOfItems?has_content]</strong></span><a class="co" name="ftl.structure.ifdir-co" href="ch05s02.html#ftl.structure.ifdir"><img border="0" alt="4" src="images/callouts/4.svg"></a>
+    &lt;table&gt;
+    <span class="bold"><strong>[#list listOfItems as item]</strong></span><a class="co" name="ftl.structure.listdir-co" href="ch05s02.html#ftl.structure.listdir"><img border="0" alt="5" src="images/callouts/5.svg"></a>
+        &lt;tr&gt;&lt;td&gt;<span class="bold"><strong>${item?html}</strong></span>&lt;/td&gt;&lt;/tr&gt;
+    <span class="bold"><strong>[/#list]</strong></span>
+    &lt;/table&gt;
+<span class="bold"><strong>[#else]</strong></span>
+    &lt;p&gt;Liste vide.&lt;/p&gt;
+<span class="bold"><strong>[/#if]</strong></span>
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    <div class="calloutlist"><table summary="Callout list" border="0"><tr><td align="left" valign="top" width="5%"><p><a name="ftl.structure.ftldir"></a><a href="#ftl.structure.ftldir-co"><img border="0" alt="1" src="images/callouts/1.svg"></a> </p></td><td align="left" valign="top">
+                            <p>FreeMarker files using <span class="emphasis"><em>square bracket syntax</em></span><a name="N20BA5" class="indexterm"></a> always start with the <code class="code">[#ftl]</code><a name="N20BB0" class="indexterm"></a> directive. Without this directive, the other FreeMarker
+                                tags in the template would be expected using "&lt;" and "&gt;" symbols,
+                                which tends to be unreadable when mixed with HTML tags.</p>
+                        </td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.structure.settingdir"></a><a href="#ftl.structure.settingdir-co"><img border="0" alt="2" src="images/callouts/2.svg"></a> </p></td><td align="left" valign="top">
+                            <p>An example of a <code class="code">[#setting]</code><a name="N20BC6" class="indexterm"></a> directive, here explicitly setting the template locale
+                                to French (France), which would affect date formatting and number
+                                formatting for any such values pushed into the template.</p>
+                            <p>As with the preceeding <code class="code">[#ftl]</code> directive, the line
+                                containing this directive (and no other non-whitespace text) will
+                                    <span class="emphasis"><em>not</em></span> be included in the template output; the
+                                first line will contain the HTML DOCTYPE declaration.</p>
+                        </td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.structure.tplvar"></a><a href="#ftl.structure.tplvar-co"><img border="0" alt="3" src="images/callouts/3.svg"></a> </p></td><td align="left" valign="top">
+                            <p>An example of the use of a template variable,
+                                    <span class="emphasis"><em>and</em></span> the use of a FreeMarker built-in.  The
+                                template variable is an expression (in programming terms), starting
+                                with "<code class="code">${</code>" and ending with "<code class="code">}</code>".  Between
+                                the curly brackets, the name of the variable appears
+                                    (<code class="varname">title</code>), followed by the
+                                    <code class="varname">?html</code><a name="N20BF1" class="indexterm"></a> built-in (which ensures that any special HTML
+                                characters are rendered without corrupting the page and without
+                                compromising security).</p>
+                            <p>Note that the same variable is referred to again, further down the
+                                page.</p>
+                        </td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.structure.ifdir"></a><a href="#ftl.structure.ifdir-co"><img border="0" alt="4" src="images/callouts/4.svg"></a> </p></td><td align="left" valign="top">
+                            <p>The <code class="code">[#if <em class="replaceable"><code>expression</code></em>]</code><a name="N20C0D" class="indexterm"></a> directive is used to mark a section of the template
+                                such that it is only used to generate output if the
+                                    <em class="replaceable"><code>expression</code></em> evaluates to
+                                    <code class="code">true</code>.  Expressions can for example compare numbers
+                                (equality, greater than, less than, and so on), a string of text
+                                (equality, starts with, ends with, and so on), or as in this
+                                example, check that the list "has content" (meaning "is not
+                                    <code class="code">null</code> and has at least one item) by using the
+                                    <code class="varname">?has_content</code><a name="N20C24" class="indexterm"></a> built-in.  The <code class="code">[#if]</code> directive requires a
+                                matching <code class="code">[/#if]</code> directive to mark the end of the
+                                conditional section, and different cases can be handled between the
+                                two marker using <code class="code">[#elseif
+                                        <em class="replaceable"><code>expression</code></em>]</code> and
+                                    <code class="code">[#else]</code> (used here to display a message in French
+                                to indicate that the list is empty or unavailable).</p>
+                        </td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.structure.listdir"></a><a href="#ftl.structure.listdir-co"><img border="0" alt="5" src="images/callouts/5.svg"></a> </p></td><td align="left" valign="top">
+                            <p>The <code class="code">[#list]</code><a name="N20C49" class="indexterm"></a> marks a section (ending with <code class="code">[/#list]</code>)
+                                that will be repeated for every <code class="varname">item</code> in
+                                    <code class="varname">listOfItems</code>.  The name of the
+                                    <code class="varname">item</code> variable is arbitrary, chosen here by
+                                the template author as part of the <code class="code">[#list]</code>
+                                directive.</p>
+                        </td></tr></table></div>
+                    <p>The above example is text-based. You can use any visual HTML editor or
+                        text editor to create your templates. Some editors may be aware of
+                        FreeMarker syntax, others will just treat the directives (in square
+                        brackets) and template variables as text in the document. If you prefer
+                        using a visual HTML editor, you should be able to avoid working with the
+                        text during almost all of the design process.</p>
+                </div>
+                <div class="sect2" title="Template variables"><div class="titlepage"><div><div><h3 class="title"><a name="N20C6B"></a>Template variables</h3></div></div></div>
+                    
+                    <p>Template variables have unique case-sensitive names, and contain typed
+                        data (such as text, numbers, dates, boolean true/false values, and arbitrary
+                        objects with properties). Some variables, such as objects and lists, can
+                        contain other variables. In the case of FreeMarker, the template engine
+                        "wraps" variables into a specific set of types for more uniform processing;
+                        for example, FreeMarker will convert various different Java data types into
+                        either numbers, dates, or collections which can be used in a consistent
+                        manner in the template.</p>
+                    <p>Other template systems may process data differently, but internally,
+                        OpenAGE Viewer always provides the same data to all template systems (this
+                        remark is important to remember if you implement an OSGi plug-in using
+                        templates: you should not specifically preformat your data for FreeMarker,
+                        as this is done for you automatically in almost all cases).</p>
+                    <div class="sect3" title="Using scalar variables in templates"><div class="titlepage"><div><div><h4 class="title"><a name="N20C76"></a>Using scalar variables in templates</h4></div></div></div>
+                        
+                        <p>FreeMarker supports a specific set of scalar (single-value) variable
+                            types in templates, specifically: text (strings), numbers, dates, and
+                            booleans.  Everything else (objects and collections) is at some point
+                            (explicitly or automatically) converted into one of the scalar variable
+                            types.  For example, the template will generally render items in a
+                            collection individually, and properties of an object individually,
+                            instead of trying to convert an entire collection or object graph into a
+                            single standard string format.</p>
+                        <div class="sect4" title="String variables"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.types.string"></a>String variables</h5></div></div></div>
+                            
+                            <p>With FreeMarker templates (which ultimately generate text output),
+                                string variables are generally the most common. As such, there are
+                                many useful built-ins for converting case, formatting, padding,
+                                searching, and splitting strings (see <a class="xref" href="ch05s02.html#ftl.string.built-ins" title="Built-ins for text">the section called &ldquo;Built-ins for text&rdquo;</a>).  All other scalar variable
+                                types have a <code class="varname">?string</code> built-in that can convert to
+                                this type.</p>
+                        </div>
+                        <div class="sect4" title="Number variables"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.types.number"></a>Number variables</h5></div></div></div>
+                            
+                            <p>FreeMarker has only one numeric variable type, covering both
+                                integers and decimal numbers with a fractional part.  You can define
+                                default formatting using settings directives, as follows (the quoted
+                                values are replaceable examples):</p>
+                            <pre class="programlisting">[#setting number_format="<em class="replaceable"><code>#,##0.00</code></em>"]<a name="N20C9C" class="indexterm"></a>
+[#setting locale="<em class="replaceable"><code>fr_FR</code></em>"]<a name="N20CA7" class="indexterm"></a></pre>
+                            <p>The symbols used to define number formats are specified by the
+                                    <a class="ulink" href="http://docs.oracle.com/javase/6/docs/api/java/text/DecimalFormat.html" target="_top"><code class="classname">DecimalFormat</code></a> class. In
+                                particular, a comma (",") is <span class="emphasis"><em>always</em></span> the
+                                grouping separator, and a full-stop (".") is
+                                    <span class="emphasis"><em>always</em></span> the decimal separator. The effective
+                                locale determines how the symbols are output, so for example using
+                                the above <code class="code">fr_FR</code> locale, in output the grouping
+                                separator becomes a space ("&nbsp;") and the decimal separator becomes a
+                                comma (",").</p>
+                            <p>Where a 0 (zero) appears, the result always includes the
+                                appropriate digit, and where a # (hash) appears, the result only
+                                includes a digit if there is a non-zero digit to the left.  The
+                                symbols before the decimal point define the minimum number of digits
+                                (if you use "0" instead of "#"), and define the grouping symbol, but
+                                do <span class="emphasis"><em>not</em></span> limit the number of digits.  After the
+                                decimal point, the number of symbols (either "#" or "0") determines
+                                the maximum number of digits shown after the decimal point, rounding
+                                up or down the truncated digits using the half-even rule.</p>
+                            <p>Using the above format with the <code class="code">fr_FR</code> locale
+                                    <code class="code">12345.678</code> will be formatted as "12&nbsp;345,68", and
+                                with the default locale will be "12,345.68".</p>
+                        </div>
+                        <div class="sect4" title="Date variables"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.types.date"></a>Date variables</h5></div></div></div>
+                            
+                            <p>Date processing in templates can be problematic, due to
+                                limitations in the standard Java API that FreeMarker depends on.
+                                Specifically, Java uses the same
+                                    <code class="classname">java.util.Date</code> object for three different
+                                concepts: <span class="emphasis"><em>date (with time of day)</em></span>,
+                                    <span class="emphasis"><em>date (without time)</em></span>, and <span class="emphasis"><em>time
+                                    (without date)</em></span>.  There is no way for FreeMarker to
+                                know which usage is intended based on the object type.  Furthermore,
+                                care must be taken with time zones, because if the time zone is not
+                                UTC, then a variable containing the time (without the date) can be
+                                rendered "incorrectly" (as the time zone offset may be
+                                applied).</p>
+                            <p>So, before trying to include a date value in a template, you tell
+                                FreeMarker which usage is expected for the variable, using built-ins
+                                (see <a class="xref" href="ch05s02.html#ftl.date.built-in.datetime" title="?datetime">the section called &ldquo;?datetime&rdquo;</a>, <a class="xref" href="ch05s02.html#ftl.date.built-in.date" title="?date">the section called &ldquo;?date&rdquo;</a>, and <a class="xref" href="ch05s02.html#ftl.date.built-in.time" title="?time">the section called &ldquo;?time&rdquo;</a>).</p>
+                            <p>You can then apply the required text formatting to the variable
+                                (restricting formatting to specific parts of the date, such as the
+                                localized name for the month or the day of the week, if necessary)
+                                using the other built-ins for this type (see <a class="xref" href="ch05s02.html#ftl.date.built-ins" title="Built-ins for dates">the section called &ldquo;Built-ins for dates&rdquo;</a>).</p>
+                            <p>You can also define default formatting using settings directives,
+                                as follows (the quoted values are replaceable examples):</p>
+                            <pre class="programlisting">[#setting datetime_format="<em class="replaceable"><code>yyyy-MM-dd HH:mm:ss</code></em>"]<a name="N20D00" class="indexterm"></a>
+[#setting date_format="<em class="replaceable"><code>EEEE, MMMM d</code></em>"]<a name="N20D0B" class="indexterm"></a>
+[#setting time_format="<em class="replaceable"><code>HH'h'mm</code></em>"]<a name="N20D16" class="indexterm"></a>
+[#setting time_zone="<em class="replaceable"><code>Europe/Paris</code></em>"]<a name="N20D21" class="indexterm"></a>
+[#setting locale="<em class="replaceable"><code>fr_FR</code></em>"]<a name="N20D2C" class="indexterm"></a></pre>
+                            <p>The symbols used to define date and time formats are specified by
+                                the <a class="ulink" href="http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html" target="_top"><code class="classname">SimpleDateFormat</code></a> class, and
+                                time zones are specified by the <a class="ulink" href="http://docs.oracle.com/javase/6/docs/api/java/util/TimeZone.html" target="_top"><code class="classname">TimeZone</code></a> class.</p>
+                            <p>The locale setting determines how text values are output: for
+                                example (using the above date format), with <code class="code">fr_FR</code> a
+                                date could be output as "mercredi, juillet 31", but with
+                                    <code class="code">en_GB</code> the same date would be output as "Wednesday,
+                                July 31".</p>
+                            <p>With the above time format example, note that the "h" separating
+                                hours and minutes must be quoted with single quotes (as the "h"
+                                character, when unquoted, is interpreted as the AM/PM time symbol).
+                                At 10:15 UTC, with the above time format and time zone, this would
+                                be output (without quotes) as 12h15 (when the current date is in
+                                daylight savings time in central Europe).</p>
+                        </div>
+                        <div class="sect4" title="Boolean variables"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.types.boolean"></a>Boolean variables</h5></div></div></div>
+                            
+                            <p>Boolean variables can be either <code class="code">true</code> or
+                                    <code class="code">false</code>. Unlike the other scalar types defined by
+                                FreeMarker, by default it is <span class="emphasis"><em>not</em></span> possible to
+                                use a boolean variable directly in a template to create text. You
+                                must use a either a built-in (see <a class="xref" href="ch05s02.html#ftl.boolean.built-ins" title="Built-ins for booleans">the section called &ldquo;Built-ins for booleans&rdquo;</a>) or define a "settings"
+                                directive. The reasoning for this is to force template authors to
+                                choose appropriate text in the template instead of "true" or
+                                "false", such as "on" or "off", "yes" or "no", "available" or
+                                "unavailable", "1" or "0", and so on.</p>
+                            <p>The settings directive can be defined as follows:</p>
+                            <pre class="programlisting">[#setting boolean_format="vrai,faux"]<a name="N20D68" class="indexterm"></a></pre>
+                            <p>Using the above setting, booleans can be used in the template
+                                without built-ins (here, <code class="code">true</code> would be output as
+                                "vrai", and <code class="code">false</code> would be output as "faux").  You can
+                                define the setting and then override it with built-ins per usage of
+                                boolean variables, as appropriate. </p>
+                        </div>
+                    </div>
+                    <div class="sect3" title="Using sequences and hashes in templates"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.types.collections"></a>Using sequences and hashes in templates</h4></div></div></div>
+                        
+                        <p><span class="emphasis"><em>Sequences</em></span> are lists of items referred to using a
+                            single template variable, usually when the number of items is not known
+                            in advance. A list of records in a table is a typical example.
+                                <span class="emphasis"><em>Hashes</em></span> are also collections of items, but
+                            unlike sequences, each item (the <span class="emphasis"><em>value</em></span>) is referred
+                            to using a <span class="emphasis"><em>key</em></span>.  A hash could for example use SKUs
+                            (stock-keeping units) as keys, and full product records as values.  The
+                            items contained by sequences and hashes can be any of FreeMarker's
+                            scalar types, Java objects, or other nested sequences and hashes.</p>
+                        <p>Templates process sequences by defining a section in the template to
+                            be applied to items in the sequence, using the <code class="code">[#list]</code><a name="N20D93" class="indexterm"></a> directive.  Hashes cannot be directly processed; they must
+                            be converted to sequences using either the <code class="varname">?keys</code><a name="N20DA1" class="indexterm"></a> or <code class="varname">?values</code><a name="N20DAF" class="indexterm"></a> built-ins (see <a class="xref" href="ch05s02.html#ftl.hash.built-ins" title="Built-ins for hashes">the section called &ldquo;Built-ins for hashes&rdquo;</a>).  The
+                            traversal order of sequences can be modified using additional built-ins
+                            (see <a class="xref" href="ch05s02.html#ftl.sequence.built-ins" title="Built-ins for sequences">the section called &ldquo;Built-ins for sequences&rdquo;</a>).</p>
+                        <p>The syntax for stepping through a sequence was introduced when
+                            presenting FreeMarker (see <a class="xref" href="ch05s02.html#ftl.structure" title="Template file structure">the section called &ldquo;Template file structure&rdquo;</a>).  Going
+                            further, FreeMarker provides some other useful features when processing
+                            sequences.</p>
+                        <pre class="programlisting"><span class="bold"><strong>[#assign edges = ["<em class="replaceable"><code>top</code></em>","<em class="replaceable"><code>right</code></em>","<em class="replaceable"><code>bottom</code></em>","<em class="replaceable"><code>left</code></em>"]]</strong></span><a name="N20DD8" class="indexterm"></a><a class="co" name="ftl.types.collections.assigndir-co" href="ch05s02.html#ftl.types.collections.assigndir"><img border="0" alt="1" src="images/callouts/1.svg"></a>
+
+<span class="bold"><strong>[#list edges as <em class="replaceable"><code>e</code></em>]</strong></span><a name="N20DE9" class="indexterm"></a><a class="co" name="ftl.types.collections.seqlistdir-co" href="ch05s02.html#ftl.types.collections.seqlistdir"><img border="0" alt="2" src="images/callouts/2.svg"></a>
+<span class="bold"><strong>[#nt]</strong></span><a class="co" name="ftl.types.collections.ntdir-co" href="ch05s02.html#ftl.types.collections.ntdir"><img border="0" alt="3" src="images/callouts/3.svg"></a><a name="N20DFA" class="indexterm"></a> padding-<span class="bold"><strong>${<em class="replaceable"><code>e</code></em>}</strong></span><a class="co" name="ftl.types.collections.interpolation-co" href="ch05s02.html#ftl.types.collections.interpolation"><img border="0" alt="4" src="images/callouts/4.svg"></a>: 10px;  /* <span class="bold"><strong>${<em class="replaceable"><code>e</code></em>_index}</strong></span><a class="co" name="ftl.types.collections.seqindex-co" href="ch05s02.html#ftl.types.collections.seqindex"><img border="0" alt="5" src="images/callouts/5.svg"></a> */
+<span class="bold"><strong>[/#list]</strong></span>
+
+margin: <span class="bold"><strong>[#list edges as <em class="replaceable"><code>e</code></em>]</strong></span>5px<span class="bold"><strong>[#if <em class="replaceable"><code>e</code></em>_has_next]</strong></span><a class="co" name="ftl.types.collections.seqhasnext-co" href="ch05s02.html#ftl.types.collections.seqhasnext"><img border="0" alt="6" src="images/callouts/6.svg"></a> <span class="bold"><strong>[#else]</strong></span>;<span class="bold"><strong>[/#if][/#list]</strong></span></pre>
+                        <p>This will produce the following output:</p>
+                        <pre class="screen">padding-top: 10px; /* 0 */
+padding-right: 10px; /* 1 */
+padding-bottom: 10px; /* 2 */
+padding-left: 10px; /* 3 */
+
+margin: 5px 5px 5px 5px;</pre>
+                        <div class="calloutlist"><table summary="Callout list" border="0"><tr><td align="left" valign="top" width="5%"><p><a name="ftl.types.collections.assigndir"></a><a href="#ftl.types.collections.assigndir-co"><img border="0" alt="1" src="images/callouts/1.svg"></a> </p></td><td align="left" valign="top"><p>The <code class="code">[#assign]</code> directive lets us create a variable from within the template,
+                                    without it having been pushed into the template by OpenAGE
+                                    Viewer, so we use it here to illustrate the example, as a simple
+                                    sequence of strings referred to using a new template variable
+                                    named "<code class="varname">edges</code>". See <a class="xref" href="ch05s02.html#ftl.directive.assign" title="Using the #assign directive">the section called &ldquo;Using the #assign directive&rdquo;</a>.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.types.collections.seqlistdir"></a><a href="#ftl.types.collections.seqlistdir-co"><img border="0" alt="2" src="images/callouts/2.svg"></a> </p></td><td align="left" valign="top"><p>The <code class="code">[#list]</code> directive lets us define a section (ending with
+                                    <code class="code">[/#list]</code>) that will process the
+                                        <code class="varname">edges</code> variable, and within the section
+                                    (repeated for each item in the sequence), we refer to the item
+                                    as "<code class="varname">e</code>" (following the "<code class="code">as</code>"
+                                    keyword in the assign directive).  You can nest different
+                                        <code class="code">[#list]...[/#list]</code> sections within each
+                                    other.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.types.collections.ntdir"></a><a href="#ftl.types.collections.ntdir-co"><img border="0" alt="3" src="images/callouts/3.svg"></a> </p></td><td align="left" valign="top"><p>The <code class="code">[#nt]</code> directive applies to the line in which it appears, and means "no trim".
+                                    In other words, we want FreeMarker to include the end-of-line
+                                    after processing each iteration over items in the sequence.
+                                    Without it, the output would appear on the same line.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.types.collections.interpolation"></a><a href="#ftl.types.collections.interpolation-co"><img border="0" alt="4" src="images/callouts/4.svg"></a> </p></td><td align="left" valign="top"><p>Each instance of "<code class="varname">e</code>" is a scalar string variable from the sequence, so we
+                                    include it as-is directly in the output using the
+                                        <code class="code">${e}</code> syntax.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.types.collections.seqindex"></a><a href="#ftl.types.collections.seqindex-co"><img border="0" alt="5" src="images/callouts/5.svg"></a> </p></td><td align="left" valign="top"><p>Here, we use an automatic FreeMarker-specific feature: an implicit variable, based on the name
+                                    of the loop variable with the "<code class="code">_index</code>"<a name="N20E7F" class="indexterm"></a> suffix. This scalar number contains the 0-based
+                                    iteration counter, so that you do not need to define and track
+                                    this useful information separately.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a name="ftl.types.collections.seqhasnext"></a><a href="#ftl.types.collections.seqhasnext-co"><img border="0" alt="6" src="images/callouts/6.svg"></a> </p></td><td align="left" valign="top"><p>In the second loop over the list, we generate output in the same line; we want every item to
+                                    be separated with a space, except the last one, which should be
+                                    following by a semicolon (";").  We achieve this using another
+                                    automatic FreeMarker-specific feature: another implicit
+                                    variable, based on the name of the loop variable with the
+                                    "<code class="code">_has_next</code>"<a name="N20E94" class="indexterm"></a> suffix.  This scalar boolean
+                                    contains <code class="code">true</code> if there are more items to loop over,
+                                    otherwise <code class="code">false</code>, so that you do not need to define
+                                    and track this useful information separately.</p></td></tr></table></div>
+                        <p>With hashes, looping over all items requires additional syntax, as
+                            follows:</p>
+                        <pre class="programlisting"><span class="bold"><strong>[#assign <em class="replaceable"><code>edges</code></em> = {"top":20,"right":10,"bottom":15,"left":50}]</strong></span>
+
+margin: <span class="bold"><strong>[#list <em class="replaceable"><code>edges</code></em>?keys as <em class="replaceable"><code>k</code></em>]${edges[<em class="replaceable"><code>k</code></em>]}</strong></span>px<span class="bold"><strong>[#if <em class="replaceable"><code>k</code></em>_has_next]</strong></span> <span class="bold"><strong>[/#if][/#list]</strong></span>;</pre>
+                        <p>This time, we declare the collection within curly brackets
+                                ("<code class="code">{...}</code>", and not the square brackets used with the
+                            preceeding sequence example) and each <span class="emphasis"><em>key</em></span> is
+                            followed by a colon (":") and the <span class="emphasis"><em>value</em></span> (values are
+                            not necessarily strings).  The loop will iterate over keys in the order
+                            in which the are defined (note that this is not necessarily the case for
+                            all hashes added by Java code in OpenAGE Viewer or in OSGi plug-ins<sup>[<a href="#ftn.N20ED7" name="N20ED7" class="footnote">1</a>]</sup>).  We loop over the hash's keys using the <code class="code">?keys</code>
+                            built-in, and retrieve values by accessing the hash variable
+                                <code class="varname">edges</code> followed by the key variable within square
+                            brackets.  This produces the following output:</p>
+                        <pre class="screen">margin: 20px 10px 15px 50px;</pre>
+                        <p>Note that FreeMarker has an important limitation: hashes only work
+                            well when hash keys are strings (text type).  Any Java objects pushed
+                            into the template's data context and that implement the
+                                <code class="classname">java.util.Map</code> interface without using string
+                            keys, must be manipulated as Java objects and <span class="emphasis"><em>not</em></span>
+                            as FreeMarker hashes.</p>
+                    </div>
+                    <div class="sect3" title="Using Java objects in templates"><div class="titlepage"><div><div><h4 class="title"><a name="N20EF4"></a>Using Java objects in templates</h4></div></div></div>
+                        
+                        <p>The default data provided by OpenAGE Viewer is almost always based on
+                            Java objects (see <a class="xref" href="ch05.html#pages.template.data" title="Default data provided for templates">the section called &ldquo;Default data provided for templates&rdquo;</a>). The properties
+                            of these objects may be other objects, or be sequences or hashes, or
+                            scalar variables. More precisely, FreeMarker introspects Java objects
+                            using a <a class="ulink" href="http://docs.oracle.com/javase/tutorial/javabeans/writing/properties.html" target="_top">JavaBeans</a>-style syntax (without going as far as indexed or
+                            bound properties), and then wraps as either sequences, hashes, scalar
+                            variables, or as other Java objects in their own template
+                            wrappers.</p>
+                        <p>You can therefore also add your own Java objects (using an OSGi
+                            plug-in) into any template, and the following method signature patterns
+                            will be recognized as properties:</p>
+                        <pre class="programlisting">public <em class="replaceable"><code>T</code></em> get<em class="replaceable"><code>SomeProperty</code></em>();       // <em class="lineannotation"><span class="lineannotation">accessible as variable.someProperty</span></em>
+public boolean is<em class="replaceable"><code>SomeCondition</code></em>(); // <em class="lineannotation"><span class="lineannotation">accessible as variable.someCondition</span></em>
+public <em class="replaceable"><code>T</code></em> get(String x);           // <em class="lineannotation"><span class="lineannotation">accessible as variable.someDynamicProperty</span></em></pre>
+                        <p>The first pattern is the most common: a <code class="code">public</code> method,
+                            with no parameters and starting with "get", returning any type of object
+                            (or primitive datatype) in place of
+                                <code class="code"><em class="replaceable"><code>T</code></em></code>.  The second pattern is a
+                            special case variant defined by the JavaBeans specification that allows
+                            boolean properties to start with "is" instead of "get".  The third
+                            pattern is similar to the first in intent, except that the property name
+                            is passed as parameter "<code class="varname">x</code>" and the method is called
+                            "get"; this allows the Java object to support dynamic properties (such
+                            as field names from a database table) that are not known in advance, so
+                            that the template author can benefit from a more concise syntax.</p>
+                        <p>You <span class="emphasis"><em>cannot</em></span> access any other method as a property,
+                            and FreeMarker applies some security filters to make some special
+                            methods (such as those defined by
+                                <code class="classname">java.lang.Object</code>) inaccessible to template
+                            authors.  It is not possible to access fields of an object directly,
+                            even if they are declared <code class="code">public</code>.</p>
+                        <p>It is bad practice (and a security risk) to attempt to call arbitrary
+                            methods of a Java object, to perform actions (such as sending an e-mail)
+                            or to modify state (such as updating a file or a database).  Such
+                            actions should be securely performed in code prior to providing data to
+                            the template.</p>
+                    </div>
+                    <div class="sect3" title="Using the #assign directive"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.directive.assign"></a>Using the #assign directive</h4></div></div></div>
+                        
+                        <p><a name="N20F41" class="indexterm"></a>The <code class="code">[#assign]</code> directive (already seen in <a class="xref" href="ch05s02.html#ftl.types.collections" title="Using sequences and hashes in templates">the section called &ldquo;Using sequences and hashes in templates&rdquo;</a>) lets you define or derive
+                            variables in the template, without needing to push them into the
+                            template using Java code.</p>
+                        <p>For example, when generated HTML within a loop or a macro, you might
+                            find it useful to define the HTML ID of a form <code class="code">&lt;input&gt;</code>
+                            element:</p>
+                        <pre class="programlisting"><span class="bold"><strong>[#assign <em class="replaceable"><code>fieldId</code></em>="textbox${<em class="replaceable"><code>item</code></em>_index+1}"]</strong></span>
+&lt;label for="<span class="bold"><strong>${<em class="replaceable"><code>fieldId</code></em>}</strong></span>"&gt;${fieldTitle?html}&lt;/label&gt;
+&lt;input id="<span class="bold"><strong>${<em class="replaceable"><code>fieldId</code></em>}</strong></span>" name="<span class="bold"><strong>${<em class="replaceable"><code>fieldId</code></em>}</strong></span>" value="" size="40"/&gt;</pre>
+                        <p>In the above example, we use the implicit
+                                <code class="varname">item_index</code> variable from the <code class="code">[#list]</code>
+                            directive (which is 0-based, so we add 1) which will result in the first
+                            value for <code class="varname"><em class="replaceable"><code>fieldId</code></em></code> being
+                            "textbox1".  We then proceed to use this calculated value in three
+                            places in the output, instead of recalculating it for each usage.</p>
+                    </div>
+                    <div class="sect3" title="Using FreeMarker built-ins"><div class="titlepage"><div><div><h4 class="title"><a name="N20F89"></a>Using FreeMarker built-ins</h4></div></div></div>
+                        
+                        <p>FreeMarker is not limited to merging variable values into templates,
+                            it also allows functions to be used in templates. Just as spreadsheet
+                            software adds flexibility with functions, you can too. FreeMarker
+                            distinguishes two types of functions: those provided by the application
+                            (see <a class="xref" href="ch05s03.html" title="Template functions">the section called &ldquo;Template functions&rdquo;</a>), and those provided by
+                            FreeMarker itself, called <span class="emphasis"><em>built-ins</em></span>.  Built-ins
+                            have their own specific syntax, and can be chained easily (a built-in
+                            can be applied to a template variable, and a second built-in can then be
+                            applied to the result of the first built-in, and so on).</p>
+                        <p>For example, assuming that the variable
+                                <code class="varname">person.lastName</code> contains the text "d'Arcy", then
+                            the following template excerpt:</p>
+                        <pre class="screen">${person.lastName?upper_case?html}</pre>
+                        <p>...will result in the following output:</p>
+                        <pre class="screen">D&amp;#39;ARCY</pre>
+                        <p>This works as follows: the template engine resolves the
+                                <code class="varname">lastName</code> property on the
+                                <code class="varname">person</code> variable, which yields the text "d'Arcy".
+                            That text is then passed to the <code class="code">?upper_case</code> built-in, which
+                            transforms it into the text "D'ARCY".  Then, the <code class="code">?html</code>
+                            built-in receives the text "D'ARCY" and transforms it into
+                            "D&amp;#39;ARCY".  Finally, the template receives the text
+                            "D&amp;#39;ARCY" and writes it directly into the output page.</p>
+                        <p>In the above example, the order if the built-ins is irrelevant, but
+                            this is not always the case.  When using built-ins, always think about
+                            what will happen as each built-in processes input and yields output at
+                            each step.</p>
+                        <p>As FreeMarker does not allow <code class="code">null</code><a name="N20FBC" class="indexterm"></a> values to be output directly into a template (it considers
+                            this to be an error, to err on the side of caution), there is one
+                            special built-in that can be applied to any variable:
+                                <code class="code">?has_content</code><a name="N20FC7" class="indexterm"></a>.  This built-in returns <code class="code">false</code> if the value to
+                            which it is applied is <code class="code">null</code>, and also returns
+                                <code class="code">false</code> if it is applied to an empty string, sequence or
+                            hash; in all other cases, this built-in returns
+                            <code class="code">true</code>.</p>
+                        <p>You can also test variables to determine if they are of a specific
+                            FreeMarker variable type, using the following built-ins:</p>
+                        <div class="variablelist"><dl><dt><span class="term"><code class="function">?is_string</code><a name="N20FEA" class="indexterm"></a></span></dt><dd>
+                                    <p>Returns <code class="code">true</code> if the variable is a FreeMarker
+                                        string.</p>
+                                </dd><dt><span class="term"><code class="function">?is_number</code><a name="N21005" class="indexterm"></a></span></dt><dd>
+                                    <p>Returns <code class="code">true</code> if the variable is a FreeMarker
+                                        number.</p>
+                                </dd><dt><span class="term"><code class="function">?is_date</code><a name="N21020" class="indexterm"></a></span></dt><dd>
+                                    <p>Returns <code class="code">true</code> if the variable is a FreeMarker
+                                        date and/or time.</p>
+                                </dd><dt><span class="term"><code class="function">?is_boolean</code><a name="N2103B" class="indexterm"></a></span></dt><dd>
+                                    <p>Returns <code class="code">true</code> if the variable is a FreeMarker
+                                        boolean.</p>
+                                </dd><dt><span class="term"><code class="function">?is_sequence</code><a name="N21056" class="indexterm"></a></span></dt><dd>
+                                    <p>Returns <code class="code">true</code> if the variable is a FreeMarker
+                                        sequence.</p>
+                                </dd><dt><span class="term"><code class="function">?is_hash</code><a name="N21071" class="indexterm"></a></span></dt><dd>
+                                    <p>Returns <code class="code">true</code> if the variable is a FreeMarker
+                                        hash.</p>
+                                </dd></dl></div>
+                        <p>Note that the following description of FreeMarker built-ins in this
+                            document is <span class="emphasis"><em>not</em></span> exhaustive. For a complete
+                            reference, refer to the online <a class="ulink" href="http://freemarker.org/docs/ref_builtins.html" target="_top">FreeMarker
+                                manual</a>.</p>
+                    </div>
+                    <div class="sect3" title="Built-ins for text"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.string.built-ins"></a>Built-ins for text</h4></div></div></div>
+                        
+                        <p>The following built-ins can be applied to scalar string variables,
+                            string properties of Java objects, and to the result of any other
+                            built-in or template function that produces a string.</p>
+                        <div class="sect4" title="?html"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.html"></a>?html</h5></div></div></div>
+                            
+                            <p><a name="N210A3" class="indexterm"></a>Converts a string into HTML format, so that page layout
+                                is not corrupted when the string contains characters that have
+                                special meaning to a web browser.  Apart from helping to prevent
+                                corrupted layout, it is a critical step in securing your web page.
+                                    <span class="bold"><strong>You must apply this systematically to all
+                                    string variables when generating HTML.</strong></span></p>
+                            <p>The following replacement rules are applied:</p>
+                                <table summary="Simple list" border="0" class="simplelist"><tr><td><code class="code">&lt;</code> is replaced with
+                                        <code class="code">&amp;lt;</code></td><td><code class="code">"</code> is replaced with <code class="code">@quot;</code></td></tr><tr><td><code class="code">&gt;</code> is replaced with
+                                        <code class="code">&amp;gt;</code></td><td><code class="code">'</code> is replaced with
+                                    <code class="code">&amp;#39;</code></td></tr><tr><td><code class="code">&amp;</code> is replaced with
+                                    <code class="code">&amp;amp;</code></td><td>&nbsp;</td></tr></table>
+                        </div>
+                        <div class="sect4" title="?js_string"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.js_string"></a>?js_string</h5></div></div></div>
+                            
+                            <p><a name="N210E6" class="indexterm"></a>Converts a string into JavaScript format, so that
+                                scripts on the page work as expected, even when the string contains
+                                characters that have special meaning in JavaScript.  Apart from
+                                helping to prevent script errors, it is a critical step in securing
+                                your web page.  <span class="bold"><strong>You must apply this
+                                    systematically to all string variables when generating
+                                    JavaScript.</strong></span></p>
+                            <p>The following replacement rules are applied:</p>
+                            <table summary="Simple list" border="0" class="simplelist"><tr><td><code class="code">"</code> is replaced with <code class="code">\"</code></td><td><code class="code">/</code> is replaced with <code class="code">\/"</code></td></tr><tr><td><code class="code">'</code> is replaced with <code class="code">\'</code></td><td>characters under <code class="code">0x20</code> are escaped</td></tr></table>
+                        </div>
+                        <div class="sect4" title="?length"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.length"></a>?length</h5></div></div></div>
+                            
+                            <p><a name="N21121" class="indexterm"></a>Gets the number of characters, including whitespace, in
+                                the string to which this built-in is applied.</p>
+                        </div>
+                        <div class="sect4" title="?upper_case"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.upper_case"></a>?upper_case</h5></div></div></div>
+                            
+                            <p><a name="N21136" class="indexterm"></a>Gets the upper case equivalent of the string to which
+                                this built-in is applied.</p>
+                            <p>For example:</p>
+                            <pre class="screen">${"Viele Gr&uuml;&szlig;e"<span class="bold"><strong>?upper_case</strong></span>}</pre>
+                            <p>...will produce the following output in a German locale:</p>
+                            <pre class="screen">VIELE GR&Uuml;SSE</pre>
+                        </div>
+                        <div class="sect4" title="?lower_case"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.lower_case"></a>?lower_case</h5></div></div></div>
+                            
+                            <p><a name="N2115B" class="indexterm"></a>Gets the lower case equivalent of the string to which
+                                this built-in is applied.</p>
+                        </div>
+                        <div class="sect4" title="?contains"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.contains"></a>?contains</h5></div></div></div>
+                            
+                            <p><a name="N21170" class="indexterm"></a>Determines if the string to which this built-in is
+                                applied contains the specified substring, using case-sensitive
+                                matching rules.</p>
+                            <p>This built-in requires a single parameter, and produces a boolean
+                                result.  For example, assuming that "<code class="varname">v</code>" is a
+                                string variable:</p>
+                            <pre class="screen">[#if v<span class="bold"><strong>?contains("order")</strong></span>]Found[#else]Not found[/#if]</pre>
+                            <p>...then when <code class="varname">v</code> is "Your order invoice", this
+                                will evaluate as <code class="code">true</code>, but when <code class="varname">v</code> is
+                                "Your quote", this will evaluate as <code class="code">false</code>.  It will
+                                also evaluate <code class="code">false</code> if <code class="code">v</code> does not contain
+                                a case-matching occurrence, as would be the case if the value of
+                                    <code class="varname">v</code> was for example "BORDER".</p>
+                        </div>
+                        <div class="sect4" title="?index_of"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.index_of"></a>?index_of</h5></div></div></div>
+                            
+                            <p><a name="N211AA" class="indexterm"></a>Gets the 0-based index of the <span class="emphasis"><em>first</em></span>
+                                occurrence of the specified string within the string to which this
+                                built-in is applied.</p>
+                            <p>This built-in accepts up to two parameters, and produces a number
+                                as a result:</p>
+                            <pre class="screen"><code class="function">index_of</code>( <em class="parameter"><code>value</code></em>, <em class="parameter"><code>offset</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>value</code></em></span></dt><dd>
+                                        <p>Required string. This is the substring to search for
+                                            within the string to which this built-in is applied.
+                                            Searching is case-sensitive, and performed from
+                                            left-to-right.</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>offset</code></em></span></dt><dd>
+                                        <p>Optional number. If specified, should be greater than
+                                            0 and less than the length (minus one) of the string to
+                                            which this built-in is applied. Searching starts at this
+                                            offset (and can therefore return a match at this offset
+                                            position, or after the offset), and continues
+                                            rightwards.</p>
+                                    </dd></dl></div>
+                            <p>The 0-based index of the first match (from the start of the
+                                string, or inclusively from the offset) is returned; when no match
+                                can be found, -1 is returned instead. For example:</p>
+                            <pre class="programlisting">${"abcabc"<span class="bold"><strong>?index_of("bc")</strong></span>}
+${"abcabc"<span class="bold"><strong>?index_of("bc",2)</strong></span>}
+${"xyz"<span class="bold"><strong>?index_of("bc")</strong></span>}</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">1
+4
+-1</pre>
+                        </div>
+                        <div class="sect4" title="?last_index_of"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.last_index_of"></a>?last_index_of</h5></div></div></div>
+                            
+                            <p><a name="N21205" class="indexterm"></a>Gets the 0-based index of the <span class="emphasis"><em>last</em></span>
+                                occurrence of the specified string within the string to which this
+                                built-in is applied.</p>
+                            <p>This built-in accepts up to two parameters, and produces a number
+                                as a result:</p>
+                            <pre class="screen"><code class="function">last_index_of</code>( <em class="parameter"><code>value</code></em>, <em class="parameter"><code>offset</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>value</code></em></span></dt><dd>
+                                        <p>Required string. This is the substring to search for
+                                            within the string to which this built-in is applied.
+                                            Searching is case-sensitive, and performed from
+                                            right-to-left.</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>offset</code></em></span></dt><dd>
+                                        <p>Optional number. If specified, should be greater than
+                                            0 and less than the length (minus one) of the string to
+                                            which this built-in is applied. Searching starts at this
+                                            offset (and can therefore return a match at this offset
+                                            position, or after the offset), and continues
+                                            leftwards.</p>
+                                    </dd></dl></div>
+                            <p>The 0-based index of the last match (from the end of the string,
+                                or inclusively from the offset) is returned; when no match can be
+                                found, -1 is returned instead. For example:</p>
+                            <pre class="programlisting">${"abcabc"<span class="bold"><strong>?last_index_of("bc")</strong></span>}
+${"abcabc"<span class="bold"><strong>?last_index_of("bc",2)</strong></span>}
+${"xyz"<span class="bold"><strong>?last_index_of("bc")</strong></span>}</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">4
+1
+-1</pre>
+                        </div>
+                        <div class="sect4" title="?substring"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.substring"></a>?substring</h5></div></div></div>
+                            
+                            <p><a name="N21260" class="indexterm"></a>Gets part of a string, from a character index up to an
+                                (optional) character index or to the end of the string.  The indices
+                                can be located using other built-ins (usually <code class="code">?index_of</code>
+                                and <code class="code">?last_index_of</code>).</p>
+                            <p>This built-in accepts up to two parameters, and produces a string
+                                as a result:</p>
+                            <pre class="screen"><code class="function">substring</code>( <em class="parameter"><code>firstIndexInclusive</code></em>, <em class="parameter"><code>lastIndexExclusive</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>firstIndexInclusive</code></em></span></dt><dd>
+                                        <p>Required number.  Must be greater than 0 and less than
+                                            the length (minus one) of the string to which this
+                                            built-in is applied.</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>lastIndexExclusive</code></em></span></dt><dd>
+                                        <p>Optional number.  If specified, must be greater than
+                                                <em class="parameter"><code>firstIndexInclusive</code></em> and less
+                                            than the length (minus one) of the string to which this
+                                            built-in is applied.</p>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">1st: ${"Home Page Menu"<span class="bold"><strong>?substring(0,4)</strong></span>}
+2nd: ${"Home Page Menu"<span class="bold"><strong>?substring(5,9)</strong></span>}
+3rd: ${"Home Page Menu"<span class="bold"><strong>?substring(10)</strong></span>}</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">1st: Home
+2nd: Page
+3rd: Menu</pre>
+                        </div>
+                        <div class="sect4" title="?split"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.split"></a>?split</h5></div></div></div>
+                            
+                            <p><a name="N212C1" class="indexterm"></a>Derives a sequence by splitting the string around
+                                matches of a specified separator.  The matching string is discarded;
+                                when two adjacent matches occur (with no text between), this adds an
+                                empty string to the sequence. </p>
+                            <p>This built-in requires one parameter<sup>[<a href="#ftn.N212D0" name="N212D0" class="footnote">2</a>]</sup>, and produces a sequence of strings as a result:</p>
+                            <pre class="screen"><code class="function">split</code>( <em class="parameter"><code>separator</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>separator</code></em></span></dt><dd>
+                                        <p>Required string, such as "&nbsp;" or ",", used to identify
+                                            boundaries in the string where splitting should
+                                            occur.</p>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">[#list "one,two,,nine,ten"?split(",") as x]
+[#nt] - "${x}"
+[/#list]</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen"> - "one"
+ - "two"
+ - ""
+ - "nine"
+ - "ten"</pre>
+                        </div>
+                        <div class="sect4" title="?left_pad"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.left_pad"></a>?left_pad</h5></div></div></div>
+                            
+                            <p><a name="N21306" class="indexterm"></a>Gets a string with padding to the left of string to
+                                which this built-in is applied, such that the length of the returned
+                                string is at least the specified length.  If applied to a string
+                                with a length that is already greater than or equal to the specified
+                                length, then no padding occurs and the returned string is the same
+                                as the string to which the built-in was applied.  By default, spaces
+                                are used for padding, but an alternative padding character may be
+                                specified.</p>
+                            <p>This built-in accepts up to two parameters, and produces a string
+                                as a result:</p>
+                            <pre class="screen"><code class="function">left_pad</code>( <em class="parameter"><code>padToLength</code></em>, <em class="parameter"><code>padWith</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>padToLength</code></em></span></dt><dd>
+                                        <p>Required number.  The minimum required length for the
+                                            string when padding.  If the string to which this
+                                            built-in is applied is longer than this, then it is
+                                            returned as-is (no padding, no truncation).</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>padWith</code></em></span></dt><dd>
+                                        <p>Optional string.  If this is a single character, it is
+                                            simply repeated as required to pad the string to the
+                                            required length.  If it contains more than one
+                                            character, then it is repeated as a pattern (the overall
+                                            padding length remains the same, the padding is simply
+                                            composed of a repeating pattern).</p>
+                                    </dd></dl></div>
+                            <p>For example (using enclosing parentheses to show the effect of
+                                padding):</p>
+                            <pre class="programlisting">(${"Pad me"<span class="bold"><strong>?left_pad(7)</strong></span>})
+(${"Naboo"<span class="bold"><strong>?left_pad(7,"-")</strong></span>})
+(${"Tatooine"<span class="bold"><strong>?left_pad(7,"-")</strong></span>})
+(${"Dashed"<span class="bold"><strong>?left_pad(12,"= ")</strong></span>})</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">( Pad me)
+(--Naboo)
+(Tatooine)
+(= = = Dashed)</pre>
+                        </div>
+                        <div class="sect4" title="?right_pad"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.right_pad"></a>?right_pad</h5></div></div></div>
+                            
+                            <p><a name="N21362" class="indexterm"></a>Gets a string with padding to the right of string to
+                                which this built-in is applied, such that the length of the returned
+                                string is at least the specified length. If applied to a string with
+                                a length that is already greater than or equal to the specified
+                                length, then no padding occurs and the returned string is the same
+                                as the string to which the built-in was applied. By default, spaces
+                                are used for padding, but an alternative padding character may be
+                                specified.</p>
+                            <p>This built-in accepts up to two parameters, and produces a string
+                                as a result:</p>
+                            <pre class="screen"><code class="function">right_pad</code>( <em class="parameter"><code>padToLength</code></em>, <em class="parameter"><code>padWith</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>padToLength</code></em></span></dt><dd>
+                                        <p>Required number.  The minimum required length for the
+                                            string when padding.  If the string to which this
+                                            built-in is applied is longer than this, then it is
+                                            returned as-is (no padding, no truncation).</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>padWith</code></em></span></dt><dd>
+                                        <p>Optional string.  If this is a single character, it is
+                                            simply repeated as required to pad the string to the
+                                            required length.  If it contains more than one
+                                            character, then it is repeated as a pattern (the overall
+                                            padding length remains the same, the padding is simply
+                                            composed of a repeating pattern).</p>
+                                    </dd></dl></div>
+                            <p>For example (using enclosing parentheses to show the effect of
+                                padding):</p>
+                            <pre class="programlisting">(${"Pad me"<span class="bold"><strong>?right_pad(7)</strong></span>})
+(${"Naboo"<span class="bold"><strong>?right_pad(7,"-")</strong></span>})
+(${"Tatooine"<span class="bold"><strong>?right_pad(7,"-")</strong></span>})
+(${"Dashed"<span class="bold"><strong>?right_pad(12,"= ")</strong></span>})</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">(Pad me )
+(Naboo--)
+(Tatooine)
+(Dashed= = = )</pre>
+                        </div>
+                        <div class="sect4" title="?trim"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.string.built-in.trim"></a>?trim</h5></div></div></div>
+                            
+                            <p><a name="N213BE" class="indexterm"></a>Gets a string with no leading or trailing
+                                whitespace.</p>
+                            <p>For example (using enclosing parentheses to show the effect of
+                                trimming):</p>
+                            <pre class="screen">(${"  hello world  "<span class="bold"><strong>?trim</strong></span>})</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">(hello world)</pre>                        </div>
+                    </div>
+                    <div class="sect3" title="Built-ins for numbers"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.number.built-ins"></a>Built-ins for numbers</h4></div></div></div>
+                        
+                        <p>The following built-ins can be applied to scalar numeric variables,
+                            numeric properties of Java objects, and to the result of any other
+                            built-in or template function that produces a number.</p>
+                        <div class="sect4" title="?c"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.number.built-in.c"></a>?c</h5></div></div></div>
+                            
+                            <p><a name="N213ED" class="indexterm"></a>Converts a number variable to a string in
+                                    <span class="emphasis"><em>computer format</em></span>, without applying any
+                                effective number format settings.  In other words, there will be no
+                                grouping separator, no decimal rounding, no left-padded zeros, and
+                                no right-padded zeros.   For example, assuming that
+                                    "<code class="varname">pi</code>" is a template variable containing the
+                                value of the <code class="code">double</code> constant
+                                    <code class="code">java.lang.Math.PI</code>:</p>
+                            <pre class="screen">${pi<span class="bold"><strong>?c</strong></span>}
+${(pi * 1000000)<span class="bold"><strong>?c</strong></span>}</pre>
+                            <p>...then the output will be:</p>
+                            <pre class="screen">3.141592653589793
+3141592.653589793</pre>
+                        </div>
+                        <div class="sect4" title="?string"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.number.built-in.string"></a>?string</h5></div></div></div>
+                            
+                            <p><a name="N2141F" class="indexterm"></a>Converts a number to a string using either the default
+                                format and locale settings for the template, or using a format
+                                specified as a parameter.</p>
+                            <p>This built-in therefore accepts one optional parameter, and
+                                produces a string as a result:</p>
+                            <pre class="screen"><code class="function">string</code>( <em class="parameter"><code>format</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>format</code></em></span></dt><dd>
+                                        <p>Optional format string. If defined, uses the
+                                            formatting symbols specified by the <a class="ulink" href="http://docs.oracle.com/javase/6/docs/api/java/text/DecimalFormat.html" target="_top"><code class="classname">DecimalFormat</code></a>
+                                            class.  Refer to <a class="xref" href="ch05s02.html#ftl.types.number" title="Number variables">the section called &ldquo;Number variables&rdquo;</a> for
+                                            more information.</p>
+                                        <p>You can also specify named formats:</p><div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>currency</code></em></span></dt><dd>
+                                                  <p>This formats the number using the current
+                                                  and default formatting rules for the effective
+                                                  locale.</p>
+                                                  <p>This can also be written as:
+                                                  <code class="code">?string.currency</code></p>
+                                                  </dd><dt><span class="term"><em class="parameter"><code>percent</code></em></span></dt><dd>
+                                                  <p>This multiplies the value by 100 then
+                                                  formats it as a percentage, using the effective
+                                                  number format for the decimal separator.
+                                                  Percentages between 0 and 100% should therefore be
+                                                  provided in the range 0.0 to 1.0.</p>
+                                                  <p>This can also be written as:
+                                                  <code class="code">?string.percent</code></p>
+                                                  </dd></dl></div>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">${12.345<span class="bold"><strong>?string.currency</strong></span>}
+${0.77<span class="bold"><strong>?string.percent</strong></span>}
+${42<span class="bold"><strong>?string("#000.0#")</strong></span>}
+${92400<span class="bold"><strong>?string("#,###")</strong></span>}</pre>
+                            <p>...produces the following output with the <code class="code">fr_FR</code>
+                                locale:</p>
+                            <pre class="screen">12,34 &euro;
+77 %
+042,0
+92 400</pre>
+                            <p>...and produces the following output with the <code class="code">en_GB</code>
+                                locale:</p>
+                            <pre class="screen">&pound;12.34
+77%
+042.0
+92,400</pre>
+                        </div>
+                        <div class="sect4" title="?round"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.number.built-in.round"></a>?round</h5></div></div></div>
+                            
+                            <p><a name="N214A8" class="indexterm"></a>Rounds a number variable.  If the fractional part ends
+                                with .5, then this rounds towards infinity (either positive or
+                                negative, depending upon whether the number is positive or
+                                negative).</p>
+                        </div>
+                        <div class="sect4" title="?number_to_date"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.number.built-in.number_to_date"></a>?number_to_date</h5></div></div></div>
+                            
+                            <p><a name="N214BD" class="indexterm"></a>Converts a number with <code class="code">long</code> (64-bit
+                                integer) precision to a date.  This may be useful in some situations
+                                with Java objects.</p>
+                            <p>This produces a FreeMarker <span class="emphasis"><em>date (without
+                                    time)</em></span> variable, which can be output using a chained
+                                built-in.  For example:</p>
+                            <pre class="programlisting">${<em class="replaceable"><code>1375354728519</code></em><span class="bold"><strong>?number_to_date</strong></span>?iso_local}</pre>
+                            <p>...will convert <em class="replaceable"><code>1375354728519</code></em> (a number
+                                of milliseconds since the Unix reference time) to a date variable,
+                                then (using the chained <code class="code">?iso_local</code> built-in) produce
+                                the following output (if the time zone is UTC):</p>
+                            <pre class="screen">2013-08-01</pre>
+                        </div>
+                        <div class="sect4" title="?number_to_time"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.number.built-in.number_to_time"></a>?number_to_time</h5></div></div></div>
+                            
+                            <p><a name="N214F0" class="indexterm"></a>Converts a number with <code class="code">long</code> (64-bit
+                                integer) precision to a time of day.  This may be useful in some
+                                situations with Java objects.</p>
+                            <p>This produces a FreeMarker <span class="emphasis"><em>time (without
+                                    date)</em></span> variable, which can be output using a chained
+                                built-in.  For example:</p>
+                            <pre class="programlisting">${<em class="replaceable"><code>4585000</code></em><span class="bold"><strong>?number_to_time</strong></span>?string("HH:mm:ss z")}</pre>
+                            <p>...will convert <em class="replaceable"><code>4585000</code></em> (a number of
+                                milliseconds from midnight) to a time variable, then (using the
+                                chained <code class="code">?string(format)</code> built-in) produce the following
+                                output (if the time zone is UTC):</p>
+                            <pre class="screen">01:16:25 UTC</pre>
+                        </div>
+                        <div class="sect4" title="?number_to_datetime"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.number.built-in.number_to_datetime"></a>?number_to_datetime</h5></div></div></div>
+                            
+                            <p><a name="N21523" class="indexterm"></a>Converts a number with <code class="code">long</code> (64-bit
+                                integer) precision to a date with time of day.  This may be useful
+                                in some situations with Java objects.</p>
+                            <p>This produces a FreeMarker <span class="emphasis"><em>date with time</em></span>
+                                variable, which can be output using a chained built-in.  For
+                                example:</p>
+                            <pre class="programlisting">${<em class="replaceable"><code>1375354728519</code></em><span class="bold"><strong>?number_to_datetime</strong></span>?iso_local}</pre>
+                            <p>...will convert <em class="replaceable"><code>1375354728519</code></em> (a number
+                                of milliseconds from midnight) to a date (with time) variable, then
+                                (using the chained <code class="code">?iso_local</code> built-in) produce the
+                                following output (if the time zone is UTC):</p>
+                            <pre class="screen">2013-08-01T10:58:48Z</pre>
+                        </div>
+                    </div>
+                    <div class="sect3" title="Built-ins for dates"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.date.built-ins"></a>Built-ins for dates</h4></div></div></div>
+                        
+                        <p>The following built-ins can be applied to scalar date variables, date
+                            properties of Java objects, and to the result of any other built-in or
+                            template function that produces a date (or data that can be coerced to a
+                            date).</p>
+                        <div class="sect4" title="?date"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.date.built-in.date"></a>?date</h5></div></div></div>
+                            
+                            <p><a name="N21560" class="indexterm"></a>Converts a Java <code class="classname">Date</code> object to a
+                                FreeMarker <span class="emphasis"><em>date (without time)</em></span> variable.</p>
+                        </div>
+                        <div class="sect4" title="?time"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.date.built-in.time"></a>?time</h5></div></div></div>
+                            
+                            <p><a name="N2157B" class="indexterm"></a>Converts a Java <code class="classname">Date</code> object to a
+                                FreeMarker <span class="emphasis"><em>time (without date)</em></span> variable.</p>
+                        </div>
+                        <div class="sect4" title="?datetime"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.date.built-in.datetime"></a>?datetime</h5></div></div></div>
+                            
+                            <p><a name="N21596" class="indexterm"></a>Converts a Java <code class="classname">Date</code> object to a
+                                FreeMarker <span class="emphasis"><em>date with time</em></span> variable.</p>
+                        </div>
+                        <div class="sect4" title="?string"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.date.built-in.string"></a>?string</h5></div></div></div>
+                            
+                            <p><a name="N215B1" class="indexterm"></a>Converts a FreeMarker date (either <span class="emphasis"><em>date
+                                    (without time)</em></span>, <span class="emphasis"><em>time (without
+                                    date)</em></span>, or <span class="emphasis"><em>date with time</em></span>) to a
+                                string using either the default format and locale settings for the
+                                template, or using a format specified as a parameter.</p>
+                            <p>This built-in therefore accepts one optional parameter, and
+                                produces a string as a result:</p>
+                            <pre class="screen"><code class="function">string</code>( <em class="parameter"><code>format</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>format</code></em></span></dt><dd>
+                                        <p>Optional format string. If defined, uses the
+                                            formatting symbols specified by the <a class="ulink" href="http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html" target="_top"><code class="classname">SimpleDateFormat</code></a>
+                                            class.</p>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">${.now?datetime?string("d/M/yyyy HH:mm:ss")}<a name="N215EC" class="indexterm"></a></pre>
+                            <p>...can produce the following output:</p>
+                            <pre class="screen">1/8/2013 13:24:31</pre>
+                        </div>
+                        <div class="sect4" title="?iso_utc"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.date.built-in.iso_utc"></a>?iso_utc</h5></div></div></div>
+                            
+                            <p><a name="N21602" class="indexterm"></a>Converts a date to a ISO format string in the UTC
+                                timezone.</p>
+                            <p>For example, even after setting the time zone to something other
+                                than UTC:</p>
+                            <pre class="screen">[#setting time_zone="Europe/Paris"]
+${.now?datetime?iso_utc}</pre>
+                            <p>...could (on August 1st, 2013, at 13:09:21 CET) result in output
+                                such as:</p>
+                            <pre class="screen">2013-08-01T11:09:21Z </pre>
+                        </div>
+                        <div class="sect4" title="?iso_local"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.date.built-in.iso_local"></a>?iso_local</h5></div></div></div>
+                            
+                            <p><a name="N21623" class="indexterm"></a>Converts a date to a ISO format string in the local
+                                timezone.</p>
+                            <p>For example, when setting the time zone to something other than
+                                UTC (here, Central European Time):</p>
+                            <pre class="screen">[#setting time_zone="Europe/Paris"]
+${.now?datetime?iso_utc}</pre>
+                            <p>...could (on August 1st, 2013, at 13:09:21 CET) result in output
+                                such as:</p>
+                            <pre class="screen">2013-08-01T13:09:21+02:00 </pre>
+                        </div>
+                    </div>
+                    <div class="sect3" title="Built-ins for booleans"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.boolean.built-ins"></a>Built-ins for booleans</h4></div></div></div>
+                        
+                        <p>The following built-ins can be applied to scalar boolean variables,
+                            boolean properties of Java objects, and to the result of any other
+                            expression, built-in or template function that produces a boolean.
+                            Boolean values can be either <code class="code">true</code> or <code class="code">false</code>,
+                            often used in practice to model "yes or no" and "on or off".</p>
+                        <div class="sect4" title="?c"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.boolean.built-in.c"></a>?c</h5></div></div></div>
+                            
+                            <p><a name="N21654" class="indexterm"></a>Converts a boolean variable to <span class="emphasis"><em>computer
+                                    format</em></span>, either "true" or "false".</p>
+                        </div>
+                        <div class="sect4" title="?string"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.boolean.built-in.string"></a>?string</h5></div></div></div>
+                            
+                            <p><a name="N2166C" class="indexterm"></a>Converts a boolean to a specified string, based on the
+                                value.  For example, assuming that "<code class="varname">v</code>" is a
+                                boolean variable:</p>
+                            <pre class="screen">${v<span class="bold"><strong>?string("Oui","Non")</strong></span>}</pre>
+                            <p>...then output when "<code class="varname">v</code>" is
+                                    <code class="varname">true</code> will be "Oui", and when
+                                    <code class="code">false</code> will be "Non".</p>
+                        </div>
+                    </div>
+                    <div class="sect3" title="Built-ins for sequences"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.sequence.built-ins"></a>Built-ins for sequences</h4></div></div></div>
+                        
+                        <p>The following built-ins can be applied to sequences, properties of
+                            Java objects that return instances of
+                                <code class="classname">java.util.List</code>, and to the result of any
+                            other built-in or template function that produces a list.</p>
+                        <div class="sect4" title="?size"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.size"></a>?size</h5></div></div></div>
+                            
+                            <p><a name="N216A4" class="indexterm"></a>Gets the number of items in the sequence, or 0 if the
+                                sequence is empty.</p>
+                        </div>
+                        <div class="sect4" title="?first"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.first"></a>?first</h5></div></div></div>
+                            
+                            <p><a name="N216B9" class="indexterm"></a>Gets the first item in a sequence, or triggers a
+                                template processing error if the sequence is empty.</p>
+                        </div>
+                        <div class="sect4" title="?last"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.last"></a>?last</h5></div></div></div>
+                            
+                            <p><a name="N216CE" class="indexterm"></a>Gets the last item in a sequence, or triggers a template
+                                processing error if the sequence is empty.</p>
+                        </div>
+                        <div class="sect4" title="?join"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.join"></a>?join</h5></div></div></div>
+                            
+                            <p><a name="N216E3" class="indexterm"></a>Concatenates all items into a single string, attempting
+                                automatic string conversion for values in the sequence if required.
+                                Any <code class="code">null</code> items in the sequence are ignored.</p>
+                            <p>This built-in accepts up to three parameters, and produces a
+                                string result:</p>
+                            <pre class="screen"><code class="function">join</code>( <em class="parameter"><code>separator</code></em>, <em class="parameter"><code>emptyValue</code></em>, <em class="parameter"><code>listEnding</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>separator</code></em></span></dt><dd>
+                                        <p>Required. This is a string containing the text to add
+                                            between items in the sequence.</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>emptyValue</code></em></span></dt><dd>
+                                        <p>Optional. This is a string, displayed when the
+                                            sequence is empty.</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>listEnding</code></em></span></dt><dd>
+                                        <p>Optional, must follow preceeding parameters.  This is
+                                            a string containing text to add after the last item in
+                                            the sequence.</p>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">[#assign choices=["Previous","Next","Finish","Cancel"]]
+[#assign nothing=[]]
+
+${choices<span class="bold"><strong>?join("/","-",".")</strong></span>}
+${nothing<span class="bold"><strong>?join("/","-",".")</strong></span>}</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">Previous/Next/Finish/Cancel.
+-</pre>
+                        </div>
+                        <div class="sect4" title="?seq_contains"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.seq_contains"></a>?seq_contains</h5></div></div></div>
+                            
+                            <p><a name="N2174A" class="indexterm"></a>Determines if a sequence contains the specified value. </p>
+                            <p>This built-in requires a single parameter, and produces a boolean
+                                result.</p>
+                            <pre class="screen"><code class="function">seq_contains</code>( <em class="parameter"><code>scalarValue</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>scalarValue</code></em></span></dt><dd>
+                                        <p>The value to search for in the sequence to which this
+                                            built-in is applied.  The specified value must be a
+                                            scalar type (it cannot be an object, hash, or
+                                            sequence).</p>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">[#assign colors=["red","green","blue"]]
+
+${colors<span class="bold"><strong>?seq_contains("red")</strong></span>?string("Found","Can't find")} red.
+${colors<span class="bold"><strong>?seq_contains("yellow")</strong></span>?string("Found","Can't find")} yellow.</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">Found red.
+Can't find yellow.</pre>
+                        </div>
+                        <div class="sect4" title="?reverse"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.reverse"></a>?reverse</h5></div></div></div>
+                            
+                            <p><a name="N2178E" class="indexterm"></a>Gets a sequence containing the same items, but in
+                                reverse order.  Produces a new view of the sequence without
+                                modifying the sequence to which it was applied.</p>
+                        </div>
+                        <div class="sect4" title="?sort"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.sort"></a>?sort</h5></div></div></div>
+                            
+                            <p><a name="N217A3" class="indexterm"></a>Gets a sequence containing the same items, but in
+                                ascending order (for descending order, apply the
+                                    <code class="code">?reverse</code> built-in to the result of this built-in).
+                                This can only be applied to sequences containing scalar items, all
+                                of the same type.  Produces a new view of the sequence without
+                                modifying the sequence to which it was applied.</p>
+                        </div>
+                        <div class="sect4" title="?sort_by"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.sort_by"></a>?sort_by</h5></div></div></div>
+                            
+                            <p><a name="N217BB" class="indexterm"></a>Gets a sequence containing the same items, but in
+                                ascending order of values of the specified hash key (for descending
+                                order, apply the <code class="code">?reverse</code> built-in to the result of
+                                this built-in).  This can only be applied to sequences where each
+                                item is a hash with a key matching the specified name.</p>
+                            <p>This built-in requires a single parameter, and produces a new view
+                                of the sequence without modifying the sequence to which it was
+                                applied.</p>
+                            <pre class="screen"><code class="function">sort_by</code>( <em class="parameter"><code>keyName</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>keyName</code></em></span></dt><dd>
+                                        <p>The name of the key that must exist for each item in
+                                            the sequence, where each item in the sequence is a
+                                            hash.</p>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">[#assign cities=[
+	{"city":"Paris","dept":75},
+	{"city":"Marseille","dept":13},
+	{"city":"Bordeaux","dept":33}
+]]
+
+[#list cities<span class="bold"><strong>?sort_by("city")</strong></span> as v]${v["city"]}[#if v_has_next], [/#if][/#list].
+[#list cities<span class="bold"><strong>?sort_by("dept")</strong></span> as v]${v["city"]}[#if v_has_next], [/#if][/#list].</pre>
+                            <p>...will product the following output:</p>
+                            <pre class="screen">Bordeaux, Marseille, Paris.
+Marseille, Bordeaux, Paris.</pre>
+                        </div>
+                        <div class="sect4" title="?chunk"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.sequence.built-in.chunk"></a>?chunk</h5></div></div></div>
+                            
+                            <p><a name="N21802" class="indexterm"></a>Splits a sequence into a collection of sequences with a
+                                specified maximum number of items.  This can split a sequence into
+                                tabular format, with a fixed maximum number of columns and an
+                                arbitrary number of rows.</p>
+                            <p>This built-in accepts up to two parameters, and produces a
+                                sequence of sequences as a result (one sequence per tabular
+                                row).</p>
+                            <pre class="screen"><code class="function">chunk</code>( <em class="parameter"><code>columnsPerRow</code></em>, <em class="parameter"><code>filler</code></em> )</pre>
+                            <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>columnsPerRow</code></em></span></dt><dd>
+                                        <p>Required.  The number of items per subsequence (the
+                                            number of columns per row).</p>
+                                    </dd><dt><span class="term"><em class="parameter"><code>filler</code></em></span></dt><dd>
+                                        <p>Optional.  The item to append to the last subsequence
+                                            (one or more times) such that it has the same number of
+                                            items as specified by
+                                                <em class="parameter"><code>columnsPerRow</code></em>, when the
+                                            number of items in the sequence to which this function
+                                            is applied is not an exact multiple of
+                                                <em class="parameter"><code>columnsPerRow</code></em>.</p>
+                                    </dd></dl></div>
+                            <p>For example:</p>
+                            <pre class="programlisting">[#assign alphabet=["alpha","beta","gamma","delta","epsilon"]]
+
+[#list <em class="replaceable"><code>alphabet</code></em><span class="bold"><strong>?chunk(3,"--")</strong></span> as <em class="replaceable"><code>row</code></em>]
+[#nt][#list <em class="replaceable"><code>row</code></em> as <em class="replaceable"><code>col</code></em>]${<em class="replaceable"><code>col</code></em>} [/#list]
+[/#list]</pre>
+                            <p>...will produce the following output:</p>
+                            <pre class="screen">alpha beta gamma
+delta epsilon --</pre>
+                        </div>
+                    </div>
+                    <div class="sect3" title="Built-ins for hashes"><div class="titlepage"><div><div><h4 class="title"><a name="ftl.hash.built-ins"></a>Built-ins for hashes</h4></div></div></div>
+                        
+                        <p>The following built-ins can be applied to hashes, properties of Java
+                            objects that return instances of <code class="classname">java.util.Map</code>,
+                            and to the result of any other built-in or template function that
+                            produces a map or hashtable with keys and values.  In practice, you will
+                            almost always convert a hash to a sequence for processing using either
+                                <code class="varname">?keys</code> or <code class="varname">?values</code>.</p>
+                        <div class="sect4" title="?keys"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.hash.built-in.keys"></a>?keys</h5></div></div></div>
+                            
+                            <p><a name="N21879" class="indexterm"></a>Gets a sequence containing all the keys defined by the
+                                hash.  Some hashes will return keys in insertion order, some will
+                                return keys sorted into ascending or descending order; many other
+                                hashes will return keys in an arbitrary (seemingly random)
+                                order.</p>
+                            <p>This built-in is the most common way to iterate over all entries
+                                in the hash, for use with the <code class="code">[#list]</code><a name="N2188A" class="indexterm"></a> directive.</p>
+                        </div>
+                        <div class="sect4" title="?values"><div class="titlepage"><div><div><h5 class="title"><a name="ftl.hash.built-in.values"></a>?values</h5></div></div></div>
+                            
+                            <p><a name="N2189F" class="indexterm"></a>Gets a sequence containing all the values contained in
+                                the hash.  The values are most often returned in an arbitrary order.
+                                The returned sequence can be used in the same ways as any other
+                                sequence.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sect2" title="Template macros"><div class="titlepage"><div><div><h3 class="title"><a name="N218AF"></a>Template macros</h3></div></div></div>
+                    
+                    <p>Template macros are fragments of templates that can be called from one or
+                        more places elsewhere in a template (or even from other template files) to
+                        produce a section of output. Macros can have parameters, including dynamic
+                        parameters and parameters with default values. Template files can define any
+                        number of macros.</p>
+                    <p>Let's start with a simple example, with no parameters:</p>
+                    <pre class="programlisting"><span class="bold"><strong>[#macro <code class="function">hello</code>]</strong></span><a name="N218C1" class="indexterm"></a>
+[#rt]<a name="N218C9" class="indexterm"></a> Hello!
+<span class="bold"><strong>[/#macro]</strong></span>
+
+[#list 1..3 as x]<span class="bold"><strong>[@<code class="function">hello</code>/]</strong></span>[/#list]</pre>
+                    <p>The above example defines the macro body using the <code class="code">[#macro
+                                <em class="replaceable"><code>macroname</code></em>]</code> directive.  It then
+                        defines a number sequence with a range from 1 to 3 (inclusive), which
+                        therefore loops three times over the macro invocation (using the
+                                <code class="code">[@<em class="replaceable"><code>macroname</code></em>/]</code> syntax within
+                        a <code class="code">[#list]</code> directive.  This produces the following
+                        output:</p>
+                    <pre class="screen"> Hello! Hello! Hello!</pre>
+                    <p>Note the use of the <code class="code">[#rt]</code> directive, or "right trim", which
+                        tells the macro to ignore the trailing whitespace on the line, and the line
+                        return, so that output continues on the same line.</p>
+                    <div class="sect3" title="Macros with parameters"><div class="titlepage"><div><div><h4 class="title"><a name="N218F8"></a>Macros with parameters</h4></div></div></div>
+                        
+                        <p>The following example illustrates how a macro can be defined and
+                            called with named parameters, including a second optional parameter with
+                            a default value:</p>
+                        <pre class="programlisting"><span class="bold"><strong>[#macro <code class="function">quote</code> <em class="parameter"><code>q</code></em> <em class="parameter"><code>a</code></em>="<em class="replaceable"><code>Anonymous</code></em>"]</strong></span>
+&lt;blockquote&gt;
+&lt;em&gt;${<em class="parameter"><code>q</code></em>?html}&lt;/em&gt;
+ -- ${<em class="parameter"><code>a</code></em>?html}
+&lt;/blockquote&gt;
+<span class="bold"><strong>[/#macro]</strong></span>
+
+[<span class="bold"><strong>@quote</strong></span> "<em class="replaceable"><code>Time flies like an arrow.  Fruit flies like a banana.</code></em>"/]
+[<span class="bold"><strong>@quote</strong></span> "<em class="replaceable"><code>The Guide is definitive. Reality is frequently inaccurate.</code></em>" "<em class="replaceable"><code>D. Adams</code></em>"/]</pre>
+                        <p>This produces the following HTML output:</p>
+                        <pre class="screen">&lt;blockquote&gt;
+&lt;em&gt;<em class="replaceable"><code>Time flies like an arrow.  Fruit flies like a banana.</code></em>&lt;/em&gt;
+ -- <em class="replaceable"><code>Anonymous</code></em>
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;em&gt;<em class="replaceable"><code>The Guide is definitive. Reality is frequently inaccurate.</code></em>&lt;/em&gt;
+ -- <em class="replaceable"><code>D. Adams</code></em>
+&lt;/blockquote&gt;</pre>
+                        <p>The above output illustrates usage of the macro with different
+                            parameters, and in the case of the first invocation, usage of a default
+                            value when the second parameter was not specified.</p>
+                        <p>The next example combines named parameters and dynamic
+                            parameters:</p>
+                        <pre class="programlisting"><span class="bold"><strong>[#macro <code class="function">img</code> <em class="parameter"><code>src</code></em> <em class="parameter"><code>extra...</code></em>]</strong></span>
+&lt;img src="${<em class="parameter"><code>src</code></em>?html}"
+	[#list <em class="parameter"><code>extra</code></em>?keys as attr]
+	${attr}="${extra[attr]?html}"
+	[/#list]
+    /&gt;
+[/#macro]
+
+[@img src="logo.png" width=100 height=50 alt="Logo"/]</pre>
+                        <p>The macro <code class="varname">img</code> is invoked with one named parameter
+                                (<code class="varname">src</code>) and three dynamic parameters
+                                (<code class="varname">width</code>, <code class="varname">height</code>, and
+                                <code class="varname">alt</code>), where the dynamic parameters are not all of
+                            the same type.  The macro signature identifies the dynamic parameter as
+                                "<code class="code">extra...</code>", where "..." indicates that the parameter is
+                            in fact a hash (named <code class="varname">extra</code>) that will collect the
+                            remaining parameters, and which can be iterated over (in an arbitrary
+                            order) using the <code class="code">?keys</code> built-in.  This produces the
+                            following output:</p>
+                        <pre class="screen">&lt;img src="logo.png"
+    height="50"
+    alt="Logo"
+    width="100"
+    /&gt;</pre>
+                    </div>
+                </div>
+                <div class="sect2" title="Including other templates"><div class="titlepage"><div><div><h3 class="title"><a name="N2197A"></a>Including other templates</h3></div></div></div>
+                    
+                    <p>Template files can <span class="emphasis"><em>include</em></span> the content of other
+                        template files using the <code class="code">[#include]</code><a name="N21986" class="indexterm"></a> directive.  Inclusion is dynamic, and the name of the file to
+                        include is a runtime parameter (it is not necessarily a fixed string).
+                        Files can be included using a path to any resource in the same template
+                        package, or even refer to resources in any other installed template
+                        package.</p>
+                    <p>The syntax of this directive is as follows:</p>
+                    <pre class="screen">[#include <em class="parameter"><code>path</code></em> <em class="parameter"><code>parse</code></em>=<em class="replaceable"><code>true</code></em>]</pre>
+                    <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>path</code></em></span></dt><dd>
+                                <p>Required.  Can either be a quoted literal string, such as
+                                    "include.ftl", or an expression that produces a string result.
+                                    The path can be relative or absolute.</p>
+                            </dd><dt><span class="term"><em class="parameter"><code>parse</code></em></span></dt><dd>
+                                <p>Optional.  If specified, must be either <code class="code">true</code> or
+                                        <code class="code">false</code>.  When parsed (the default), it must be a
+                                    valid FreeMarker file, and the included file can access
+                                    variables in the current template.  When false, the file is
+                                    treated as plain text.</p>
+                            </dd></dl></div>
+                    <p>Some usage examples:</p>
+                    <pre class="screen">[#-- a FreeMarker template from the current directory --]
+[<span class="bold"><strong>#include</strong></span> "<em class="replaceable"><code>footer.ftl</code></em>"]
+
+[#-- a static text file containing a copyright notice --]
+[<span class="bold"><strong>#include</strong></span> "<em class="replaceable"><code>blurb/copyright.txt</code></em>" parse=false]
+
+[#-- a shared navigation header, from another package --]
+[<span class="bold"><strong>#include</strong></span> "<em class="replaceable"><code>/sharedthemepack/corporate/sitenavigation.ftl</code></em>"]
+
+[#-- a dynamic include,based on a "language" variable --]
+[<span class="bold"><strong>#include</strong></span> "content_"+<em class="replaceable"><code>language</code></em>+".ftl"]</pre>
+                </div>
+                <div class="sect2" title="Importing macros from other templates"><div class="titlepage"><div><div><h3 class="title"><a name="N219E8"></a>Importing macros from other templates</h3></div></div></div>
+                    
+                    <p>Template files can <span class="emphasis"><em>import</em></span> the macros defined by other
+                        template files using the <code class="code">[#import]</code><a name="N219F4" class="indexterm"></a> directive.  Unlike the <code class="code">[#import]</code> directive, it is
+                        not designed to copy the contents of the file; it treats the imported file
+                        as a library of macros that can be called.</p>
+                    <p>The syntax of this directive is as follows:</p>
+                    <pre class="screen">[#import <em class="parameter"><code>path</code></em> as <code class="varname"><em class="replaceable"><code>namespace</code></em></code>]</pre>
+                    <div class="variablelist"><dl><dt><span class="term"><em class="parameter"><code>path</code></em></span></dt><dd>
+                                <p>Required.  Can either be a quoted literal string, such as
+                                    "library.ftl", or an expression that produces a string result.
+                                    The path can be relative or absolute.</p>
+                            </dd><dt><span class="term"><code class="varname">namespace</code></span></dt><dd>
+                                <p>Required.  This is the name of a hash that will contain all
+                                    the macros imported from the template file specified by the
+                                        <em class="parameter"><code>path</code></em> parameter.  Unlike the previous
+                                    parameter, this is not a string expression (the namespace is
+                                    fixed, not dynamic). </p>
+                            </dd></dl></div>
+                    <p>A hypothetical example of usage:</p>
+                    <pre class="screen">[#-- Import two hypothetical macro libraries --]
+[#import "library/forms.ftl" as forms]
+[#import "../sharedthemepack/corporate/layout.ftl" as layout]
+
+[#-- Use functions, prefixed with hashes, to build page --]
+[@layout.header title="Login"]
+[@forms.username id="principal"]
+[@forms.password id="credentials"]
+[@forms.button type="submit" label="${dict.login}"]
+[@layout.footer office="Courbevoie"]</pre>
+                    <p>The above example shows how a template could be assembled using imported
+                        macro libraries.  Here, one library provides the general corporate page
+                        layout (header, footer), which can be rendered by calling functions with
+                        parameters.  Then, we use another library that hides the verbosity of form
+                        layout (fields, labels, standard attributes, alignment, and action
+                        buttons).</p>
+                </div>
+            <div class="footnotes"><br><hr align="left" width="100"><div class="footnote">
+                                <p><sup>[<a href="#N20ED7" id="ftn.N20ED7" class="para">1</a>] </sup>Consider using
+                                        <code class="classname">java.util.LinkedHashMap&lt;String,V&gt;</code>
+                                    if you need to add an order-preserving hash from an OSGi
+                                    plug-in. </p>
+                            </div><div class="footnote">
+                                    <p><sup>[<a href="#N212D0" id="ftn.N212D0" class="para">2</a>] </sup>The <code class="code">?split</code> function actually accepts an
+                                        optional second parameter, allowing regular expression
+                                        matching, however this feature is beyond the scope of this
+                                        manual.  Refer to the official on-line FreeMarker
+                                        documentation.</p>
+                                </div></div></div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ch05.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="ch05.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ch05s03.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Chapter&nbsp;5.&nbsp;Creating custom templates&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Template functions</td></tr></table></div></body></html>
