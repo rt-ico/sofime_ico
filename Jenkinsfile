@@ -6,7 +6,9 @@ pipeline {
         PG_CONTAINER_NAME = "pg_sofime_ico"
 
         IMAGE_NAME_HTTP="sofime_http"
-        IMAGE_CONTAINER_HTTP="sofime_http"
+        CONTAINER_NAME_HTTP="sofime_http"
+
+        NETWORK_NAME = "sofime_ico"
 
         POSTGRES_PASSWORD = "not24get"
         SQL_SCRIPT = "deploy.sql"             // script SQL à injecter
@@ -16,8 +18,19 @@ pipeline {
 
         stage('Lancer le conteneur PostgreSQL') {
             steps {
-
                 script {
+                    def netExists = sh(
+                            script: "podman network exists ${NETWORK_NAME} && echo true || echo false",
+                            returnStdout: true
+                    ).trim()
+
+                    if (netExists == "true") {
+                        echo "✅ Le réseau ${NETWORK_NAME} existe déjà."
+                    } else {
+                        echo "⚠️ Le réseau ${NETWORK_NAME} n'existe pas, création en cours..."
+                        sh "podman network create ${NETWORK_NAME}"
+                    }
+
                     dir("podman-postgres") {
                         // Vérifie si l’image existe
                         def imageExists = sh(
@@ -45,6 +58,7 @@ pipeline {
                         podman run -d --rm \
                             --replace \
                             --name $PG_CONTAINER_NAME \
+                            --network=${NETWORK_NAME} \
                             -e POSTGRES_PASSWORD=not24get \
                             -e POSTGRES_DB=oa_prod \
                             -e FAKETIME_SHM_DISABLE=1 \
@@ -116,6 +130,7 @@ pipeline {
                 # Redéployer avec la nouvelle date
                 podman run -d  \
                     --name $PG_CONTAINER_NAME \
+                    --network=${NETWORK_NAME} \
                     -e POSTGRES_PASSWORD=not24get \
                     -e POSTGRES_DB=oa_prod \
                     -e FAKETIME_SHM_DISABLE=1 \
@@ -163,14 +178,14 @@ pipeline {
                             }
                         }
                     }
-                     dir("podman-tomcat") {
-                                        echo "Construction de l'image podman pour Tomcat..."
-                                        sh 'java -jar ../tools/keycodec.jar ${IMAGE_NAME_HTTP} enterprise > openage/context/openage/install/licence.txt'
-                                        sh 'podman build --build-arg EXPOSED_PORT=${EXPOSED_PORT} --build-arg WAR_NAME=openage --build-arg CONTAINER_NAME_DB=${CONTAINER_NAME_DB} --tag  ${IMAGE_NAME_HTTP} .'
-                                        echo "Lancement du conteneur Tomcat..."
-                                        // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
-                                        sh "podman run -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${IMAGE_NAME_HTTP} --network=${NETWORK} --name  ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
-                                    }
+                    dir("podman-tomcat") {
+                        echo "Construction de l'image podman pour Tomcat..."
+                        sh 'java -jar ../tools/keycodec.jar ${IMAGE_NAME_HTTP} enterprise > openage/context/openage/install/licence.txt'
+                        sh 'podman build --build-arg EXPOSED_PORT=${EXPOSED_PORT} --build-arg WAR_NAME=openage --build-arg CONTAINER_NAME_DB=${CONTAINER_NAME_DB} --tag  ${IMAGE_NAME_HTTP} .'
+                        echo "Lancement du conteneur Tomcat..."
+                        // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
+                        sh "podman run -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${IMAGE_NAME_HTTP} --network=${NETWORK_NAME} --name  ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
+                    }
                 }
             }
         }
