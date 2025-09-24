@@ -39,6 +39,7 @@ pipeline {
 
                         # Lancer le conteneur initial avec date par défaut
                         podman run -d --rm \
+                            --replace \
                             --name $PG_CONTAINER_NAME \
                             -e POSTGRES_PASSWORD=not24get \
                             -e POSTGRES_DB=oa_prod \
