@@ -10,6 +10,7 @@ pipeline {
 
         NETWORK_NAME = "sofime_ico"
 
+        EXPOSED_PORT="8686"
         POSTGRES_PASSWORD = "not24get"
         SQL_SCRIPT = "deploy.sql"             // script SQL à injecter
     }
@@ -184,7 +185,7 @@ pipeline {
                         sh 'podman build --build-arg EXPOSED_PORT=${EXPOSED_PORT} --build-arg WAR_NAME=openage --build-arg CONTAINER_NAME_DB=${CONTAINER_NAME_DB} --tag  ${IMAGE_NAME_HTTP} .'
                         echo "Lancement du conteneur Tomcat..."
                         // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
-                        sh "podman run -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${IMAGE_NAME_HTTP} --network=${NETWORK_NAME} --name  ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
+                        sh "podman run --replace -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${IMAGE_NAME_HTTP} --network=${NETWORK_NAME} --name  ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
                     }
                 }
             }
