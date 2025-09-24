@@ -14,7 +14,7 @@ pipeline {
             steps {
 
             script {
-            dir("sofime_reloc") {
+            dir("podman-postgres") {
                     // Vérifie si l’image existe
                     def imageExists = sh(
                         script: "podman image exists ${PG_IMAGE} && echo true || echo false",
