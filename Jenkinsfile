@@ -12,8 +12,8 @@ pipeline {
 
         stage('Lancer le conteneur PostgreSQL') {
             steps {
-              script {
-                dir("sofime_reloc") {
+
+                dir("podman-postgres") {
                         sh """
                         # Stopper l'ancien conteneur s'il existe
                         podman stop $PG_CONTAINER_NAME 2>/dev/null || true
@@ -36,7 +36,7 @@ pipeline {
                         """
                     }
                 }
-            }
+
         }
 
         stage('Mise à jour et construction de l\'application Sofime') {
