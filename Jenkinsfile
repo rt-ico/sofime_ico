@@ -25,7 +25,7 @@ pipeline {
                         echo "✅ L'image ${PG_IMAGE} existe déjà, pas de build nécessaire."
                     } else {
                         echo "⚠️ L'image ${PG_IMAGE} n'existe pas, lancement du build..."
-                        sh "podman build -t ${PG_IMAGE}"
+                        sh "podman build -t ${PG_IMAGE} ."
                     }
                 }
                 }
