@@ -127,6 +127,32 @@ pipeline {
             }
         }
 
+
+        stage('Lancement d'OpenAGE Forms) {
+          /*  when {
+                expression { params.mode == 'Run' }
+            }*/
+
+            steps {
+                script {
+                    // Vérification et clonage du dépôt si nécessaire
+
+                    sh '''if ! test -d OpenAGE; then
+		                git clone git@github.com:rt-admin/OpenAGE.git
+			        fi'''
+
+                    sh 'cp config_file/build-OpenAGE.properties OpenAGE/'
+                    dir("OpenAGE") {
+                        sh 'git pull'
+                        sh 'git checkout master'
+                        withAnt(installation: 'Ant:1.9.13', jdk: 'Java1.6') {
+                            sh 'ant -Dbin-dist-folder=../../podman-tomcat/ build-webapp'
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Vérifier le trigger') {
             steps {
                 sh """
