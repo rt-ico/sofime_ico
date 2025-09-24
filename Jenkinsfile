@@ -12,7 +12,9 @@ pipeline {
 
         stage('Lancer le conteneur PostgreSQL') {
             steps {
+
             script {
+            dir("sofime_reloc") {
                     // Vérifie si l’image existe
                     def imageExists = sh(
                         script: "podman image exists ${PG_IMAGE} && echo true || echo false",
@@ -23,8 +25,9 @@ pipeline {
                         echo "✅ L'image ${PG_IMAGE} existe déjà, pas de build nécessaire."
                     } else {
                         echo "⚠️ L'image ${PG_IMAGE} n'existe pas, lancement du build..."
-                        sh "podman build -t ${PG_IMAGE} ${DOCKERFILE_DIR}"
+                        sh "podman build -t ${PG_IMAGE}"
                     }
+                }
                 }
              //   dir("podman-postgres") {
                         sh """
