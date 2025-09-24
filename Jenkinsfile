@@ -128,7 +128,7 @@ pipeline {
         }
 
 
-        stage('Lancement d\'OpenAGE Forms) {
+        stage('Lancement d\'OpenAGE Forms') {
           /*  when {
                 expression { params.mode == 'Run' }
             }*/
