@@ -181,11 +181,11 @@ pipeline {
                     }
                     dir("podman-tomcat") {
                         echo "Construction de l'image podman pour Tomcat..."
-                        sh 'java -jar ../tools/keycodec.jar ${IMAGE_NAME_HTTP} enterprise > openage/context/openage/install/licence.txt'
+                        sh 'java -jar ../tools/keycodec.jar ${CONTAINER_NAME_HTTP} enterprise > openage/context/openage/install/licence.txt'
                         sh 'podman build --build-arg EXPOSED_PORT=${EXPOSED_PORT} --build-arg WAR_NAME=openage --build-arg CONTAINER_NAME_DB=${PG_CONTAINER_NAME} --tag  ${IMAGE_NAME_HTTP} .'
                         echo "Lancement du conteneur Tomcat..."
                         // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
-                        sh "podman run --replace -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${IMAGE_NAME_HTTP} --network=${NETWORK_NAME} --name  ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
+                        sh "podman run --replace -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${CONTAINER_NAME_HTTP} --network=${NETWORK_NAME} --name ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
                     }
                 }
             }
