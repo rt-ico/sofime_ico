@@ -1,4 +1,4 @@
-FROM docker.io/openjdk:8
+FROM docker.io/openjdk:8-jdk
 
 #usr/lib/jvm/jdk1.8.0_191/jre/bin/java 
 #-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9175 -ea -XX:+StartAttachListener -XX:+UseG1GC -XX:+UseStringDeduplication 
