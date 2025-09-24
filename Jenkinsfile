@@ -13,24 +13,24 @@ pipeline {
         stage('Lancer le conteneur PostgreSQL') {
             steps {
 
-            script {
-            dir("podman-postgres") {
-                    // Vérifie si l’image existe
-                    def imageExists = sh(
-                        script: "podman image exists ${PG_IMAGE} && echo true || echo false",
-                        returnStdout: true
-                    ).trim()
+                script {
+                    dir("podman-postgres") {
+                        // Vérifie si l’image existe
+                        def imageExists = sh(
+                                script: "podman image exists ${PG_IMAGE} && echo true || echo false",
+                                returnStdout: true
+                        ).trim()
 
-                    if (imageExists == "true") {
-                        echo "✅ L'image ${PG_IMAGE} existe déjà, pas de build nécessaire."
-                    } else {
-                        echo "⚠️ L'image ${PG_IMAGE} n'existe pas, lancement du build..."
-                        sh "podman build -t ${PG_IMAGE} ."
+                        if (imageExists == "true") {
+                            echo "✅ L'image ${PG_IMAGE} existe déjà, pas de build nécessaire."
+                        } else {
+                            echo "⚠️ L'image ${PG_IMAGE} n'existe pas, lancement du build..."
+                            sh "podman build -t ${PG_IMAGE} ."
+                        }
                     }
                 }
-                }
-             //   dir("podman-postgres") {
-                        sh """
+                //   dir("podman-postgres") {
+                sh """
                         # Stopper l'ancien conteneur s'il existe
                         podman stop $PG_CONTAINER_NAME 2>/dev/null || true
 
@@ -51,8 +51,8 @@ pipeline {
                             -v /dev/shm:/dev/shm \
                             $PG_IMAGE
                         """
-                    }
-              //  }
+            }
+            //  }
 
         }
 
@@ -130,9 +130,9 @@ pipeline {
 
 
         stage('Lancement d\'OpenAGE Forms') {
-          /*  when {
-                expression { params.mode == 'Run' }
-            }*/
+            /*  when {
+                  expression { params.mode == 'Run' }
+              }*/
 
             steps {
                 script {
@@ -140,15 +140,29 @@ pipeline {
 
                     sh '''if ! test -d OpenAGE; then
 		                git clone git@github.com:rt-admin/OpenAGE.git
+		                sh 'git pull'
+                        sh 'git checkout master'
 			        fi'''
 
                     sh 'cp config_file/build-OpenAGE.properties OpenAGE/'
                     dir("OpenAGE") {
-                        sh 'git pull'
-                        sh 'git checkout master'
-                        withAnt(installation: 'Ant:1.9.13', jdk: 'Java1.6') {
-                            sh 'ant -Dbin-dist-folder=../../podman-tomcat/ build-webapp'
+                        sh "git fetch git@github.com:rt-admin/OpenAGE.git master"
+
+                        // Comparer le dernier commit local et distant
+                        def localCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+                        def remoteCommit = sh(script: "git rev-parse FETCH_HEAD", returnStdout: true).trim()
+                        if (localCommit == remoteCommit) {
+                            echo "✅ Pas de mise à jour disponible, aucune action lancée."
+
+                        } else {
+                            echo "⚠️ Nouvelle mise à jour détectée sur ${GIT_BRANCH}."
+                            // Ici tu mets ton action conditionnelle
+                            withAnt(installation: 'Ant:1.9.13', jdk: 'Java1.6') {
+                                sh 'ant -Dbin-dist-folder=../../podman-tomcat/ build-webapp'
+                            }
                         }
+
+
                     }
                 }
             }
@@ -171,5 +185,5 @@ pipeline {
     //    always {
     //      //  sh "podman stop $CONTAINER_NAME 2>/dev/null || true"
 //        }
-  //  }
+    //  }
 }
