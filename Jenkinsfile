@@ -111,7 +111,7 @@ pipeline {
             steps {
                 sh """
                 # Attendre que PostgreSQL soit prêt
-                sleep 15
+                sleep 5
 
                 # Injecter le script SQL
                 podman exec -i $PG_CONTAINER_NAME psql -U postgres < sofime_reloc/deploy/$SQL_SCRIPT
@@ -198,7 +198,7 @@ pipeline {
                 sleep 15
 
                 # Vérifier les résultats dans la table de logs
-                podman exec -i $PG_CONTAINER_NAME psql -U postgres -c "SELECT * FROM expats;"
+                podman exec -i $PG_CONTAINER_NAME psql -U postgres -c "SELECT * FROM application.expat;"
                 """
             }
         }
