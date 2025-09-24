@@ -207,7 +207,7 @@ pipeline {
 
                         echo "Construction de l'image podman pour Tomcat..."
 
-                        sh 'podman build --build-arg EXPOSED_PORT=${VS_EXPOSED_PORT} --build-arg --build-arg CONTAINER_NAME_DB=${PG_CONTAINER_NAME} --tag  ${IMAGE_NAME_VS} .'
+                        sh 'podman build --build-arg EXPOSED_PORT=${VS_EXPOSED_PORT} --build-arg CONTAINER_NAME_DB=${PG_CONTAINER_NAME} --tag  ${IMAGE_NAME_VS} .'
                         echo "Lancement du conteneur Tomcat..."
                         // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
                         sh "podman run --replace -d -p ${VS_EXPOSED_PORT}:9170 -h ${CONTAINER_NAME_VS} --network=${NETWORK_NAME} --name ${CONTAINER_NAME_VS} ${IMAGE_NAME_VS}"
