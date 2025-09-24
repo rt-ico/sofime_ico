@@ -8,9 +8,14 @@ pipeline {
         IMAGE_NAME_HTTP="sofime_http"
         CONTAINER_NAME_HTTP="sofime_http"
 
+
+        IMAGE_NAME_VS="sofime_vs"
+        CONTAINER_NAME_VS="sofime_vs"
+
         NETWORK_NAME = "sofime_ico"
 
         EXPOSED_PORT="8686"
+        VS_EXPOSED_PORT="9170"
         POSTGRES_PASSWORD = "not24get"
         SQL_SCRIPT = "deploy.sql"             // script SQL à injecter
     }
@@ -187,9 +192,31 @@ pipeline {
                         // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
                         sh "podman run --replace -d -p 8042:8042 -p ${EXPOSED_PORT}:8080 -h ${CONTAINER_NAME_HTTP} --network=${NETWORK_NAME} --name ${CONTAINER_NAME_HTTP} ${IMAGE_NAME_HTTP}"
                     }
+                    dir("podman-vs") {
+                                        def imageExists = sh(
+                                                    script: "podman image exists ${IMAGE_NAME_VS} && echo true || echo false",
+                                                    returnStdout: true
+                                            ).trim()
+
+                                            if (imageExists == "true") {
+                                                echo "✅ L'image ${IMAGE_NAME_VS} existe déjà, pas de build nécessaire."
+                                            } else {
+                                                echo "⚠️ L'image ${IMAGE_NAME_VS} n'existe pas, lancement du build..."
+                                                sh "podman build -t ${IMAGE_NAME_VS} ."
+                                            }
+
+                        echo "Construction de l'image podman pour Tomcat..."
+
+                        sh 'podman build --build-arg EXPOSED_PORT=${VS_EXPOSED_PORT} --build-arg --build-arg CONTAINER_NAME_DB=${PG_CONTAINER_NAME} --tag  ${IMAGE_NAME_VS} .'
+                        echo "Lancement du conteneur Tomcat..."
+                        // Utilisation de la variable EXPOSED_PORT pour exposer le bon port
+                        sh "podman run --replace -d -p ${VS_EXPOSED_PORT}:9170 -h ${CONTAINER_NAME_VS} --network=${NETWORK_NAME} --name ${CONTAINER_NAME_VS} ${IMAGE_NAME_VS}"
+                    }
                 }
             }
         }
+
+
 
         stage('Vérifier le trigger') {
             steps {

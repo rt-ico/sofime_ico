@@ -2,11 +2,11 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>Configured by "pbo" on "pbo-PX713QM".</comment>
-<entry key="jdbc.database">sofime</entry>
+<entry key="jdbc.database">oa_prod</entry>
 <entry key="jdbc.username">postgres</entry>
 <entry key="jdbc.password">not24get</entry>
 <entry key="currentSchema">application</entry>
-<entry key="jdbc.host">oa7_postgres_sofime</entry>
+<entry key="jdbc.host">pg_sofime_ico</entry>
 <entry key="jdbc.port">5432</entry>
 </properties>
 
