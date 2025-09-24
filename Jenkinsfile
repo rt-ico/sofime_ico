@@ -160,7 +160,7 @@ pipeline {
                 sleep 15
 
                 # Vérifier les résultats dans la table de logs
-                podman exec -i $PG_CONTAINER_NAME psql -U postgres -c "SELECT * FROM logs;"
+                podman exec -i $PG_CONTAINER_NAME psql -U postgres -c "SELECT * FROM expats;"
                 """
             }
         }
