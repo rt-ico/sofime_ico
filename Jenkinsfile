@@ -66,7 +66,7 @@ pipeline {
 
                     // sh 'cp config_file/build-OpenAGE.properties OpenAGE/'
                     dir("sofime_reloc") {
-                        sh 'git checkout main && git pull'
+                        sh 'git checkout master && git pull'
                         //sh 'git checkout master'
                         //    withAnt(installation: 'Ant:1.9.13', jdk: 'Java1.8') {
                         //        sh 'ant dist'
