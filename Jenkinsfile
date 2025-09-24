@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        CONTAINER_NAME = "postgres"
+        PG_CONTAINER_NAME = "pg_sofime_ico"
         POSTGRES_PASSWORD = "not24get"
-        POSTGRES_IMAGE = "postgres" // image avec libfaketime
+        POSTGRES_IMAGE = "pg_sofime_ico" // image avec libfaketime
         SQL_SCRIPT = "deploy.sql"             // script SQL à injecter
     }
 
@@ -14,14 +14,14 @@ pipeline {
             steps {
                 sh """
                 # Stopper l'ancien conteneur s'il existe
-                podman stop $CONTAINER_NAME 2>/dev/null || true
-                
+                podman stop $PG_CONTAINER_NAME 2>/dev/null || true
+
                 podman run --rm -v pgdata:/data alpine sh -c "rm -rf /data/*"
                 podman volume import pgdata /mnt/dump/sofime/postgres-data-20250919.tar
 
                 # Lancer le conteneur initial avec date par défaut
                 podman run -d --rm \
-                    --name $CONTAINER_NAME \
+                    --name $PG_CONTAINER_NAME \
                     -e POSTGRES_PASSWORD=not24get \
                     -e POSTGRES_DB=oa_prod \
                     -e FAKETIME_SHM_DISABLE=1 \
@@ -47,7 +47,7 @@ pipeline {
                     // sh 'cp config_file/build-OpenAGE.properties OpenAGE/'
                     dir("sofime_reloc") {
                         sh 'git pull'
-                        //sh 'git checkout master'	
+                        //sh 'git checkout master'
                         //    withAnt(installation: 'Ant:1.9.13', jdk: 'Java1.8') {
                         //        sh 'ant dist'
                         //   }
@@ -59,8 +59,8 @@ pipeline {
                         // }
                         // dir("podman-vs") {
                         //    //sh "podman image rm ${IMAGE_NAME_VS}"
-                        //    sh 'podman build --build-arg EXPOSED_PORT=${EXPOSED_PORT} --build-arg WAR_NAME=openage --build-arg CONTAINER_NAME_DB=${CONTAINER_NAME_DB} --tag  ${IMAGE_NAME_VS} .'
-                        //    sh "podman run -d -p 9171:9170 -h ${IMAGE_NAME_VS} --network=${NETWORK} --name  ${CONTAINER_NAME_VS} ${IMAGE_NAME_VS}"
+                        //    sh 'podman build --build-arg EXPOSED_PORT=${EXPOSED_PORT} --build-arg WAR_NAME=openage --build-arg PG_CONTAINER_NAME_DB=${PG_CONTAINER_NAME_DB} --tag  ${IMAGE_NAME_VS} .'
+                        //    sh "podman run -d -p 9171:9170 -h ${IMAGE_NAME_VS} --network=${NETWORK} --name  ${PG_CONTAINER_NAME_VS} ${IMAGE_NAME_VS}"
                         //}
                     }
                 }
@@ -77,7 +77,7 @@ pipeline {
 
 
                 # Injecter le script SQL
-                podman exec -i $CONTAINER_NAME psql -U postgres < sofime_reloc/deploy/$SQL_SCRIPT
+                podman exec -i $PG_CONTAINER_NAME psql -U postgres < sofime_reloc/deploy/$SQL_SCRIPT
                 """
             }
         }
@@ -89,11 +89,11 @@ pipeline {
                 NEW_DATE="2025-09-20 09:00:00"
 
                 # Stopper l'ancien conteneur
-                podman stop $CONTAINER_NAME
+                podman stop $PG_CONTAINER_NAME
 
                 # Redéployer avec la nouvelle date
                 podman run -d  \
-                    --name $CONTAINER_NAME \
+                    --name $PG_CONTAINER_NAME \
                     -e POSTGRES_PASSWORD=not24get \
                     -e POSTGRES_DB=oa_prod \
                     -e FAKETIME_SHM_DISABLE=1 \
@@ -114,7 +114,7 @@ pipeline {
                 sleep 15
 
                 # Vérifier les résultats dans la table de logs
-                podman exec -i $CONTAINER_NAME psql -U postgres -c "SELECT * FROM logs;"
+                podman exec -i $PG_CONTAINER_NAME psql -U postgres -c "SELECT * FROM logs;"
                 """
             }
         }
