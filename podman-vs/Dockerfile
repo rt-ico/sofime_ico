@@ -47,7 +47,7 @@ WORKDIR "/home/$user"
 
 ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9175", "-ea", "-XX:+StartAttachListener", "-XX:+UseG1GC", "-XX:+UseStringDeduplication", \
 "-Xloggc:/home/vsh/logs/garbage.log", "-XX:+PrintGCTimeStamps", "-Xmx512m", \
-"-Dorg.osgi.framework.executionenvironment=OSGi/Minimum-1.0,OSGi/Minimum-1.1,JRE-1.1,J2SE-1.2,J2SE-1.3,J2SE-1.4,J2SE-1.5,JavaSE-1.6,JavaSE-1.7,JavaSE/compact2", \
+"-Dorg.osgi.framework.executionenvironment=OSGi/Minimum-1.0,OSGi/Minimum-1.1,JRE-1.1,J2SE-1.2,J2SE-1.3,J2SE-1.4,J2SE-1.5,JavaSE-1.6,JavaSE-1.7,,JavaSE-1.8,JavaSE/compact2", \
 "-DVSH_HOME=/home/vsh/", \
 "-DVSH_LOG_LEVEL=DEBUG", "-DVSH_LOG_ROLL_TYPE=NONE", "-DVSH_LOG_APPEND=FALSE", "-DVSH_LOCALHOST_DEFAULT=TRUE", "-Djava.awt.headless=true", \
 "-jar", "/opt/sdk/viewshell.jar"]
