@@ -4,7 +4,7 @@ pipeline {
     environment {
         PG_CONTAINER_NAME = "pg_sofime_ico"
         POSTGRES_PASSWORD = "not24get"
-        POSTGRES_IMAGE = "pg_sofime_ico" // image avec libfaketime
+        PG_IMAGE = "pg_sofime_ico" // image avec libfaketime
         SQL_SCRIPT = "deploy.sql"             // script SQL à injecter
     }
 
@@ -12,7 +12,20 @@ pipeline {
 
         stage('Lancer le conteneur PostgreSQL') {
             steps {
+            script {
+                    // Vérifie si l’image existe
+                    def imageExists = sh(
+                        script: "podman image exists ${IMAGE_NAME} && echo true || echo false",
+                        returnStdout: true
+                    ).trim()
 
+                    if (imageExists == "true") {
+                        echo "✅ L'image ${PG_IMAGE} existe déjà, pas de build nécessaire."
+                    } else {
+                        echo "⚠️ L'image ${PG_IMAGE} n'existe pas, lancement du build..."
+                        sh "podman build -t ${PG_IMAGE} ${DOCKERFILE_DIR}"
+                    }
+                }
              //   dir("podman-postgres") {
                         sh """
                         # Stopper l'ancien conteneur s'il existe
@@ -32,7 +45,7 @@ pipeline {
                             -p 5433:5432 \
                             -v pg_sofime_ico:/var/lib/postgresql/data \
                             -v /dev/shm:/dev/shm \
-                            $POSTGRES_IMAGE
+                            $PG_IMAGE
                         """
                     }
               //  }
@@ -106,7 +119,7 @@ pipeline {
                     -p 5433:5432 \
                     -v pg_sofime_ico:/var/lib/postgresql/data \
                     -v /dev/shm:/dev/shm \
-                    $POSTGRES_IMAGE
+                    $PG_IMAGE
                 """
             }
         }
