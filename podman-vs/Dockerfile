@@ -1,5 +1,5 @@
-FROM docker.io/openjdk:8-jdk
-
+#FROM docker.io/openjdk:8-jdk
+FROM docker.io/eclipse-temurin:8-jdk
 #usr/lib/jvm/jdk1.8.0_191/jre/bin/java 
 #-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9175 -ea -XX:+StartAttachListener -XX:+UseG1GC -XX:+UseStringDeduplication 
 #-Xloggc:/home/pbo/dev/java/projects/sofime_reloc/home/logs/garbage.log -XX:+PrintGCTimeStamps -Xmx512m 
