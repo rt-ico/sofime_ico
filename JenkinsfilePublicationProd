@@ -1,0 +1,113 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: getChoicesFromEtat(),   // Généré en fonction du précédent état
+            description: 'Action'
+        )
+    }
+
+    environment {
+        ETAT_FILE = 'etat.json'
+    }
+
+    stages {
+        stage('Mettre à jour l\'état et la version') {
+            steps {
+                script {
+                    def etat = loadEtat()
+                    etat.version = etat.version + 1
+                    etat.status = 'ready'
+                    etat.lastUpdated = new Date().format("yyyy-MM-dd'T'HH:mm:ss")
+
+                    saveEtat(etat)
+                    echo "État mis à jour : version ${etat.version}, statut ${etat.status}"
+
+                    currentBuild.description = "Prêt pour publication"
+                }
+            }
+        }
+
+        stage('Exécuter selon l\'état et la version') {
+            steps {
+                script {
+                    def etat = loadEtat()
+                    echo "Version actuelle : ${etat.version}, Statut : ${etat.status}"
+
+                    if (etat.status == 'ready') {
+                        echo "Condition remplie, on continue !"
+                    } else {
+                        echo "Condition non remplie, on s'arrête ici."
+                        currentBuild.result = 'ABORTED'
+                        error("Le statut n'est pas 'ready'")
+                    }
+                }
+            }
+        }
+
+        stage('Stage conditionnel') {
+            when {
+                expression {
+                    def etat = loadEtat()
+                    return etat.status == 'ready'
+                }
+            }
+            steps {
+                echo "Ce stage ne s'exécute que si le statut est 'ready' !"
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                def etat = loadEtat()
+                echo "Pipeline terminé. Version : ${etat.version}, Statut : ${etat.status}"
+                archiveArtifacts artifacts: "${ETAT_FILE}", fingerprint: true
+            }
+        }
+    }
+}
+
+//
+// Fonctions utilitaires adaptées au sandbox
+//
+def loadEtat() {
+    if (fileExists(env.ETAT_FILE)) {
+        try {
+            return readJSON (file: env.ETAT_FILE)
+        } catch (Exception e) {
+            error("Impossible de lire ou parser ${env.ETAT_FILE} : ${e.message}")
+        }
+    } else {
+        return [version: 0, status: 'initial']
+    }
+}
+
+def saveEtat(etat) {
+    writeJSON (file: env.ETAT_FILE, json: etat, pretty: 4)
+}
+
+
+def getChoicesFromEtat() {
+    def defaultChoices = ['Default']
+     return ['Publish minor version', 'Publish major version']
+     /*
+    if (fileExists('etat.json')) {
+        try {
+            def etat = readJSON(file: 'etat.json')
+            return ['Publish minor version', 'Publish major version']
+            if (etat.lastAction == 'Rebuild') {
+                return ['Publish minor version', 'Publish major version']
+            } else {
+                return ['Rebuild', 'Default']
+            }
+        } catch (Exception e) {
+            return defaultChoices
+        }
+    }
+    */
+    //return defaultChoices
+}
