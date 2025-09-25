@@ -1,0 +1,78 @@
+pipeline {
+    agent any
+
+    environment {
+        ETAT_FILE = 'etat.json'
+    }
+
+    stages {
+        // Stage 1 : Initialiser ou mettre à jour l'état avec versionnage
+        stage('Mettre à jour l\'état et la version') {
+            steps {
+                script {
+                    def etat
+                    def version = 1
+
+                    // Si le fichier existe, on le lit et on incrémente la version
+                    if (fileExists(ETAT_FILE)) {
+                        etat = readJSON file: ETAT_FILE
+                        version = etat.version + 1
+                    } else {
+                        etat = [version: 0, status: 'initial']
+                    }
+
+                    // Mise à jour de l'état et de la version
+                    etat.version = version
+                    etat.status = 'ready'  // Exemple : tu peux changer ce statut selon ta logique
+                    etat.lastUpdated = new Date().toString()
+
+                    // Écriture dans le fichier
+                    writeJSON file: ETAT_FILE, json: etat
+
+                    echo "État mis à jour : version ${version}, statut ${etat.status}"
+                }
+            }
+        }
+
+        // Stage 2 : Lire l'état et conditionner l'exécution
+        stage('Exécuter selon l\'état et la version') {
+            steps {
+                script {
+                    def etat = readJSON file: ETAT_FILE
+                    echo "Version actuelle : ${etat.version}, Statut : ${etat.status}"
+
+                    // Condition : exécuter le stage suivant seulement si le statut est "ready"
+                    if (etat.status == 'ready') {
+                        echo "Condition remplie, on continue !"
+                    } else {
+                        echo "Condition non remplie, on s'arrête ici."
+                        currentBuild.result = 'ABORTED'
+                        error("Le statut n'est pas 'ready'")
+                    }
+                }
+            }
+        }
+
+        // Stage 3 : Exécuté seulement si le statut est "ready"
+        stage('Stage conditionnel') {
+            when {
+                expression {
+                    def etat = readJSON file: ETAT_FILE
+                    return etat.status == 'ready'
+                }
+            }
+            steps {
+                echo "Ce stage ne s'exécute que si le statut est 'ready' !"
+                // Ajoute ici les étapes spécifiques
+            }
+        }
+    }
+
+    // Nettoyage (optionnel)
+    post {
+        always {
+            def etat = readJSON file: ETAT_FILE
+            echo "Pipeline terminé. Version : ${etat.version}, Statut : ${etat.status}"
+        }
+    }
+}
