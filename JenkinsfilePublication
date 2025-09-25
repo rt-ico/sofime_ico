@@ -16,6 +16,8 @@ pipeline {
 
                     saveEtat(etat)
                     echo "État mis à jour : version ${etat.version}, statut ${etat.status}"
+
+                    currentBuild.description = "Prêt pour publication"
                 }
             }
         }
