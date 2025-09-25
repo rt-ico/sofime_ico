@@ -67,7 +67,7 @@ pipeline {
 def loadEtat() {
     if (fileExists(env.ETAT_FILE)) {
         try {
-            return readJSON file: env.ETAT_FILE
+            return readJSON (file: env.ETAT_FILE)
         } catch (Exception e) {
             error("Impossible de lire ou parser ${env.ETAT_FILE} : ${e.message}")
         }
@@ -77,5 +77,5 @@ def loadEtat() {
 }
 
 def saveEtat(etat) {
-    writeJSON file: env.ETAT_FILE, json: etat, pretty: 4
+    writeJSON (file: env.ETAT_FILE, json: etat, pretty: 4)
 }
