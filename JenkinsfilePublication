@@ -93,18 +93,21 @@ def saveEtat(etat) {
 
 def getChoicesFromEtat() {
     def defaultChoices = ['Default']
+     return ['Publish minor version', 'Publish major version']
+     /*
     if (fileExists('etat.json')) {
         try {
             def etat = readJSON(file: 'etat.json')
             return ['Publish minor version', 'Publish major version']
-         /*   if (etat.lastAction == 'Rebuild') {
+            if (etat.lastAction == 'Rebuild') {
                 return ['Publish minor version', 'Publish major version']
             } else {
                 return ['Rebuild', 'Default']
-            }*/
+            }
         } catch (Exception e) {
             return defaultChoices
         }
     }
-    return defaultChoices
+    */
+    //return defaultChoices
 }
