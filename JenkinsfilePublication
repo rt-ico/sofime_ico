@@ -62,13 +62,12 @@ pipeline {
 }
 
 //
-// Fonctions utilitaires pour la gestion de l'état
+// Fonctions utilitaires adaptées au sandbox
 //
 def loadEtat() {
     if (fileExists(env.ETAT_FILE)) {
         try {
-            def content = readFile(env.ETAT_FILE)
-            return new groovy.json.JsonSlurper().parseText(content)
+            return readJSON file: env.ETAT_FILE
         } catch (Exception e) {
             error("Impossible de lire ou parser ${env.ETAT_FILE} : ${e.message}")
         }
@@ -78,5 +77,5 @@ def loadEtat() {
 }
 
 def saveEtat(etat) {
-    writeFile file: env.ETAT_FILE, text: new groovy.json.JsonBuilder(etat).toPrettyString()
+    writeJSON file: env.ETAT_FILE, json: etat, pretty: 4
 }
