@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: getChoicesFromEtat(),   // Généré en fonction du précédent état
+            description: 'Action'
+        )
+    }
+
     environment {
         ETAT_FILE = 'etat.json'
     }
@@ -80,4 +88,23 @@ def loadEtat() {
 
 def saveEtat(etat) {
     writeJSON (file: env.ETAT_FILE, json: etat, pretty: 4)
+}
+
+
+def getChoicesFromEtat() {
+    def defaultChoices = ['Default']
+    if (fileExists('etat.json')) {
+        try {
+            def etat = readJSON(file: 'etat.json')
+            return ['Publish minor version', 'Publish major version']
+         /*   if (etat.lastAction == 'Rebuild') {
+                return ['Publish minor version', 'Publish major version']
+            } else {
+                return ['Rebuild', 'Default']
+            }*/
+        } catch (Exception e) {
+            return defaultChoices
+        }
+    }
+    return defaultChoices
 }
