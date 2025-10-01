@@ -39,6 +39,7 @@ Thumbs.db
 *.swp
 #Reflexe directory
 ##################
+.idea/
 sofime_reloc/
 OpenAGE/
 temp-build-OpenAGE/

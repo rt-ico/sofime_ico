@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  volume-init:
+    image: busybox
+    volumes:
+      - quick_sf_volume:/var/lib/postgresql/data
+      - ./podman-postgres:/backup:ro
+    command: sh -c "tar -xvf /backup/sofime_scenario_001.tar -C /var/lib/postgresql/data"
+    restart: "no"
+  postgres:
+    build:
+      context: ./podman-postgres
+      args:
+        EXPOSED_PORT: "17"
+        APP_JAR: "myapp.jar"
+    container_name: quick-sf-pg
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: not24get
+      POSTGRES_DB: oa_prod
+    volumes:
+      - type: volume
+        source: quick_sf_volume
+        target: /var/lib/postgresql/data
+    networks:
+      - quick_sf_net
+    ports:
+      - "5433:5432"
+
+  postgres-fs:
+    image: busybox
+    container_name: quick-sf-pg-fs
+    volumes:
+      - type: volume
+        source: quick_sf_volume
+        target: /var/lib/postgresql/data
+    command: sh -c "while true; do sleep 3600; done"
+    networks:
+      - quick_sf_net
+
+  viewer:
+    build:
+      context: ./podman-vs   # dossier contenant ton Dockerfile Java
+      args:
+        EXPOSED_PORT: "9170"
+        CONTAINER_NAME_DB: "quick-sf-pg"
+    container_name: quick-sf-vs
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: oa_prod
+      DB_USER: postgres
+      DB_PASSWORD: not24get
+    depends_on:
+      - postgres
+    networks:
+      - quick_sf_net
+    ports:
+      - "9170:9170"
+
+volumes:
+  quick_sf_volume:
+
+
+
+networks:
+  quick_sf_net:
+    driver: bridge
