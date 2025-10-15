@@ -1,12 +1,12 @@
 version: "3.9"
 
 services:
-  volume-init:
+  volume_init:
     image: busybox
     volumes:
       - quick_sf_volume:/var/lib/postgresql/data
       - ./podman-postgres:/backup:ro
-    command: sh -c "tar -xvf /backup/sofime_scenario_001.tar -C /var/lib/postgresql/data"
+    command: sh -c "tar -xvf /backup/sofime_scenario_001.tar -C /var/lib/postgresql/data && chown -R 777 /var/lib/postgresql/data && touch /var/lib/postgresql/data/.initialized"
     restart: "no"
   postgres:
     build:
@@ -27,18 +27,35 @@ services:
       - quick_sf_net
     ports:
       - "5433:5432"
+    entrypoint: sh -c "while [ ! -f /var/lib/postgresql/data/.initialized ]; do sleep 10; done && docker-entrypoint.sh postgres"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 25
 
-  postgres-fs:
-    image: busybox
-    container_name: quick-sf-pg-fs
-    volumes:
-      - type: volume
-        source: quick_sf_volume
-        target: /var/lib/postgresql/data
-    command: sh -c "while true; do sleep 3600; done"
+  openage:
+    build:
+      context: ./podman-tomcat   # dossier contenant ton Dockerfile Java
+      args:
+        EXPOSED_PORT: "9170"
+        CONTAINER_NAME_DB: "quick-sf-pg"
+        WAR_NAME: "openage"
+    container_name: quick-sf-oa
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: oa_prod
+      DB_USER: postgres
+      DB_PASSWORD: not24get
+      EXPOSED_PORT: 8686
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - quick_sf_net
-
+    ports:
+      - "8686:8080"
   viewer:
     build:
       context: ./podman-vs   # dossier contenant ton Dockerfile Java
@@ -53,7 +70,8 @@ services:
       DB_USER: postgres
       DB_PASSWORD: not24get
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - quick_sf_net
     ports:
@@ -61,8 +79,6 @@ services:
 
 volumes:
   quick_sf_volume:
-
-
 
 networks:
   quick_sf_net:
