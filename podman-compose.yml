@@ -36,7 +36,7 @@ services:
 
   openage:
     build:
-      context: ./podman-tomcat   # dossier contenant ton Dockerfile Java
+      context: ./podman-tomcat  
       args:
         EXPOSED_PORT: "9170"
         CONTAINER_NAME_DB: "quick-sf-pg"
@@ -58,7 +58,7 @@ services:
       - "8686:8080"
   viewer:
     build:
-      context: ./podman-vs   # dossier contenant ton Dockerfile Java
+      context: ./podman-vs  
       args:
         EXPOSED_PORT: "9170"
         CONTAINER_NAME_DB: "quick-sf-pg"
