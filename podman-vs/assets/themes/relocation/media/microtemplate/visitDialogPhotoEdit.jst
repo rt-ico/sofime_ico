@@ -1,0 +1,42 @@
+<div id="photoConfirm" class="thumbDialog">
+<div class="thumbPane">
+<h2><%- data.txt.dialogPhotoAddSubtitle %></h2>
+<% if (data.editContext.isImage) { %>
+<img src="<%= data.route.drop %><%= data.editContext.thumbName %>" width=<%= data.thumb.width %> height=<%= data.thumb.height %>>
+<% } else { %>
+<img src="<%= data.route.themeStyleUri %>media/white2x/form.png" width=<%= data.thumb.width %> height=<%= data.thumb.height %>>
+<% }
+
+if (data.editContext.replace && false){
+	%><h2><%- data.txt.dialogPhotoReplaceSubtitle %></h2><%
+	%><img src="<%= data.route.photoLibrary %><%= data.editContext.replace.uuid %>/thumb?mtime=<%= data.editContext.replace.mtime.getTime() %>" width=<%= data.thumb.width %> height=<%= data.thumb.height %>><%
+}
+%>
+</div>
+
+<div class="fieldPane">
+
+<label for="fileName" class="strong"><%- data.txt.dialogFileName %> :</label>
+<input id="fileName" type=text autocomplete="off" value="<%- data.editContext.fileName %>">
+
+<label for="fileRemarks" class="strong"><%- data.txt.dialogFileRemarks %> :</label>
+<textarea id="fileRemarks" autocomplete="off" rows=2></textarea>
+
+<input type="hidden" id="refExpat" name="refExpat" value="<%= data.editContext.refExpat %>" >
+<input type="hidden" id="refType" name="refType" value="<%= data.editContext.refType %>" >
+
+
+
+<%
+
+if (data.editContext.replace && data.editContext.replace.has_file){
+	%><div class="add-or-replace-options"><%
+	%><label><input type=radio name="addOrReplace" value="replace" checked> <%- data.txt.actionReplace %></label><%
+	%><label><input type=radio name="addOrReplace" value="add"> <%- data.txt.actionAdd %></label><%
+	%></div><%
+}
+
+%>
+</div>
+
+</div>

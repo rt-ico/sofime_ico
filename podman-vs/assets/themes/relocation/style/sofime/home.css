@@ -1,0 +1,3228 @@
+body > header,
+body > header > h1,
+body > header > div,
+body > footer,
+body > main,
+body > nav,
+body > nav > .nav-ctl,
+body > nav > .l7n-ctl {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	transition: all 0.2s;
+}
+
+body > header,
+body > footer,
+body > nav {
+	background-color: inherit;
+	box-shadow: rgba(0, 0, 0, 0.2) 2px 0 6px 0;
+	padding: 4px 8px;
+}
+
+body > main,
+body > header > .search,
+body > nav > div.nav-ctl.inactive,
+.minibody {
+	background-color: rgb(240, 240, 240);
+}
+
+body > header,
+body > footer {
+	z-index: 10;
+	overflow: hidden;
+}
+
+body > header {
+	background-image: url("media/bg-header.png");
+	background-repeat: no-repeat;
+	background-size: 107px 48px;
+	background-position: center center;
+}
+
+body > nav {
+	z-index: 20;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	font-weight: bold;
+}
+
+body > nav::after {
+	content: "";
+	opacity: 0.5;
+	background-image: url("media/bg-nav.png");
+	background-repeat: no-repeat;
+	background-size: 320px;
+	background-position: bottom center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+body:not(.with-nav) > nav,
+body:not(.with-header) > header,
+body:not(.with-footer) > footer {
+	display: none;
+	opacity: 0;
+}
+
+body.with-nav > nav {
+	display: block;
+	width: 320px;
+	opacity: 1;
+}
+
+body.with-nav > main,
+body.with-nav.with-header > header,
+body.with-nav.with-footer > footer {
+	left: 320px;
+}
+
+body.with-header > header {
+	display: block;
+	opacity: 1;
+	height: 48px;
+	bottom: initial;
+}
+
+body.with-header > main {
+	top: 48px;
+}
+
+body.with-footer > footer {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	opacity: 1;
+	height: 48px;
+	top: initial;
+}
+
+body.with-footer > main {
+	bottom: 48px;
+}
+
+body:not(.with-nav) > header .nav-ctl {
+	width: 48px;
+	right: initial;
+	opacity: 1;
+}
+
+body.with-nav > header .nav-ctl {
+	display: none;
+	opacity: 0;
+}
+
+body > header .hdr-ctl {
+	width: 96px;
+	left: initial;
+	text-align: right;
+}
+
+body > header .title {
+	font-weight: bold;
+	font-size: 28px;
+	margin: 0;
+}
+
+body > header .title,
+body > header .search {
+	line-height: 36px;
+	top: 4px;
+	bottom: 4px;
+	left: 48px;
+	right: 96px;
+	padding: 2px 8px;
+	border: 2px solid transparent;
+	border-radius: 2px;
+	visibility: hidden;
+}
+
+body.with-nav > header .title,
+body.with-nav > header .search {
+	left: 0;
+}
+
+body > header:not(.with-search) .title {
+	visibility: visible;
+}
+
+body > header.with-search .search {
+	visibility: visible;
+	border-color: rgb(248, 248, 248);
+}
+
+@media only screen and (max-width: 640px) {
+	body.with-nav > header,
+	body.with-nav > footer,
+	body.with-nav > main {
+		display: none;
+	}
+
+	body.with-nav > nav {
+		width: 100%;
+	}
+}
+
+body > * > .nav-ctl,
+body > header > .hdr-ctl {
+	height: 48px;
+	line-height: 48px;
+	bottom: initial;
+}
+
+body > nav > .l7n-ctl {
+	height: 48px;
+	line-height: 48px;
+	top: initial;
+}
+
+body > * > .nav-ctl img,
+body > header > .hdr-ctl img {
+	height: 24px;
+	width: 24px;
+	padding: 12px;
+	cursor: pointer;
+	opacity: 0.5;
+	transition: all 0.4s ease-out;
+}
+
+body > * > .nav-ctl img:hover {
+	opacity: 1;
+}
+
+body > * > .nav-ctl:not(.inactive) img:hover {
+	filter: drop-shadow(0 0 2px white);
+}
+
+body > header > .hdr-ctl img:hover {
+	opacity: 1;
+}
+
+body > nav > .l7n-ctl span.user-locale {
+	display: block;
+	left: 48px;
+	right: 48px;
+	box-sizing: content-box;
+	border-top: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+body > nav > .l7n-ctl span.user-locale > a {
+	display: inline-block;
+	position: absolute;
+	top: 8px;
+	bottom: 8px;
+	line-height: 24px;
+}
+
+body > nav > .l7n-ctl span.user-locale > a > * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+body > nav > .l7n-ctl span.user-locale > a > img {
+	width: 24px;
+	height: 24px;
+	margin-right: 8px;
+}
+
+body > nav > .nav-ctl span.user-cn {
+	left: 48px;
+}
+
+body > nav > .nav-ctl span.user-cn.xp {
+	display: flex;
+	justify-content: flex-end;
+}
+
+body > nav .nav-box {
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 48px;
+	bottom: 48px;
+}
+
+body > nav > .l7n-ctl {
+	font-size: 14px;
+	text-transform: capitalize;
+}
+
+body > nav > .l7n-ctl span.user-locale a {
+	transition: all 0.2s ease-out;
+	opacity: 0.5;
+}
+
+body > nav > .l7n-ctl span.user-locale a:hover {
+	opacity: 0.95;
+}
+
+body > nav .nav-box ul {
+	padding: 20px 0;
+	margin: 0 8px;
+}
+
+body > nav .nav-box ul > li {
+	cursor: pointer;
+	line-height: 30px;
+	max-height: 30px;
+	list-style-type: none;
+	padding: 0 0 0 40px;
+
+	font-weight: 500;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	background-repeat: no-repeat !important;
+	background-size: 24px 24px !important;
+	background-position: 3px 3px !important;
+
+	transition: all 0.2s ease-out;
+	opacity: 0.95;
+}
+
+body > nav .nav-box ul.text-only > li {
+	padding: 0 0 0 10px;
+}
+
+body > nav .nav-box ul:not(.text-only) > li {
+	background-image: url('media/white1x/environment.png');
+}
+
+body > nav .nav-box ul > li.account {
+	background-image: url('media/white1x/gearwheel.png');
+	background-position: right 3px top 3px !important;
+}
+
+.card.welcome .miniitem.expatMain,
+body > nav .nav-box ul > li.expatMain,
+body > nav .nav-box ul > li.hrHome {
+	background-image: url('media/white1x/ux-layout.png');
+}
+
+.card.welcome .miniitem.expatRelocation,
+body > nav .nav-box ul > li.expatRelocation,
+body > nav .nav-box ul > li.hrReloSetup {
+	background-image: url('media/white1x/user.png');
+}
+
+/*body > nav .nav-box ul > li.expatSurveys {
+	background-image: url('media/white1x/checks.png');
+}*/
+
+.card.welcome .miniitem.expatVisits,
+body > nav .nav-box ul > li.expatVisits,
+body > nav .nav-box ul > li.sfRelos,
+body > nav .nav-box ul > li.hrReloTrack {
+	background-image: url('media/white1x/ux-home.png');
+}
+
+.card.welcome .miniitem.otherVisits,
+body > nav .nav-box ul > li.otherVisits,
+body > nav .nav-box ul > li.hrPlanning {
+	background-image: url('media/white1x/ux-calendar.png');
+}
+
+body > nav .nav-box ul > li.expatDocs {
+	background-image: url('media/white1x/document_empty.png');
+}
+
+body > nav .nav-box ul > li.expatGuides,
+body > nav .nav-box ul > li.hrSfServices {
+	background-image: url('media/white1x/ux-clipboard.png');
+}
+
+body > nav .nav-box ul > li.expatContacts,
+body > nav .nav-box ul > li.hrContacts {
+	background-image: url('media/white1x/users.png');
+}
+
+body > nav .nav-box ul > li.hrStats {
+	background-image: url('media/white1x/chart_column.png');
+}
+
+body > nav .nav-box ul > li.sfTodo {
+	background-image: url('media/white1x/clipboard_checks.png');
+}
+
+body > nav .nav-box ul > li.sfMemo {
+	background-image: url('media/white1x/edit.png');
+}
+
+body > nav .nav-box ul > li.sfSuppliers {
+	background-image: url('media/white1x/businesspeople_alt.png');
+}
+
+body > nav .nav-box ul > li.activeSurveys {
+	background-image: url('media/white1x/messages.png');
+}
+
+body > nav .nav-box ul > li.sfMessages {
+	background-image: url('media/white1x/email.png');
+}
+
+@media only screen and (min-resolution: 1.25dppx), (-webkit-min-device-pixel-ratio: 1.25) {
+	body > nav .nav-box ul:not(.text-only) > li {
+		background-image: url('media/white2x/environment.png');
+	}
+
+	body > nav .nav-box ul > li.account {
+		background-image: url('media/white2x/gearwheel.png');
+	}
+
+	.card.welcome .miniitem.expatMain,
+	body > nav .nav-box ul > li.expatMain,
+	body > nav .nav-box ul > li.hrHome {
+		background-image: url('media/white2x/ux-layout.png');
+	}
+
+	.card.welcome .miniitem.expatRelocation,
+	body > nav .nav-box ul > li.expatRelocation,
+	body > nav .nav-box ul > li.hrReloSetup {
+		background-image: url('media/white2x/user.png');
+	}
+
+	/*body > nav .nav-box ul > li.expatSurveys {
+		background-image: url('media/white2x/checks.png');
+	}*/
+	.card.welcome .miniitem.expatVisits,
+	body > nav .nav-box ul > li.expatVisits,
+	body > nav .nav-box ul > li.sfRelos,
+	body > nav .nav-box ul > li.hrReloTrack {
+		background-image: url('media/white2x/ux-home.png');
+	}
+
+	.card.welcome .miniitem.otherVisits,
+	body > nav .nav-box ul > li.otherVisits,
+	body > nav .nav-box ul > li.hrPlanning {
+		background-image: url('media/white2x/ux-calendar.png');
+	}
+
+	body > nav .nav-box ul > li.expatDocs {
+		background-image: url('media/white2x/document_empty.png');
+	}
+
+	body > nav .nav-box ul > li.expatGuides,
+	body > nav .nav-box ul > li.hrSfServices {
+		background-image: url('media/white2x/ux-clipboard.png');
+	}
+
+	body > nav .nav-box ul > li.expatContacts,
+	body > nav .nav-box ul > li.hrContacts {
+		background-image: url('media/white2x/users.png');
+	}
+
+	body > nav .nav-box ul > li.hrStats {
+		background-image: url('media/white2x/chart_column.png');
+	}
+
+	body > nav .nav-box ul > li.sfTodo {
+		background-image: url('media/white2x/clipboard_checks.png');
+	}
+
+	body > nav .nav-box ul > li.sfMemo {
+		background-image: url('media/white2x/edit.png');
+	}
+
+	body > nav .nav-box ul > li.sfSuppliers {
+		background-image: url('media/white2x/businesspeople_alt.png');
+	}
+
+	body > nav .nav-box ul > li.activeSurveys {
+		background-image: url('media/white2x/messages.png');
+	}
+
+	body > nav .nav-box ul > li.sfMessages {
+		background-image: url('media/white2x/email.png');
+	}
+}
+
+body > nav .nav-box ul > li.separator {
+	padding: 0;
+	background-image: none;
+	cursor: default;
+}
+
+body > nav .nav-box ul > li.separator > hr {
+	height: 1px;
+	color: white;
+	background-color: white;
+	border: none;
+	margin: 8px 40px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+
+body > nav .nav-box ul > li a:active,
+body > nav .nav-box ul > li a:visited,
+body > nav .nav-box ul > li a:hover,
+body > nav .nav-box ul > li a {
+	text-decoration: none !important;
+	color: inherit;
+}
+
+.badge {
+	display: inline-block;
+	float: right;
+	border-radius: 12px;
+	height: 24px;
+	font-weight: bold;
+	line-height: 24px;
+	text-align: center;
+	margin: 3px;
+	padding: 0 6px;
+	min-width: 2em;
+	transition: opacity 0.5s;
+}
+
+.badge.zero {
+	opacity: 0;
+}
+
+body > .splash {
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	transition: all 0.5s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+body > .splash p {
+	font-weight: bold;
+	font-size: 40px;
+	text-align: center;
+}
+
+body > .splash p > img {
+	width: 320px;
+	height: 130px;
+}
+
+.multiline {
+	white-space: normal;
+	text-overflow: clip;
+}
+
+.context-popup.bubble article {
+	position: relative;
+}
+
+.context-popup.bubble article:after {
+	position: absolute;
+	content: '';
+	top: 0;
+	right: 0;
+	width: 0;
+	height: 0;
+	border: 8px solid transparent;
+}
+
+.context-popup.bubble.left article:after {
+	top: 16px;
+	border-left-color: white;
+	border-right: 0;
+	margin-top: -8px;
+	margin-right: -8px;
+}
+
+.card {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	right: 16px;
+	bottom: 16px;
+}
+
+.card:not(.flat) {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card .header {
+	position: absolute;
+	height: 48px;
+	left: 0;
+	right: 0;
+	line-height: 48px;
+	padding: 0 16px;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card .header h2,
+.card .header div,
+.card.with-footer .footer > * {
+	display: inline-block;
+}
+
+.card .body {
+	position: absolute;
+	top: 64px;
+	left: 16px;
+	right: 16px;
+	bottom: 16px;
+	overflow: auto;
+}
+
+.card.flat .body {
+	overflow-x: visible;
+	overflow-y: auto;
+}
+
+.card.with-footer .body {
+	bottom: 48px;
+}
+
+.card.with-footer .footer {
+	position: absolute;
+	height: 48px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	line-height: 48px;
+	padding: 0 16px;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.card.welcome .homecard a,
+.card.with-footer .footer > a {
+	flex-grow: 1;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 4px;
+	line-height: 28px;
+	margin: 0 8px;
+	cursor: pointer;
+
+	font-weight: bold;
+	text-align: center;
+	transition: all 0.2s;
+}
+
+.card.with-footer .footer > a:first-of-type {
+	margin-left: 0;
+}
+
+.card.with-footer .footer > a:last-of-type {
+	margin-right: 0;
+}
+
+.card.with-footer .footer > a.accent-color:not(.disabled) {
+	color: white;
+}
+
+.card.welcome .homecard a.disabled,
+.card.with-footer .footer > a.disabled {
+	opacity: 0.25;
+	color: rgba(0, 0, 0, 0.5);
+	border-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.25);
+	cursor: not-allowed;
+}
+
+@media only screen and (max-width: 667px) {
+	.card {
+		top: 8px;
+		left: 8px;
+		right: 8px;
+		bottom: 8px;
+	}
+
+	.card .header {
+		height: 36px;
+		line-height: 36px;
+		padding: 0 8px;
+	}
+
+	.card .body {
+		top: 48px;
+	}
+
+	.card .header h2 {
+		font-size: 16px;
+	}
+}
+
+.card.surveys ul.questions,
+.card.surveys ul.questions li {
+	margin: 0;
+	padding: 0;
+}
+
+.card.surveys ul.questions li {
+	list-style-type: none;
+}
+
+.card.surveys ul.questions li:not(:last-of-type) {
+	margin-bottom: 24px;
+}
+
+.card.surveys ul.questions li > div.q-label {
+	font-weight: bold;
+}
+
+.card.surveys ul.questions li:not(.q-radio):not(.q-checkbox) > div.q-label {
+	margin-bottom: 8px;
+}
+
+.card.surveys ul.questions li:not(.q-radio):not(.q-checkbox) div.q-field:not(:first-of-type) {
+	margin-top: 8px;
+}
+
+.card.account div.field label.required::after,
+.card.account div.fm-field label.required::after,
+.card.surveys ul.questions li > div.q-label.required::after,
+.card.hr .hr-field label.required::after {
+	content: " *";
+	color: red;
+}
+
+.card.surveys ul.questions div.q-label,
+.card.surveys ul.questions div.q-field {
+	line-height: 32px;
+	/*	vertical-align: middle;*/
+}
+
+.card.surveys ul.questions li.q-textfield input[type="text"],
+.card.surveys li.q-textarea textarea,
+.card.surveys input[type="text"].answer-remarks,
+.card.surveys textarea.review {
+	width: 100%;
+}
+
+.card.surveys .review.box {
+	padding: 4px;
+	margin: 4px;
+	border-radius: 4px;
+}
+
+/*.card.account input[type="text"].datefield,*/
+.card.surveys ul.questions li.q-intfield input[type="number"],
+.card.surveys ul.questions li.q-datefield input[type="text"]:not(.answer-remarks) {
+	width: 10em;
+	text-align: center;
+	height: 32px;
+}
+
+.card.surveys ul.questions li.q-datefield div.q-field {
+	display: flex;
+	align-items: center;
+}
+
+.datepicker-icon {
+	cursor: pointer;
+	transition: all 0.2s;
+	opacity: 0.5;
+	width: 24px;
+	height: 24px;
+	margin: 4px;
+}
+
+.datepicker-icon:hover:not(.disabled) {
+	opacity: 0.95;
+}
+
+.card.surveys.sections h3 {
+	margin-bottom: 16px;
+}
+
+.card.surveys.sections .infocard button.action {
+	margin: 16px 8px;
+}
+
+.card.surveys ul.sections {
+	padding: 0 24px 0 8px;
+	margin: 0;
+}
+
+.card.surveys ul.sections li {
+	list-style-type: none;
+	padding: 8px;
+	margin: 0;
+
+	font-weight: bold;
+
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 4px;
+
+	transition: all 0.2s;
+}
+
+.card.surveys ul.sections li {
+	border-width: 1px;
+	font-weight: 500;
+	line-height: 28px;
+}
+
+.card.surveys ul.sections li:not(.accent-color) {
+	background-color: white;
+}
+
+.card.surveys ul.sections li.accent-color {
+	color: white;
+}
+
+.card.surveys ul.sections li:not(:first-of-type) {
+	margin-top: 8px;
+}
+
+.card.surveys ul.questions li.q-radio div.q-field,
+.card.surveys ul.questions li.q-checkbox div.q-field {
+	padding-left: 8px;
+}
+
+.card.surveys ul.questions li.q-radio span.field-title,
+.card.surveys ul.questions li.q-checkbox span.field-title {
+	font-weight: normal;
+}
+
+.card.surveys ul.questions li.q-radio input.other,
+.card.surveys ul.questions li.q-checkbox input.other {
+	position: absolute;
+	top: 4px;
+	height: 32px;
+	width: calc(100% - 32px);
+	left: 32px;
+	right: 0;
+}
+
+.card table.sf-default {
+	width: 100%;
+	border-width: 1px;
+	border-style: solid;
+	border-collapse: collapse;
+}
+
+.card table.sf-default tr,
+.card table.sf-default th,
+.card table.sf-default td,
+.card table.sf-default {
+	border-color: rgba(0, 0, 0, 0.05);
+}
+
+.card table.sf-default:not(.optimized) tr:nth-child(odd):not(:nth-child(1)):not(.accent-color) {
+	background-color: rgba(0, 0, 0, 0.025);
+}
+
+.card table.sf-default.optimized tr:nth-child(odd) {
+	background-color: rgba(0, 0, 0, 0.025);
+}
+
+.card table.sf-default th,
+.card table.sf-default td {
+	border-width: 1px;
+	border-style: solid;
+
+	text-align: left;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 2px;
+}
+
+.card table.sf-default th.centered,
+.card table.sf-default td.centered {
+	text-align: center;
+}
+
+.card table.sf-default td.centered div.restyle-box {
+	display: inline-block;
+}
+
+.card table.sf-default td.centered div.restyle-box label.no-text {
+	padding: 8px;
+	cursor: pointer;
+}
+
+.card.expat.relocation h3:not(:first-of-type) {
+	margin-top: 24px;
+}
+
+.card table.sf-default.optimized td {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.card table.sf-default.optimized td > span,
+.card table.sf-default.optimized td > a {
+	display: block;
+}
+
+/*	start-of: styled radio buttons and checkboxes */
+
+label.for-radio,
+label.for-checkbox {
+	display: block;
+	line-height: 24px;
+	font-size: 16px;
+	position: relative;
+}
+
+label.for-checkbox,
+label.for-radio {
+	padding: 8px 8px 8px 32px;
+	margin: 0;
+	min-height: 40px;
+}
+
+.js-enabled label.for-radio > input[type=radio][name][value],
+.js-enabled label.for-checkbox > input[type=checkbox] {
+	opacity: 0;
+}
+
+label.for-checkbox > input[type=checkbox],
+.js-enabled label.for-checkbox::before,
+label.for-radio > input[type=radio][name][value],
+.js-enabled label.for-radio::before {
+	position: absolute;
+	top: 8px;
+	left: 0;
+	width: 24px;
+	height: 24px;
+}
+
+.js-enabled label.for-radio::before {
+	content: "";
+	border: 2px solid black;
+	border-radius: 50%;
+}
+
+.js-enabled label.for-checkbox.focus::before,
+.js-enabled label.for-radio.focus::before {
+	outline: none;
+	box-shadow: 0 0 1px 4px #ffbf47;
+}
+
+.js-enabled label.for-radio.checked::after {
+	content: "";
+	border: 4px solid black;
+	border-radius: 50%;
+	opacity: 1;
+	position: absolute;
+	top: 16px;
+	left: 8px;
+	width: 0;
+	height: 0;
+}
+
+.js-enabled label.for-checkbox::before {
+	content: "";
+	border: 2px solid black;
+	border-radius: 4px;
+}
+
+.js-enabled label.for-checkbox.checked::after {
+	content: "";
+	border-width: 0 0 4px 4px;
+	border-style: solid;
+	border-color: black;
+	transform: rotate(-45deg);
+	opacity: 1;
+	position: absolute;
+	top: 14px;
+	left: 4px;
+	width: 16px;
+	height: 8px;
+}
+
+.js-enabled label.for-radio[disabled],
+.js-enabled label.for-checkbox[disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+input[type=checkbox] {
+	margin: 0;
+}
+
+span.field-title {
+	font-weight: bold;
+}
+
+/*	  end-of: styled radio buttons and checkboxes */
+
+/*	start-of: typeahead */
+
+.tt-menu {
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.95);
+	border-radius: 2px;
+}
+
+.tt-menu, .tt-dataset {
+	max-height: 120px;
+	overflow-y: auto;
+	z-index: 1100 !important;
+}
+
+.tt-open {
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.tt-suggestion {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-shadow: -1px -1px 0 white, -1px 1px 0 white, 1px -1px 0 white, 1px 1px 0 white, 0 0 2px white;
+	line-height: 24px;
+	cursor: pointer;
+	border-radius: 2px;
+	padding: 0 2px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tt-cursor {
+	background-color: #86bffe;
+}
+
+/*	  end-of: typeahead */
+
+/*	start-of: datepicker */
+
+table.dp-view {
+	table-layout: fixed;
+	width: 100%;
+	height: 100%;
+	border-collapse: collapse;
+	font-size: 80%;
+}
+
+table.dp-view * {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+table.dp-view tr:first-of-type {
+	line-height: 24px;
+}
+
+table.dp-view td.d6:not(.accent-color):not(.light-primary-color),
+table.dp-view td.d7:not(.accent-color):not(.light-primary-color) {
+	background-color: rgba(0, 0, 0, 0.04);
+}
+
+table.dp-view tr:nth-of-type(2) {
+	background-color: rgba(0, 0, 0, 0.08);
+}
+
+table.dp-view tr.dp-week td:not(.primary-text-color) {
+	color: rgba(0, 0, 0, 0.25)
+}
+
+table.dp-view tr:not(:first-of-type) {
+	line-height: 20px;
+}
+
+table.dp-view th,
+table.dp-view td {
+	text-align: center;
+	border: 1px solid rgba(0, 0, 0, 0.16);
+	transition: all 0.2s;
+}
+
+table.dp-view tr:first-of-type > * {
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+}
+
+table.dp-view .dp-deny {
+	cursor: not-allowed;
+}
+
+table.dp-view .dp-pick,
+table.dp-view .dp-prev:not(.dp-deny),
+table.dp-view .dp-next:not(.dp-deny) {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+table.dp-view th.dp-weeknum,
+table.dp-view td.dp-weeknum {
+	border-right: 3px double;
+	background-color: rgba(0, 0, 0, 0.02);
+}
+
+table.dp-view td.dp-weeknum {
+	font-weight: bold;
+}
+
+/*	  end-of: datepicker */
+
+/*  start-of: tabs */
+
+.card .tabs {
+	display: flex;
+	align-items: stretch;
+	height: 56px;
+}
+
+.card .tabs .tab {
+	vertical-align: middle;
+	border-top-style: solid;
+	border-top-color: transparent;
+	border-bottom-style: solid;
+	padding: 0 32px;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card .tabs .tab.active {
+	border-top-width: 3px;
+	border-bottom-width: 3px;
+	line-height: 50px;
+	font-weight: bold;
+}
+
+.card .tabs .tab:not(.active) {
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	line-height: 54px;
+}
+
+.card .tabs .tab.empty {
+	flex-grow: 2;
+}
+
+@media only screen and (max-width: 768px) {
+	.card .tabs .tab {
+		padding: 0 8px;
+	}
+}
+
+/*    end-of: tabs */
+
+
+/*	start-of: specific page styles */
+
+.plaincard,
+.infocard,
+.homecard,
+.visitcard,
+.minicard,
+.survey-card {
+	position: relative;
+	background-color: white;
+	box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.2);
+	margin: 8px;
+	transition: all 0.2s;
+}
+
+@media only screen and (max-width: 768px) {
+	.card .body {
+		left: 4px;
+		right: 4px;
+	}
+
+	.card .body.pad-container {
+		padding: 4px;
+	}
+
+	.infocard,
+	.homecard,
+	.visitcard,
+	.minicard {
+		margin: 4px;
+	}
+}
+
+.minicard {
+	width: 300px;
+	min-height: 300px;
+}
+
+.minicard > * {
+	text-align: center;
+}
+
+.survey-card,
+.infocard {
+	border-left-style: solid;
+	border-left-width: 8px;
+}
+
+.homecard,
+.infocard {
+	margin-bottom: 24px;
+}
+
+.visitcard {
+	width: 200px;
+	min-height: 200px;
+}
+
+.visitcard p:not(.visit-date):not(.visit-time) {
+	font-size: 12px;
+	margin-top: 4px;
+}
+
+.visitcard p.visit-time {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0;
+}
+
+.visitcard p.visit-date {
+	font-size: 14px;
+	margin: 0 0 16px 0 !important;
+}
+
+.visitcard p.visit-url a {
+	display: inline-block;
+	width: 100%;
+}
+
+.visitcard span.label {
+	font-weight: bold;
+}
+
+.visitcard .action-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.family-members a.add,
+.family-members a.remove,
+.visitcard .action-box > * {
+	flex-grow: 1;
+	text-align: center;
+	font-weight: bold;
+	line-height: 24px;
+	height: 32px;
+	padding: 4px;
+	border-radius: 4px;
+	margin: 4px 0;
+}
+
+.family-members a.add,
+.family-members a.remove {
+	display: inline-block;
+	width: 80px;
+	flex-grow: 0;
+}
+
+.family-members .fm-field {
+	padding: 8px;
+	min-width: 160px;
+}
+
+.family-members a.remove {
+	margin: 8px;
+}
+
+.family-members .fm-field label,
+.family-members .fm-field .field-title {
+	font-weight: 500 !important;
+}
+
+.family-members .fm-field label:not(.for-checkbox) {
+	display: block;
+}
+
+.family-members .fm-field select {
+	height: 32px;
+}
+
+.visitcard .action-box > *:not(:first-child) {
+	margin-left: 4px;
+}
+
+.visitcard .action-box > *:not(:last-child) {
+	margin-right: 4px;
+}
+
+.family-members a.add svg,
+.family-members a.remove svg,
+.visitcard .action-box a > svg {
+	width: 24px;
+	height: 24px;
+}
+
+.homecard {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.homecard[data-target] {
+	cursor: pointer;
+}
+
+.infocard > h4 {
+	font-weight: 500;
+}
+
+@media only screen and (max-width: 384px) {
+	.infocard > h4 {
+		font-weight: normal;
+	}
+
+	.infocard .appointments-box {
+		font-size: 12px;
+	}
+}
+
+.infocard .appointments-box {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.homecard > div.indicator {
+	padding: 4px 8px;
+	height: 40px;
+	line-height: 32px;
+	font-size: 14px;
+	font-weight: bold;
+
+	display: flex;
+	align-items: center;
+}
+
+.homecard > div.icon {
+	flex-grow: 2;
+	text-align: center;
+}
+
+.homecard > div.icon svg,
+.homecard > div.icon img {
+	width: 96px;
+	height: 96px;
+	margin: 16px;
+}
+
+.minicard > div.avatar {
+	height: 100px;
+}
+
+.minicard > div.avatar svg,
+.minicard img.avatar {
+	width: 90px;
+	height: 90px;
+	margin: 5px;
+	clip-path: circle(50%);
+}
+
+.minicard h3.cn {
+	line-height: 50px;
+	font-weight: normal;
+}
+
+.homecard .indicator p,
+.card .minicard.contact p {
+	margin: 0;
+}
+
+.homecard .indicator p {
+	flex-grow: 2;
+}
+
+.homecard .indicator .info,
+.homecard .indicator .warn {
+	width: 32px;
+	height: 32px;
+	text-align: center;
+	font-size: 12px;
+	position: relative;
+}
+
+.homecard .indicator .info > span,
+.homecard .indicator .warn > span:not(.bg),
+.hr.relo-track .minicard .indicator {
+	z-index: 1;
+	position: relative;
+}
+
+.homecard .indicator .info {
+	border-radius: 16px;
+}
+
+.homecard .indicator .warn {
+	margin-left: 8px;
+}
+
+.homecard .indicator .warn > span.value,
+.hr.relo-track .minicard .indicator.warn > span.value {
+	text-shadow: -1px -1px 0 white, -1px 1px 0 white, 1px -1px 0 white, 1px 1px 0 white, 0 0 2px white;
+}
+
+.homecard .indicator .warn > span.bg,
+.hr.relo-track .minicard .indicator.warn > span.bg {
+	z-index: 0;
+	display: block;
+	position: absolute;
+	color: red;
+	left: -2px;
+	top: -4px;
+}
+
+.homecard .indicator .warn > span.bg,
+.homecard .indicator .warn > span.bg > svg,
+.hr.relo-track .minicard .indicator.warn > span.bg > svg {
+	width: 36px;
+	height: 36px;
+}
+
+.card.home .homecards,
+.card.visits .visitcards,
+.card.contacts:not(.hr) .body,
+.card.contacts.hr .contact-cards,
+.card .minicard.contact .detail .subjects {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	align-items: flex-start;
+}
+
+.card.visits .visitcards {
+	justify-content: space-around;
+}
+
+.card.home .homecards {
+	justify-content: space-between;
+}
+
+.card.home .homecard {
+	width: 45%;
+	min-height: 180px;
+}
+
+@media only screen and (max-width: 768px) {
+	.card.home .homecard {
+		justify-content: space-around;
+	}
+
+	body.with-nav .card.home .homecard {
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 384px) {
+	.card.visits .visitcard,
+	.card.home .homecard {
+		width: 100%;
+	}
+}
+
+@media only screen and (min-width: 1224px) {
+	body.with-nav .card.home .homecard,
+	body:not(.with-nav) .card.home .homecard {
+		width: 220px;
+	}
+}
+
+@media only screen and (min-width: 1440px) {
+	body.with-nav .card.home .homecard,
+	body:not(.with-nav) .card.home .homecard {
+		width: 240px;
+	}
+}
+
+.card .minicard.contact .detail .subjects {
+	justify-content: center;
+	padding: 16px 0;
+}
+
+.card .minicard.contact .detail .subjects .subject {
+	display: inline-block;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 4px;
+	padding: 4px 6px;
+	margin: 2px;
+	max-width: 240px;
+}
+
+.card .minicard.contact .detail .contact {
+	text-align: left;
+	line-height: 22px;
+	padding: 0 8px 16px 8px;
+}
+
+.card.account .form {
+	width: 100%;
+}
+
+.card.account .form .field:not(:first-of-type) {
+	margin-top: 12px;
+}
+
+.card.account .form .field > label:first-of-type {
+	display: block;
+}
+
+.card.account .form .field input[type="email"],
+.card.account .form .field input[type="tel"],
+.card.account .form .field input[type="text"]:not(.date) {
+	width: 100%;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.card.hr input[type="number"],
+.card.hr input[type="text"].date,
+.card.staff input[type="text"].date,
+.card.staff input[type="text"].time,
+.card.staff input[type="text"].numeric,
+.card.staff input[type="text"].postcode,
+.card.relocation .field input[type="text"].date,
+.card.account .form .field input[type="text"].date {
+	width: 10em;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.card.account .form .field > label:first-of-type {
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.card.account .form .field > label:not(:first-of-type),
+.card.account .form .field div.input {
+	margin-left: 8px;
+}
+
+.card.account .form .field div.input span.twitter-typeahead {
+	width: 100%;
+}
+
+.card.hr .hr-field .input,
+.card.staff .staff-field .input,
+.card.relocation .field .input,
+.card.account .form .field .input {
+	display: flex;
+	align-items: center;
+	min-height: 32px;
+}
+
+.card.hr .hr-field div.hint,
+.card.hr .hr-field div.input.stretch,
+.card.hr .hr-field input.stretch {
+	width: 100%;
+}
+
+.card.hr .hr-field label.hint,
+.card.hr .hr-field div.hint {
+	font-size: 14px;
+	margin-top: 8px;
+}
+
+.card.account .form span.field-title:not(.service) {
+	font-weight: normal;
+}
+
+.card.account h3 {
+	font-weight: bold;
+	font-size: 24px;
+	margin: 0;
+}
+
+.card.account .family-members .family-member,
+.card.staff .family-members .family-member {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+
+	margin-top: 8px;
+
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 4px;
+}
+
+.card.account .fm-field.date .field {
+	display: flex;
+	align-items: center;
+}
+
+.card.account .fm-field.grow {
+	flex-grow: 1;
+}
+
+.card.account .fm-field.remarks {
+	margin-right: 48px;
+}
+
+.card.welcome p.subtitle {
+	margin: 0;
+}
+
+.card.welcome .crumbtrail {
+	display: flex;
+	align-items: center;
+	min-height: 64px;
+	margin: 32px 0 16px 0;
+}
+
+.card.welcome .crumbtrail-labels {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.card.welcome .crumb-label {
+	width: 96px;
+	height: 64px;
+	overflow: hidden;
+	font-size: 12px;
+	text-align: center;
+}
+
+.card.welcome .crumbtrail .crumb {
+	width: 64px;
+	height: 64px;
+	border-radius: 32px;
+	padding: 16px;
+	line-height: 32px;
+	text-align: center;
+}
+
+.card.welcome .homecard .actions {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+
+	align-content: space-between;
+	height: 80px;
+}
+
+.card.welcome .homecard .actions a {
+	flex-grow: 0;
+	min-width: 280px;
+	text-decoration: none;
+	font-weight: 500;
+	/*padding-top: 20px;*/
+}
+
+.crumbtrail .done,
+.crumbtrail .doing {
+	cursor: pointer;
+	pointer-events: inherit;
+}
+
+@media only screen and (min-width: 768px) {
+	.card.welcome .crumbtrail .crumb:first-of-type {
+		margin-left: 16px;
+	}
+
+	.card.welcome .crumbtrail .crumb:last-of-type {
+		margin-right: 16px;
+	}
+}
+
+.card.welcome .crumbtrail .crumb.doing {
+	opacity: 0.6;
+}
+
+.card.welcome .crumbtrail .crumb.todo {
+	border-width: 1px;
+	border-style: solid;
+}
+
+.card.welcome .crumbtrail .line {
+	flex-grow: 1;
+	height: 1px;
+	color: rgba(0, 0, 0, 0.5);
+	border: none;
+	margin: 0;
+}
+
+.card.welcome .homecard {
+	padding: 24px;
+}
+
+@media only screen and (max-width: 767px) {
+	.card.welcome .crumbtrail,
+	.card.welcome .crumbtrail-labels {
+		justify-content: space-around;
+	}
+
+	.card.welcome .crumbtrail .crumb.done:not(.small-screen-display),
+	.card.welcome .crumbtrail .crumb.doing:not(.small-screen-display),
+	.card.welcome .crumbtrail .crumb.todo,
+	.card.welcome .crumbtrail-labels .crumb-label.done:not(.small-screen-display),
+	.card.welcome .crumbtrail-labels .crumb-label.doing:not(.small-screen-display),
+	.card.welcome .crumbtrail-labels .crumb-label.todo,
+	.card.welcome .crumbtrail .line:not(.small-screen-display) {
+		display: none;
+	}
+}
+
+.card.welcome .stage-ui {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	margin-bottom: 24px;
+}
+
+.card.welcome .stage-ui.welcome a {
+	border: none;
+	border-radius: 0;
+	margin: 0;
+	font-weight: normal;
+}
+
+.card.welcome .stage-ui.survey {
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+.card.welcome .minimenu,
+.card.welcome .minibody {
+	min-width: 280px;
+	min-height: 140px;
+	margin: 4px;
+	overflow: hidden;
+}
+
+.card.welcome .minibody {
+	flex-grow: 1;
+}
+
+.card.welcome .miniitem {
+	height: 30px;
+	line-height: 30px;
+	margin: 0 8px;
+	padding-left: 40px;
+	background-repeat: no-repeat;
+	background-size: 24px 24px;
+	background-position: 3px 3px;
+	font-weight: 500;
+}
+
+.card.welcome .miniitem:not(.disabled) {
+	cursor: pointer;
+}
+
+.card.welcome .miniitem.disabled {
+	/*backdrop-filter: blur(4px);*/
+	opacity: 0.2;
+	cursor: not-allowed;
+}
+
+.card.welcome .stage-ui .outline {
+	border-width: 4px;
+	border-style: solid;
+	border-radius: 4px;
+}
+
+.card.welcome .stage-ui .survey-card {
+}
+
+.card.welcome .stage-ui .outline h3,
+.card.expat.relocation h3 {
+	font-weight: 500;
+}
+
+.card.expat.relocation input
+.card.account .home-search {
+	opacity: 0.99;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 4px;
+	padding: 8px;
+	margin-top: 8px;
+	font-weight: normal;
+	min-height: 240px;
+	transition: all 0.2s;
+}
+
+.card.account .home-search.disabled {
+	opacity: 0.01;
+	padding: 0;
+	margin: 0;
+	height: 0;
+	min-height: 0;
+	pointer-events: none;
+	/*cursor: not-allowed;*/
+}
+
+.card.account h3:not(:first-of-type),
+.card.account .home-search h4:not(:first-of-type) {
+	margin-top: 16px;
+}
+
+.card.account .home-search span.temp-date,
+.card.account .home-search label.hire-transfer > span {
+	display: block;
+}
+
+.card.account .home-search span.temp-date > *,
+.card.account .home-search label.hire-transfer > span > * {
+	vertical-align: middle;
+}
+
+.card.account .home-search span.temp-date > input,
+.card.account .home-search label.hire-transfer > span > input {
+	text-align: center;
+}
+
+.card.account .home-search.temp label:not(:first-of-type) {
+	margin-top: 16px;
+}
+
+.card.account textarea#newExpatRemarks {
+	width: 100%;
+	margin-bottom: 16px;
+}
+
+.card.home .body > p {
+	margin: 8px 0;
+}
+
+.card.home .infocard.appointments .icon,
+.card.home .infocard.appointments .icon > svg,
+.card.home .infocard.communication .icon,
+.card.home .infocard.communication .icon > svg {
+	width: 32px;
+	height: 32px;
+}
+
+@media only screen and (min-width: 768px) {
+	.card.home .infocard.appointments,
+	.card.home .infocard.communication {
+		display: flex;
+	}
+
+	.card.home .infocard.appointments p,
+	.card.home .infocard.communication p {
+		margin: 4px 0 4px 16px;
+	}
+}
+
+.card.home .infocard.appointments p span {
+	display: block;
+}
+
+.card.home .infocard.appointments p span:not(:first-of-type) {
+	margin-top: 12px;
+}
+
+.card.home .infocard.visits .visit-subject {
+	display: inline-block;
+	width: 280px;
+}
+
+.card.home .infocard.visits .visit-subject,
+.card.home .infocard.visits .visit-date,
+.card.home .infocard.visits .visit-time {
+	font-weight: bold;
+}
+
+.card.welcome .stage-ui .survey-card,
+.card.relocation .infocard.survey {
+	display: flex;
+	align-items: center;
+}
+
+.card.relocation .infocard.survey:not(.locked) {
+	cursor: pointer;
+}
+
+.card.relocation .infocard.survey.locked {
+	cursor: not-allowed;
+}
+
+.card.welcome .survey-card div,
+.card.relocation .infocard.survey div {
+	vertical-align: center;
+	height: 32px;
+	line-height: 32px;
+}
+
+.card.welcome .survey-card div.survey-text,
+.card.relocation .infocard.survey div.survey-text {
+	flex-grow: 1;
+}
+
+.card.welcome .survey-card div.survey-icon svg,
+.card.relocation .infocard.survey div.survey-icon svg {
+	height: 24px;
+	width: 24px;
+	margin: 4px;
+}
+
+.card.appointments .body > h3 {
+	margin-bottom: 24px;
+}
+
+.card.appointments .infocard div.about {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	flex-wrap: wrap;
+}
+
+.card.appointments .infocard div.about > p {
+	flex-grow: 1;
+	margin: 0;
+}
+
+@media only screen and (min-width: 768px) {
+	.card.appointments .infocard div.about > p.location {
+		text-align: end;
+	}
+}
+
+.card.appointments .infocard div.extra {
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.card.appointments .infocard > * {
+	margin: 0 0 8px 0;
+}
+
+.card.appointments .infocard p:last-child {
+	margin-bottom: 0;
+}
+
+.card.appointments .infocard p.subject,
+.card.appointments .infocard p.appointment {
+	font-weight: bold;
+}
+
+.card.appointments .infocard p.appointment {
+	font-size: 24px;
+}
+
+.card.visits .body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+.card.visits .body > * {
+	flex-grow: 1;
+}
+
+.card.visits .body > .map.visits {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 8px;
+	min-height: 160px;
+}
+
+#edit-remarks {
+	width: 100%;
+	height: 100%;
+}
+
+.hr .body h2:not(.no-margin),
+.hr .body h3:not(.no-margin),
+.hr .body h4:not(.no-margin) {
+	margin-top: 24px;
+}
+
+.hr .body .plaincard h2:first-of-type:not(.no-margin),
+.hr .body .plaincard h3:first-of-type:not(.no-margin),
+.hr .body .plaincard h4:first-of-type:not(.no-margin) {
+	margin-top: 16px;
+}
+
+.body h2.no-margin,
+.body h3.no-margin,
+.body h4.no-margin {
+	margin: 0 !important;
+}
+
+.hr .body h3,
+.hr .body h4 {
+	font-weight: 500;
+}
+
+@media only screen and (min-width: 1320px) {
+	.card.hr .setup-1 .flatcard {
+		width: 920px;
+		margin: auto;
+	}
+}
+
+.card.hr .setup-1 .flatcard .pick-client {
+	background-color: white;
+}
+
+.card.hr .setup-1 .flatcard .pick-client,
+.card.hr .setup-1 .flatcard .pick-pack {
+	min-width: initial;
+	max-width: initial;
+	width: 100%;
+	margin: 0 0 16px 0;
+}
+
+.card.hr.relo-setup input.combo {
+	width: 100%;
+}
+
+.card.hr .setup-1 .flatcard .pick-pack {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: stretch;
+	justify-content: flex-end;
+}
+
+.card.hr .setup-1 .flatcard .pick-pack .service-pack {
+	height: 40px;
+	line-height: 36px;
+	text-align: center;
+	min-width: 280px;
+	margin: 8px 16px;
+	border-radius: 4px;
+	border-width: 2px;
+	border-style: solid;
+	transition: all 0.25s;
+}
+
+.card.hr .setup-1 .flatcard .pick-pack .service-pack:not(.transparent) {
+	cursor: pointer;
+}
+
+.card.hr .setup-1 .flatcard .pick-pack .service-pack.applied {
+	color: white !important;
+}
+
+.card.hr .setup-1 .flatcard .category {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: stretch;
+	width: 100%;
+}
+
+.card.hr .setup-1 .flatcard .category:not(:first-of-type) > * {
+	padding-top: 16px !important;
+}
+
+.card.hr .setup-1 .flatcard .category .cat-desc {
+	width: 280px;
+	margin: 4px 8px;
+}
+
+.card.hr .setup-1 .flatcard .category .cat-desc h4 {
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	line-height: 32px;
+	margin-bottom: 4px;
+	font-size: 14px;
+}
+
+.card.hr .setup-1 .flatcard .category .services {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	flex-grow: 2;
+
+	min-width: 280px;
+	padding: 0 8px;
+	margin-right: 8px;
+	background-color: white;
+}
+
+.card.hr .setup-1 .flatcard .category .service {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.card.hr .setup-1 .flatcard .category .service label {
+	flex-grow: 1;
+	font-size: 14px;
+}
+
+.card.hr .setup-1 label.for-checkbox span.field-title {
+	font-weight: normal;
+}
+
+.card.hr .setup-1 .flatcard .category .service .detail:not(.disabled) {
+	cursor: pointer;
+}
+
+.card.hr .setup-1 .flatcard .category .service .detail.disabled {
+	cursor: not-allowed;
+	opacity: 0.1;
+}
+
+.card.hr.relo-setup svg {
+	width: 24px;
+	height: 24px;
+}
+
+.card.hr.account .plaincard.form,
+.card.hr .setup-2 .plaincard {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	justify-content: space-between;
+}
+
+.card.hr .setup-3 .plaincard {
+	min-height: 120px;
+}
+
+.card.hr .plaincard .radiobox {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	border: none;
+}
+
+.card.hr .plaincard .radiobox label:not(.for-radio) {
+	width: 100%;
+	display: block;
+}
+
+.card.hr .plaincard .radiobox label.for-radio {
+	display: inline-block;
+	margin-right: 24px;
+}
+
+.card.hr .hr-field {
+	padding: 8px;
+	margin: 4px;
+	flex-grow: 1;
+}
+
+.card.hr .hr-field:not(.radiobox) {
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 6px;
+	min-width: 280px;
+	max-width: 560px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.card.hr .hr-field:not(:first-of-type) {
+	margin-top: 4px;
+}
+
+.card.hr .setup-2 .plaincard .hr-field label {
+	font-size: 14px;
+	margin-bottom: 4px;
+}
+
+.card.hr .setup-2 .plaincard .hr-field label.required {
+	font-weight: 500;
+}
+
+.card.hr .setup-2 .plaincard .hr-field label:not(:first-of-type) {
+	margin-top: 8px;
+}
+
+.card.hr .hr-field input:not(.outlined),
+.card.hr .hr-field textarea:not(.outlined) {
+	border-color: transparent;
+	border-width: 1px;
+	border-radius: 1px;
+	transition: all 0.2s;
+}
+
+.card.hr .hr-field input:focus,
+.card.hr .hr-field textarea:focus {
+	border-bottom-color: rgba(0, 0, 0, 0.25);
+}
+
+.card.hr.contacts .resources ul.links {
+	padding: 0;
+	margin: 8px 0 0 0;
+}
+
+.card.hr.contacts .resources ul.links li {
+	list-style-type: none;
+	padding: 8px;
+	font-weight: bold;
+}
+
+.hr.relo-track .expats.cards {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-evenly;
+	margin-top: 16px;
+}
+
+.hr.home.relo-track .expats.cards {
+	justify-content: space-between;
+}
+
+p.aftercards {
+	text-align: right;
+}
+
+.hr.relo-track .minicard {
+	min-height: initial;
+	margin-top: 16px;
+	margin-bottom: 16px;
+	cursor: pointer;
+}
+
+.hr.relo-track .minicard .cardtitle {
+	height: 64px;
+	display: flex;
+	align-items: center;
+}
+
+.hr.relo-track .minicard .cardtitle .id {
+	flex-grow: 2;
+	flex-shrink: 2;
+	text-align: left;
+	line-height: 24px;
+	min-width: 64px;
+
+	font-size: 14px;
+}
+
+.hr.relo-track .minicard .rdv,
+.hr.relo-track .minicard .svc,
+.hr.relo-track .minicard .indicator {
+	font-size: 13px;
+	line-height: 24px;
+}
+
+.hr.relo-track .minicard .rdv {
+	display: flex;
+	justify-content: space-between;
+}
+
+.hr.relo-track .minicard .svc {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding-bottom: 8px;
+}
+
+.hr.relo-track .minicard .svc > span {
+	flex-grow: 1;
+	flex-shrink: 1;
+	padding: 0 4px;
+	margin: 4px;
+	border-radius: 4px;
+	border-width: 2px;
+	border-style: solid;
+}
+
+.hr.relo-track .minicard .rdv > span,
+.hr.relo-track .minicard .svc > span {
+	min-width: 64px;
+	display: block;
+}
+
+.hr.relo-track .minicard .cardtitle .id > span {
+	display: block;
+}
+
+.hr.relo-track .minicard .cardtitle .id .cn {
+	font-weight: bold;
+	width: 100%;
+}
+
+.hr.relo-track .minicard .icon {
+	padding: 8px;
+}
+
+.hr.relo-track .minicard .icon svg {
+	width: 32px;
+	height: 32px;
+}
+
+.hr.relo-track .minicard .indicator {
+	min-width: 32px;
+	height: 32px;
+	line-height: 32px;
+	margin: 4px;
+	text-align: center;
+	font-weight: bold;
+
+	border-radius: 16px;
+}
+
+.hr.relo-track .minicard .indicator.info {
+}
+
+.hr.relo-track .minicard .indicator.warn {
+}
+
+.hr.relo-track .minicard .rdv,
+.hr.relo-track .minicard .svc,
+.hr.relo-track .minicard h4 {
+	margin: 0 8px;
+}
+
+.hr.relo-track .minicard h4 {
+	text-align: left;
+}
+
+.hr.relo-track .minicard h4:not(:first-of-type) {
+	margin: 8px;
+}
+
+.staff:not(.hr) table.expats,
+.staff:not(.hr) table.surveys,
+.staff table.automail-outbox,
+.hr table.expats.done,
+.hr table.expats.planning,
+.hr table.services {
+	background-color: white;
+	margin-top: 16px;
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+.staff:not(.hr) table.expats th,
+.staff:not(.hr) table.surveys th,
+.staff table.automail-outbox th,
+.hr table.expats.done th,
+.hr table.expats.planning th,
+.hr table.services th {
+	text-align: left;
+	font-weight: 500;
+}
+
+.staff:not(.hr) table.expats th .sort-arrow,
+.staff:not(.hr) table.surveys th .sort-arrow,
+.staff table.automail-outbox th .sort-arrow,
+.hr table.expats.done th .sort-arrow,
+.hr table.expats.planning th .sort-arrow,
+.hr table.services th .sort-arrow {
+	float: right;
+	font-size: 22px;
+}
+
+.staff:not(.hr) table.expats th,
+.staff:not(.hr) table.expats td,
+.staff:not(.hr) table.surveys th,
+.staff:not(.hr) table.surveys td,
+.staff table.automail-outbox th,
+.staff table.automail-outbox td,
+.hr table.expats.done th,
+.hr table.expats.done td,
+.hr table.expats.planning th,
+.hr table.expats.planning td,
+.hr table.services th,
+.hr table.services td {
+	padding: 8px;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.staff:not(.hr) table.expats tr,
+.staff:not(.hr) table.surveys tr,
+.staff table.automail-outbox tr,
+.hr table.expats.done tr,
+.hr table.expats.planning tr,
+.hr table.services tr {
+	line-height: 28px;
+}
+
+.staff:not(.hr) table th.sortable,
+.staff table.automail-outbox.sortable,
+.hr table.expats.done tbody tr,
+.hr table.expats.done thead th.sortable,
+.hr table.expats.planning thead th.sortable,
+.hr table.services thead th.sortable {
+	cursor: pointer;
+}
+
+.staff table.automail-outbox .customer-name {
+ 	width: 12%;
+}
+
+.staff:not(.hr) table.expats .centered {
+	text-align: center;
+	width: 15%;
+}
+
+.staff:not(.hr) table.surveys .centered {
+	text-align: center;
+	width: 10%;
+}
+
+.hr table.services .projects {
+	text-align: center;
+}
+
+.hr.relo-track.one .infocard {
+	border-radius: 4px;
+}
+
+.hr.relo-track.one h3 {
+	margin-bottom: 16px;
+}
+
+.staff .filter,
+.hr .filter,
+.hr.relo-track.one .pick-expat {
+	display: flex;
+	flex-wrap: wrap;
+	flex-shrink: 0; /* fix safari "collapse" bug */
+	margin-bottom: 24px;
+}
+
+.staff .filter,
+.hr .filter {
+	justify-content: space-between;
+}
+
+.hr.relo-track.one .pick-expat > div {
+	max-width: 300px;
+	margin-right: 20px;
+}
+
+.hr .filter > div > div,
+.hr.relo-track.one .pick-expat > div > div {
+	padding: 8px;
+	border-radius: 8px;
+	border-style: solid;
+	height: 48px;
+	vertical-align: center;
+}
+
+.staff .filter p.label,
+.hr .filter p.label {
+	font-weight: 500;
+	margin: 12px 0;
+}
+
+.hr.relo-track.one .pick-expat p.label {
+	font-weight: 500;
+	margin: 0 0 12px;
+}
+
+.hr.relo-track.one .pick-expat > .picker {
+	width: 300px;
+}
+
+.staff .filter .input-box,
+.hr .filter .input-box,
+.hr.relo-track.one .pick-expat .picker-box {
+	background-color: white;
+	border-width: 1px;
+	display: flex;
+	align-items: center;
+}
+
+.staff .filter div.combo,
+.hr .filter div.combo,
+.hr.relo-track.one .pick-expat .picker div.combo {
+	flex-grow: 2;
+}
+
+.staff .filter div.combo input,
+.staff .filter div.combo .twitter-typeahead,
+.hr .filter div.combo input,
+.hr .filter div.combo .twitter-typeahead,
+.hr.relo-track.one .pick-expat .picker input,
+.hr.relo-track.one .pick-expat .twitter-typeahead {
+	width: 100%;
+}
+
+.staff .filter div.combo input,
+.hr .filter div.combo input,
+.hr.relo-track.one .pick-expat .picker input {
+	border-color: transparent;
+}
+
+.staff .filter div.icon,
+.staff .filter svg,
+.hr .filter div.icon,
+.hr .filter svg,
+.hr.relo-track.one .pick-expat div.icon,
+.hr.relo-track.one .pick-expat svg {
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+
+.hr.relo-track.one .pick-expat .welcomer-box {
+	line-height: 28px;
+	border-width: 2px;
+	text-align: center;
+}
+
+.hr.relo-track.one .infocard h4 {
+	text-transform: uppercase;
+}
+
+.hr.relo-track.one .infocard h4:first-of-type {
+	margin: 0 0 12px;
+}
+
+.hr.relo-track.one .infocard h4:not(:first-of-type) {
+	margin: 24px 0 12px;
+}
+
+.hr.relo-track.one .infocard .field-boxes {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.hr.relo-track.one .infocard .field-box {
+	font-size: 14px;
+	line-height: 20px;
+	flex-grow: 1;
+}
+
+.hr.relo-track.one .label.family-relation {
+	font-weight: 500;
+}
+
+.hr.stats .plaincard {
+	margin-bottom: 32px;
+}
+
+.hr.stats .kpi {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.hr.stats .kpi .indicator {
+	background-color: white;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+	border-radius: 2px;
+	margin: 8px 8px 16px 8px;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	min-height: 80px;
+	min-width: 240px;
+	position: relative;
+}
+
+.hr.stats .kpi .indicator .value {
+	z-index: 2;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	width: 64px;
+	text-shadow: -1px -1px 0 white, -1px 1px 0 white, 1px -1px 0 white, 1px 1px 0 white, 0 0 2px white;
+}
+
+.hr.stats .kpi .indicator .value::after {
+	content: "";
+	z-index: -1;
+	top: 8px;
+	left: 8px;
+	width: 64px;
+	height: 64px;
+	border-width: 4px;
+	border-style: solid;
+	border-radius: 40px;
+	position: absolute;
+}
+
+.hr.stats .kpi .indicator .label {
+	font-size: 12px;
+	flex-grow: 1;
+	margin-left: 8px;
+}
+
+.hr.stats .gfx-chartbox {
+	width: 100%;
+	height: 280px;
+	overflow: hidden;
+	position: relative;
+}
+
+.hr.account .plaincard.client h4 {
+	font-weight: bold !important;
+	margin: 0 0 16px 0 !important;
+}
+
+.hr.account .plaincard.client:not(:first-of-type) {
+	margin-top: 24px;
+}
+
+.hr.account .plaincard.client p:last-of-type {
+	margin-bottom: 0;
+}
+
+.hr.account .plaincard.client span.label {
+	font-weight: 500;
+	text-decoration: underline;
+}
+
+@media only screen and (min-width: 1024px) {
+	.card.hr.account .hr-field {
+		min-width: 480px;
+		max-width: initial;
+	}
+}
+
+.staff.todo-list-popup {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.staff.todo-list-popup .subheader {
+	padding: 0 0 16px;
+}
+
+.staff.todo-list-popup .subheader > * {
+	height: 36px;
+	line-height: 36px;
+}
+
+.staff.todo-list-popup .subheader h2 {
+	display: inline-block;
+}
+
+.staff.todo-list-popup .firstbutton {
+	text-align: right;
+	flex-grow: 1;
+}
+
+.staff.todo-list-popup .buttons {
+	text-align: right;
+	margin-left: 10px;
+}
+
+.staff.todo-list-popup label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.staff.todo-list-popup .field {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.staff.todo-list-popup #todo-remarks {
+	flex-grow: 1;
+}
+
+.staff.memo .staff-field:not(:first-of-type) {
+	margin-top: 16px;
+}
+
+.staff.memo label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.staff.memo .staff-field.combo .twitter-typeahead,
+.staff.memo .staff-field.combo input {
+	min-width: 50%;
+}
+
+.staff.memo .staff-field.combo .twitter-typeahead input,
+.staff.memo .staff-field.remarks input {
+	width: 100%;
+}
+
+.staff.suppliers .body,
+.staff.todo-list .body,
+.staff.expats .body {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	top: 48px;
+}
+
+.staff.suppliers .body .suppliers-card,
+.staff.todo-list .body .todo-list,
+.staff.expats .body .expat-list {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.staff.send-grouped .body .filter,
+.staff.todo-list .body .filter,
+.staff.suppliers .body .filter,
+.staff.mail .body .filter,
+.staff.expats .body .filter {
+	justify-content: space-around;
+}
+
+.staff.todo-list article.expat-task,
+.staff.expats article.expat {
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+.staff.mail article.mail h3,
+.staff.todo-list article.expat-task h3,
+.staff.todo-list article.expat-task h4,
+.staff.todo-list article.expat-task p,
+.staff.todo-list article.expat-task span,
+.staff.expats article.expat h3,
+.staff.expats article.expat h4,
+.staff.expats article.expat p,
+.staff.expats article.expat span,
+.staff.expat-visits article.infocard {
+	text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.6), -1px 1px 0 rgba(255, 255, 255, 0.6), 1px -1px 0 rgba(255, 255, 255, 0.6), 1px 1px 0 rgba(255, 255, 255, 0.6), 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.staff.mail article.mail h3,
+.staff.todo-list article.expat-task h3,
+.staff.todo-list article.expat-task h4,
+.staff.expats article.expat h3,
+.staff.expats article.expat h4 {
+	line-height: 24px;
+	font-size: 16px;
+	text-align: left;
+}
+
+.staff.mail article.mail h3,
+.staff.todo-list article.expat-task h3,
+.staff.expats article.expat h3 {
+	font-weight: bold;
+	padding: 6px 6px 0;
+}
+
+.staff.todo-list article.expat-task h4,
+.staff.expats article.expat h4 {
+	font-weight: 500;
+	padding: 0 6px 6px;
+}
+
+.staff.mail article.mail p,
+.staff.todo-list article.expat-task p,
+.staff.expats article.expat p {
+	font-weight: 500;
+}
+
+.staff.todo-list article.expat-task p,
+.staff.todo-list article.expat-task span,
+.staff.expats article.expat p,
+.staff.expats article.expat span {
+	font-size: 14px;
+}
+
+.staff.expat-visits article.infocard {
+	cursor: pointer;
+	font-weight: 500;
+}
+
+.staff.expat-visits article.infocard.accent-color {
+	border-color: rgba(0, 0, 0, 0.2);
+}
+
+.staff .sf-tiles {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.staff .sf-tile {
+	width: 280px;
+	height: 120px;
+	padding: 8px;
+	margin: 16px;
+	font-weight: 500;
+	text-align: center;
+	overflow: hidden;
+	cursor: pointer;
+	border-radius: 2px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	transition: all 0.25s;
+}
+
+.staff .sf-tile.accent-color {
+	color: white;
+	box-shadow: 0 2px 6px 4px rgba(0, 0, 0, 0.4);
+	text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.4), -1px 1px 0 rgba(0, 0, 0, 0.4), 1px -1px 0 rgba(0, 0, 0, 0.4), 1px 1px 0 rgba(0, 0, 0, 0.4), 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+.staff .sf-tile:not(.accent-color) {
+	background-color: white;
+	box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.2);
+}
+
+.staff .sf-tile .filler {
+	flex-grow: 1;
+}
+
+.sf.x-set-v-attr,
+.sf.x-set-vp-time {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+.sf.x-set-v-attr .field,
+.sf.x-set-vp-time .field {
+	min-height: 32px;
+}
+
+.sf.x-set-v-address .field {
+	max-height: 40px;
+}
+
+.sf.x-set-v-attr .field.combo label {
+	margin-bottom: 4px;
+}
+
+.sf.x-set-v-attr .field.combo span.twitter-typeahead,
+.sf.x-set-v-attr .field input.combo,
+.sf.x-set-v-attr .field textarea {
+	width: 100%;
+}
+
+.sf.x-set-v-attr .field.stretch,
+.sf.x-set-vp-time .field:first-of-type {
+	flex-grow: 2;
+}
+
+.sf.x-set-v-attr .field:not(:first-of-type),
+.sf.x-set-vp-time .field:not(:first-of-type) {
+	margin-top: 8px;
+}
+
+.sf.x-set-v-datetime input[name="date"],
+.sf.x-set-v-datetime input[name="time"],
+.sf.x-set-vp-time input[name="time"] {
+	margin: 0 16px;
+	text-align: center;
+}
+
+.sf.x-set-v-attr span.label {
+	display: inline-block;
+	min-width: 120px;
+}
+
+.sf.x-set-v-attr div.vp-other,
+.sf.x-set-vp-time div.vp-other {
+	font-size: 14px;
+}
+
+.sf.x-set-v-attr div.vp-other.link {
+	flex-grow: 2;
+}
+
+.staff.x-home .field {
+	padding: 0 8px;
+	margin-bottom: 12px;
+}
+
+.staff.x-home .field label:not(.for-checkbox) {
+	display: block;
+	line-height: 28px;
+}
+
+.staff.x-home .field label,
+.staff.x-home .field label.for-checkbox span.field-title {
+	font-weight: 500;
+}
+
+.staff.x-home .field input:not(.numeric),
+.staff.x-home .field textarea,
+.staff.x-home .field span.twitter-typeahead {
+	width: 100%;
+}
+
+.staff.x-home .field input.date,
+.staff.x-home .field input.numeric {
+	width: 10em;
+}
+
+.staff .visitcard .action-box a {
+	border-width: 2px;
+	border-style: solid;
+	line-height: 22px;
+	font-weight: 500;
+	transition: all 0.2s;
+}
+
+.staff .visitcard .action-box a.alt-accent-color:hover {
+	text-decoration: underline;
+	color: white;
+}
+
+.staff .add-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.staff .add-card > * {
+	flex-grow: 1;
+}
+
+.add-card-icon {
+	color: black;
+	opacity: 0.4;
+}
+
+.add-card-icon,
+.add-card-icon > svg {
+	width: 80px;
+	height: 80px;
+}
+
+.add-card-icon > svg {
+	padding: 0;
+}
+
+.staff.add-visit-place .body {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.staff.add-visit-place .field {
+	margin-bottom: 12px;
+}
+
+.staff.add-visit-place .field label {
+	font-weight: bold;
+}
+
+.staff.add-visit-place .field textarea,
+.staff.add-visit-place .field input:not(.date):not(.time):not(.postcode):not(.numeric):not([type="checkbox"]),
+.staff.add-visit-place .field.combo span.twitter-typeahead {
+	width: 100%;
+}
+
+.staff.add-visit-place .field.picker div.input {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+@media only screen and (max-width: 518px) {
+	.staff.mail.send .minicard {
+		min-height: 100px;
+		max-width: 500px;
+	}
+}
+@media only screen and (min-width: 518px) {
+	.staff.mail.send .minicard {
+		min-height: 100px;
+		/*width: 400px;*/
+		min-width: 400px;
+		max-width: 500px;
+	}
+}
+
+.staff.mail.send .minicard[data-id] {
+	cursor: pointer;
+}
+
+.staff.mail.send .minicard > * {
+	text-align: left;
+}
+
+.staff.mail.send .minicard > div.cn {
+	font-weight: 500;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	margin-bottom: 8px;
+}
+
+.staff.mail.send .minicard > div.subject {
+	flex-grow: 1;
+}
+
+.staff.mail.item .field.mh {
+	line-height: 40px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.staff.mail.item .field.mh label {
+    color: rgb(43, 90, 109);
+	display: inline-block;
+	min-width: 140px;
+	text-align: right;
+	font-weight: 500;
+	margin-right: 8px;
+}
+
+.staff.mail.item .field.mh input {
+	flex-grow: 1;
+}
+
+.staff.mail.item a.attachment {
+	display: inline-block;
+	margin: 4px;
+	padding: 4px 8px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.staff.mail.item .am-body {
+	width: 100%;
+	height: 100%;
+}
+
+.staff.mail.item .field.mb {
+	color: black;
+	background-color: white;
+	border-width: 2px;
+	border-style: solid;
+	min-height: 240px;
+	margin: 16px 0;
+}
+
+.staff.mail.send-grouped div.check-expat {
+	text-align: center;
+	border-radius: 20px;
+	border-width: 1px;
+	border-style: solid;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.staff.mail.send-grouped div.form {
+	margin: 16px 0;
+}
+
+.staff.mail.send-grouped div.form label {
+	display: block;
+	font-weight: 500;
+	line-height: 36px;
+}
+
+.staff.mail.send-grouped div.form textarea {
+	width: 100%;
+}
+
+.staff.mail.send-grouped div.disabled {
+	opacity: 0.25;
+	cursor: not-allowed;
+}
+
+.staff.mail.send-grouped div.disabled * {
+	pointer-events: none;
+}
+
+
+.staff.mail a.add, .staff.mail a.remove {
+	display: inline-block;
+	width: 80px;
+	flex-grow: 0;
+}
+
+.staff.mail a.add,
+.staff.mail a.remove {
+	/*flex-grow: 1;*/
+	width:140px;
+	text-align: center;
+	font-weight: bold;
+	line-height: 24px;
+	padding: 4px;
+	height: 32px;
+	border-radius: 4px;
+	margin: 4px 0;
+}
+
+.staff.mail.item  .field.ma {
+	display: flex;
+	flex-flow: column;
+	justify-content: flex-start;
+	align-items: baseline;
+}
+
+.staff.mail.item .attached-doc {
+	display: flex;
+	/*flex-grow: 1;*/
+	text-align: center;
+	font-weight: bold;
+	line-height: 24px;
+	height: 32px;
+	border-radius: 4px;
+	margin: 4px 0;
+}
+
+.staff.mail.item .field.ma a {
+	display: flex;
+	min-width: 140px;
+	/*flex-grow: 1;*/
+	font-weight: bold;
+	line-height: 24px;
+	height: 32px;
+	padding: 4px 10px;
+	border-radius: 4px;
+	margin-right: 4px;
+	justify-content: center;
+}
+
+.staff.mail.item .signature-picker,
+.staff.mail.item .document-picker {
+	display: flex;
+	/*flex-grow: 1;*/
+	text-align: center;
+	font-weight: bold;
+	line-height: 24px;
+	height: 32px;
+	border-radius: 4px;
+	margin: 4px 0;
+}
+
+
+.staff.mail.item .input-box {
+	border-style: solid;
+	display: flex;
+	/*flex-grow: 1;*/
+	text-align: center;
+	font-weight: bold;
+	line-height: 24px;
+	height: 32px;
+	border-radius: 4px;
+	margin:4px;
+}
+
+.staff.mail.item .pick-signature.icon,
+.staff.mail.item .pick-attachment.icon {
+	border: transparent;
+	width:26px;
+}
+
+.expat-hook {}
+
+.customer-hook {}
+
+.generic-hook {}
+
+.staff.mail.item .pick-signature input,
+.staff.mail.item .pick-attachment input {
+	width:480px;
+	border-color: transparent;
+	height: 24px;
+}
+
+
+.staff.mail.item a.add-document svg,
+.staff.mail.item a.remove-document svg,
+.staff.mail a.add svg,
+.staff.mail a.remove svg {
+	width: 24px;
+	height: 24px;
+}
+
+.sf.stats .body,
+.sf.stats .body .plaincard {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.sf.stats .plaincard {
+	flex-grow: 1;
+}
+
+.sf.stats .gfx-chartbox {
+	overflow: hidden;
+	position: relative;
+	flex-grow: 1;
+}
+
+.automail-outbox {
+
+}
+
+.staff table.automail-outbox .centered {
+	text-align: center;
+	width: 8%;
+}
+
+.staff table.automail-outbox .date {
+	text-align: center;
+	min-width: 110px;
+	width: 110px;
+}
+.staff table.automail-outbox .subject {
+	width: 40%;
+}
+
+@media all and (max-width: 500px)
+{
+    .staff.mail.item .field.ma a {
+        min-width: 36px;
+    }
+
+    .staff.mail.item .field.mh {
+    	flex-flow: wrap;
+    	line-height: normal;
+        margin-bottom: 18px;
+    }
+
+    .staff.mail.item .field.mh label {
+        text-align: left;
+    }
+
+    .staff.mail.item .field.mh input {
+        margin-right: 10px;
+    }
+
+    .staff.mail a.remove {
+        width: 40px;
+        margin-right: 5px;
+        margin-top: 0px;
+        float: right;
+    }
+
+    .staff.mail a.add {
+        margin: 10px;
+    }
+
+    .staff.mail.item .pick-attachment input, .staff.mail.item .pick-signature input {
+        width: 100%;
+    }
+
+    .staff.mail.item .attached-doc {
+        padding-left: 60px;
+    }
+
+    .staff table.automail-outbox .centered {
+    	width: 10%;
+    }
+}
+
+/*	  end-of: specific page styles */
+
+#gfx-canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.textWithOverflow{
+	overflow: auto;
+	font-size: medium;
+	display: flex;
+}

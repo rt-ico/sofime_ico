@@ -1,0 +1,84 @@
+<div class="card flat staff expat-edit with-header with-footer"><%
+
+%><div class="header"><%
+let navMsg = data.fmt.sprintf(data.txt.sofimeExpats);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sofimeExpats/" title="<%- navMsg %>"><%- navMsg %> <%- data.txt.sfExpatNewRelocation %></a></div><%
+%></div><% /* .header */
+%><div class="body fit-container pad-container"><%
+
+%><div class="form staff-field"><%
+
+%><h3 class="alt-accent"><%- data.txt.colExpatName %></h3><%
+
+
+
+
+%><label class="required extraPaddingTop"><%- data.txt.expatriateGender %></label><%
+
+%><div class="expatEditLocaleInput extraPaddingTop"><%
+
+_.each(data.gender, function(g){
+	%><label class="for-radio-for-gender secondary-text-color  <%= data.locked ? 'readonly':'' %> "><%
+	%><input  class="expatEditLocaleCheckbox" <%= data.locked ? 'disabled':'' %> type="radio" name="gender" value=<%= g.id %><% if(g.id===3){ print(' checked'); } %>><%
+	%><span class="rightPadding expatEditGender"><%- g.name %></span><%
+	%></label><%
+});
+%></div><% /* .field */
+
+%><div class="row-block sizeablePaddingTop"><%
+
+%><div class="field column-block"><%
+%><label class="required"><%- data.txt.expatriateSurName %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="sn" ><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><div class="field column-block"><%
+%><label class="required"><%- data.txt.expatriateGivenName %></label><%
+%><div class="input  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="gn" ><%
+%></div><% /* .input */
+%></div><% /* .field */
+%></div><% /* .row-block */
+
+%><div class="row-block extraPaddingTop"><%
+
+%><div class="field expatRelocationClientField"><%
+%><label class="required"><%- data.txt.colCustomerName %></label><%
+%><div class="input pick-client combo  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="client" ><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required extraPaddingLeft"><%- data.txt.expatRelocationContact %></label><%
+%><div class="input contactRh  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=100 name="contactRh" ><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .row-block */
+
+%><div class="field extraPaddingTop"><%
+%><label class="required"><%- data.txt.expatriateWorkMail %></label><%
+%><div class="input expatEditMail  <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=email maxlength=100 name="workMail" ><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%></div><% /* .form */
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+if(!data.locked){
+%><a class="update ellipsis accent-border accent-color disabled"
+	 href="#sfExpat" title="<%- data.txt.actionCreate %>"><%- data.txt.actionCreate %></a><%
+}
+%></div><% /* .footer */
+
+%></div>

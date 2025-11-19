@@ -1,0 +1,63 @@
+{
+  "context" : {
+    "name" : "CONTEXT_NAMECore",
+    "path" : "/root/openage/context/openage"
+  },
+  "logging" : {
+    "path" : "/root/openage/context/openage/logs",
+    "level" : "DEBUG",
+    "rotation" : "SIZE",
+    "dateRoll" : "WEEKLY",
+    "sizeRoll" : 1024,
+    "retained" : 7,
+    "lifespan" : "365"
+  },
+  "indexing" : {
+    "use" : false
+  },
+  "upgrades" : {
+    "unattended" : true
+  },
+  "jdbc" : {
+    "dialect" : "postgresql",
+    "schema" : "",
+    "createSystemObjects" : "auto",
+    "jndi" : {
+      "name" : ""
+    },
+    "datasource" : [ {
+      "name" : "jdbc/OpenAGE",
+      "label" : "",
+      "url" : "jdbc:postgresql://CONTAINER_NAME:5432/mydb",
+      "dialect" : "postgres",
+      "driverClassName" : "org.postgresql.Driver",
+      "factory" : "org.apache.commons.dbcp.BasicDataSourceFactory",
+      "type" : "javax.sql.DataSource",
+      "auth" : "Container",
+      "username" : "postgres",
+      "password" : "not24get",
+      "maxActive" : "50",
+      "maxIdle" : "10",
+      "maxWait" : "5000",
+      "connectionProperties" : "currentSchema=openage"
+    } ]
+  },
+  "mail" : {
+    "name" : "mail/OpenAGE",
+    "type" : "javax.mail.Session",
+    "smtp" : {
+      "host" : "mail.server",
+      "port" : "25",
+      "auth" : {
+        "required" : "true",
+        "starttls" : "false",
+        "username" : "UserName",
+        "password" : "crypt:9b3b30Ff3f7e1a7e44Bb6aA97f12EaB4B10c26Ee533985554350E91a89BfA50b73C95c7874840bD1D79dA230Ea1bF494C9EaA39cA093266c420726D23984723f0063E78326B7034a36086fB7A34fA5Bf"
+      },
+      "sender" : {
+        "address" : "",
+        "name" : ""
+      }
+    }
+  }
+}

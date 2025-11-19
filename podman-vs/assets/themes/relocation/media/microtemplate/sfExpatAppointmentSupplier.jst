@@ -1,0 +1,14 @@
+<div class="fit-container pad-container sf x-set-v-attr x-set-v-supplier secondary-text-color"><%
+
+%><div class="field stretch combo"><%
+%><label class="strong"><%- data.txt.colSupplier %> :</label><br><%
+%><input type=text name="supplier" class="combo" value=""><%
+%></div><%
+
+%><div class="field vp-other"><%
+	print(_.escape(data.appointment.localized));
+	print('<br>');
+	print(_.escape(data.appointment.localeDesc || data.appointment.subject));
+%></div><%
+
+%></div>

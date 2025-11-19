@@ -1,0 +1,260 @@
+<div class="card flat staff x-home x-settle with-header<%= data.locked ? '':' with-footer' %>"><%
+
+	%><div class="header"><%
+		%><h2 class="primary"><%
+			%><a href="#sfExpatView/<%= data.expat.id %>" class="underlined"><%- data.expat.cn %>&nbsp;<%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a> &gt; <%
+			%><a href="#sfExpatView/<%= data.expat.id %>/housing" class="underlined"><%- data.txt.sfExpatHome %></a> &gt; <%
+			%><%- data.txt.sfExpatHomeSettle %></h2><%
+		%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="field"><%
+%><label for="sfhs_addressfinal"><%- data.txt.sfExpatHomeSettle_addressfinal %> :</label><%
+%><textarea id="sfhs_addressfinal" <%= data.locked ? 'readonly':'' %> rows=4 cols=40><%= _.isString(data.fields.addressFinal) ? _.escape(data.fields.addressFinal.trim()) : '' %></textarea><%
+%></div><%
+
+var dt = data.fields.moving;
+
+%><div class = "row-block space-between"><% /*doublepage */
+
+%><div class = ""><% /*doublepage left hand */
+
+%><div class="row-block"><%
+
+%><div class="field "><%
+%><label class=""><%- data.txt.sfExpatHomeSettle_arrival %></label><%
+%><div class="alignCenter"><%
+%><input  <%= data.locked ? 'readonly':'' %> type=text maxlength=10 name="arrivalDate" id="arrivalDate" class="date" value="<% if(dt){ print(_.escape(data.cachedMoment(dt).format("L"))); } %>" data-floor=0 title="<%- data.txt.calendarDigitDateMask %>" placeholder="<%- data.txt.calendarDigitDateMask %>"><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="arrivalDate" data-pick-date-title="<%- data.txt.expatriateArrivalDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><%
+%></div><% /* .field */
+
+%><div class="field alignCenter"><%
+%><label for="horsMarche" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_horsMarcheHover %>"><%
+%><input  id="horsMarche" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.fields.horsMarche){ print('checked'); } %> value=1><%
+%><span class="field-title"><%- data.txt.sfExpatHomeSettle_horsMarche %></span><%
+%></label><%
+%></div><%
+
+%></div><% /*rowBlock*/
+
+				%><div class="row-block"><%
+
+					%><div class="field alignCenter"><%
+						%><label for="rentTypeCodeCivil" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_rentTypeCodeCivil %>"><%
+							%><input  id="rentTypeCodeCivil" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.fields.rentTypeCodeCivil){ print('checked'); } %> value=1><%
+							%><span class="field-title"><%- data.txt.sfExpatHomeSettle_rentTypeCodeCivil %></span><%
+							%></label><%
+						%></div><%
+
+					%><div class="field alignCenter"><%
+						%><label for="rentTypeLoiAlur" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_rentTypeLoiAlur %>"><%
+							%><input  id="rentTypeLoiAlur" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.fields.rentTypeLoiAlur){ print('checked'); } %> value=1><%
+							%><span class="field-title"><%- data.txt.sfExpatHomeSettle_rentTypeLoiAlur %></span><%
+							%></label><%
+						%></div><%
+
+					%><div class="field alignCenter"><%
+						%><label for="rentTypeHighIncome" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_rentTypeHighIncome %>"><%
+							%><input  id="rentTypeHighIncome" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.fields.rentTypeHighIncome){ print('checked'); } %> value=1><%
+							%><span class="field-title"><%- data.txt.sfExpatHomeSettle_rentTypeHighIncome %></span><%
+							%></label><%
+						%></div><%
+
+					%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="sfhs_digicode1"><%- data.txt.sfExpatHomeSettle_digicode1 %> :</label><%
+%><input  id="sfhs_digicode1" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.digicode1) ? _.escape(data.fields.digicode1.trim()) : '' %>"><%
+%></div><%
+
+%><div class="field"><%
+%><label for="sfhs_digicode2"><%- data.txt.sfExpatHomeSettle_digicode2 %> :</label><%
+%><input  id="sfhs_digicode2" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.digicode2) ? _.escape(data.fields.digicode2.trim()) : '' %>"><%
+%></div><%
+%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+%><div class="field "><%
+%><label for="sfhs_floor"><%- data.txt.sfExpatHomeSettle_floor %> :</label><%
+%><input  id="sfhs_floor" class=" " type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.floor) ? _.escape(data.fields.floor.trim()) : '' %>"><%
+%></div><%
+
+%><div class="field"><%
+%><label for="sfhs_surface "><%- data.txt.sfExpatHomeSettle_surface %> :</label><%
+%><input  id="sfhs_surface" class=" " type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.surface) ? _.escape(data.fmt.formatDecimal(data.fields.surface)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="sfhs_insurance"><%- data.txt.sfExpatHomeSettle_insurance %> :</label><%
+%><input  id="sfhs_insurance" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.insurance) ? _.escape(data.fields.insurance.trim()) : '' %>"><%
+%></div><%
+
+%><div class="field"><%
+%><label for="sfhs_internet"><%- data.txt.sfExpatHomeSettle_internet %> :</label><%
+%><input  id="sfhs_internet" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.internet) ? _.escape(data.fields.internet.trim()) : '' %>"><%
+%></div><%
+%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="sfhs_electricity"><%- data.txt.sfExpatHomeSettle_electricity %> :</label><%
+%><input  id="sfhs_electricity" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.electricity) ? _.escape(data.fields.electricity.trim()) : '' %>"><%
+%></div><%
+
+%><div class="field"><%
+%><label for="sfhs_gascontract"><%- data.txt.sfExpatHomeSettle_gascontract %> :</label><%
+%><input  id="sfhs_gascontract" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.gasContract) ? _.escape(data.fields.gasContract.trim()) : '' %>"><%
+%></div><%
+%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="sfhs_rentprice"><%- data.txt.sfExpatHomeSettle_rentprice %> :</label><%
+%><input  id="sfhs_rentprice" class=" " type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.rentPrice) ? _.escape(data.fmt.formatDecimal(data.fields.rentPrice)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+
+%><div class="field"><%
+%><label for="sfhs_deposit"><%- data.txt.sfExpatHomeSettle_deposit %> :</label><%
+%><input  id="sfhs_deposit" class=" " type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.deposit) ? _.escape(data.fmt.formatDecimal(data.fields.deposit)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+
+					%><div class="field"><%
+						%><label class="label"><%- data.txt.sfExpatHomeSettle_rentGuarantee %> :</label><%
+						%><div class="row-block alignCenter"><%
+							%><div class="WIP width250 row-block alignCenter"><%
+								%><div class="rentGuarantee WIPTypeAhead width160"><input id="rentGuarantee" class = "WIPTypeAhead" title="<%= data.txt.rentGuarantee %>" autocomplete = "off" value=" "></div><%
+								%><div class="width10 ">&nbsp</div><%
+								%><div class="rentGuarantee width22 rentGuaranteeExpandIcon "><%= data.images.expand %></div><%
+								%></div><% /* .input-box */
+							%><div class="width22 rentGuaranteeMissingIcon missingFieldIcon visibilityOff"><%= data.images.missing %></div><%
+							%></div><% /* row-block*/
+						%></div><% /* .field */
+
+%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+
+%><div class="field"><%
+%><label for="sfhs_furnished" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_furnished %>"><%
+%><input  id="sfhs_furnished" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.fields.furnished){ print('checked'); } %> value=1><%
+%><span class="field-title"><%- data.txt.sfExpatHomeSettle_furnished %></span><%
+%></label><%
+%></div><%
+
+%><div class="field"><%
+%><label for="sfhs_unfurnished" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_unfurnished %>"><%
+%><input  id="sfhs_unfurnished" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.fields.unfurnished){ print('checked'); } %> value=1><%
+%><span class="field-title"><%- data.txt.sfExpatHomeSettle_unfurnished %></span><%
+%></label><%
+%></div><%
+
+%></div><% /*rowBlock*/
+
+%></div><% /*doublepage - left hand */
+
+%><div class = "rightHandDoublePage"><% /*doublepage right hand */
+
+				%><div class = "height10p100"></div><%
+				%><div class = "encapsulation"><%
+				%><h3 class="alt-accent"><%- data.txt.RSE %></h3><%
+
+
+%><div class="field alignCenter"><%
+	%><label for="publicTransportationAt15" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_publicTransportationAt15 %>"><%
+	%><input  id="publicTransportationAt15" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.expat.hasOnFootAccess){ print('checked'); } %> value=1><%
+	%><span class="field-title textWithOverflow width250"><%- data.txt.sfExpatHomeSettle_publicTransportationAt15 %></span><%
+	%></label><%
+%></div><%
+					%><div class="field alignCenter"><%
+						%><label for="PMRAccess" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_mobilityAccess %>"><%
+							%><input  id="PMRAccess" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.expat.hasPMRAccess){ print('checked'); } %> value=1><%
+							%><span class="field-title textWithOverflow width250"><%- data.txt.sfExpatHomeSettle_mobilityAccess %></span><%
+							%></label><%
+						%></div><%
+					%><div class="field alignCenter"><%
+						%><label for="bikePoint" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_bikeGarage %>"><%
+							%><input  id="bikePoint" type=checkbox <%= data.locked ? 'disabled':'' %> <% if(data.expat.hasBikePoint){ print('checked'); } %> value=1><%
+							%><span class="field-title textWithOverflow width250"><%- data.txt.sfExpatHomeSettle_bikeGarage %></span><%
+							%></label><%
+						%></div><%
+				%><div class="field"><%
+						%><div class="label ifNotMandatory"><%- data.txt.sfExpatHomeSettle_commuteTime %> :</div><%
+						%><div class="label ifMandatory"><%- data.txt.sfExpatHomeSettle_commuteTime %>* :</div><%
+					%><div class="row-block alignCenter commuteTime"><%
+					%><div class="goldenWidth"><%
+						%><input id="commuteTime" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.expat.commuteTime) ? _.escape(data.expat.commuteTime.trim()) : '' %>"><%
+					%></div><%
+					%><div><%- data.txt.sfExpatHomeSettle_commuteTimeTail %></div><%
+							%><div class="width22 commuteTimeMissingIcon missingFieldIcon visibilityOff"><%= data.images.missing %></div><%
+					%></div><%
+				%></div><%
+
+					%><div class="field"><%
+						%><div class="label ifNotMandatory"><%- data.txt.sfExpatHomeSettle_energyClass %> :</div><%
+						%><div class="label  ifMandatory"><%- data.txt.sfExpatHomeSettle_energyClass %>* :</div><%
+						%><div class="row-block alignCenter"><%
+						%><div class="input WIP width160 row-block alignCenter"><%
+							%><div class="energyClass WIPTypeAhead width116"><input id="energyClass" class = "WIPTypeAhead" title="<%= data.txt.energyClass %>" autocomplete = "off" value=<%= data.expat.energyClass ? data.energyClasses[data.expat.energyClass].name : " " %>></div><%
+							%><div class="width10 ">&nbsp</div><%
+							%><div class="energyClass width22 expandIcon "><%= data.images.expand %></div><%
+							%></div><% /* .input-box */
+						%><div class="width22 energyClassMissingIcon missingFieldIcon visibilityOff"><%= data.images.missing %></div><%
+						%></div><% /* row-block*/
+						%></div><% /* .field */
+
+
+					%></div><%
+%></div><% /*doublepage - right hand */
+
+%></div><% /*doublepage*/
+
+if (data.fields.homeSearchService){
+	%><div class="field" ><%
+	%><label for="sfhs_homeSearchSupplier"><%- data.txt.sfExpatHomeSettle_supplier %> :</label><%
+	%><input id="sfhs_homeSearchSupplier" class="combo readonly" readonly  type=text title="<%= data.txt.sfExpatHomeSettle_mouseoverDisabledHomesearch %>" autocomplete = "off"  > <%
+	%></div><%
+}
+
+%><div class="field"><%
+%><label for="sfhs_housingmgr"><%- data.txt.sfExpatHomeSettle_housingmgr %> :</label><%
+%><input  id="sfhs_housingmgr" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isString(data.fields.housingMgr) ? _.escape(data.fields.housingMgr.trim()) : '' %>"><%
+%></div><%
+
+%><div class="field"><%
+%><label for="sfhs_remarks"><%- data.txt.sfExpatHomeSettle_remarks %> :</label><%
+%><textarea id="sfhs_remarks" <%= data.locked ? 'readonly':'' %> rows=4 cols=40><%= _.isString(data.fields.remarks) ? _.escape(data.fields.remarks.trim()) : '' %></textarea><%
+%></div><%
+
+%></div><% /* .body */
+
+if (!data.locked){
+	%><div class="footer"><%
+
+	%><a class="ellipsis accent-border accent-color update disabled"
+		  title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+
+    %><a class="upload ellipsis secondaryFooter"
+	 href="#sfExpatHomeSettle/<%= data.expatId %>" title="<%- data.txt.colPhoto %>"><%- data.txt.colPhoto %></a><%
+    %><input type=file class="masked upload-document-file" accept="image/*" capture ><%
+
+    if(!data.expat.generatingReport){
+    %><a class="generateReport ellipsis secondaryFooter"
+		 data-action="generateReport" title="<%- data.txt.actionGenerateReport %>"><%- data.txt.actionGenerateReport %></a><%
+    }
+    if(data.expat.generatingReport){
+    %><a class="generateReport ellipsis accent" title="<%- data.txt.generatingReport %>"><%- data.txt.generatingReport %></a><%
+    }
+
+	%></div><% /* .footer */
+}
+
+%></div>

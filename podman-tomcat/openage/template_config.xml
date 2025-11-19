@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<Configuration context="CONTEXT_NAME">
+<!-- repertoire OpenAGE sur le serveur -->
+<Environment name="home.directory" type="java.lang.String" value="/root/openage/context/openage"></Environment>
+
+<!-- attendu: "mysql", "oracle", "db2", "sqlserver", "postgresql" -->
+<Environment name="database.product.name" type="java.lang.String" value="postgresql"></Environment>
+<Environment name="database.schema" type="java.lang.String" value="openage"></Environment>
+<Environment name="database.creation" type="java.lang.String" value="auto"></Environment>
+
+<Environment name="log.folder" type="java.lang.String" value="/root/openage/context/openage/logs"></Environment>
+<Environment name="log.level" type="java.lang.String" value="INFO"></Environment>
+<Environment name="log.schedule" type="java.lang.String" value="WEEKLY"></Environment>
+<Environment name="log.rotation" type="java.lang.String" value="size"></Environment>
+<Environment name="log.max-file-backups" type="java.lang.Integer" value="1"></Environment>
+<Environment name="log.max-file-size-kilobytes" type="java.lang.Integer" value="1024"></Environment>
+
+<Environment name="indexing.use" type="java.lang.Boolean" value="true"></Environment>
+<Environment name="indexing.limit" type="java.lang.Integer" value="100"></Environment>
+
+<Environment name="tab.to.icon" type="java.lang.Boolean" value="false"></Environment>
+
+<Environment name="plugins.path" type="java.lang.String" value="/root/openage/context/openage/plugins"></Environment>
+<Environment name="plugins.make-defaults-available" type="java.lang.Boolean" value="true"></Environment>
+<Environment name="plugins.always-copy-defaults" type="java.lang.Boolean" value="true"></Environment>
+
+<Environment name="export.csv.separator" type="java.lang.String" value=";"></Environment>
+<Environment name="export.csv.text" type="java.lang.String" value="\u0022"></Environment>
+
+<Environment name="framework.path" type="java.lang.String" value="isomorphic"></Environment>
+<Environment name="framework.homepage" type="java.lang.String" value="index.jsp"></Environment>
+
+
+<!-- Param�tres SMTP de la messagerie... configurer aussi la 'resource' (ci-dessous) -->
+<Environment name="smtp.fromaddr" type="java.lang.String" value=""></Environment>
+<Environment name="smtp.fromname" type="java.lang.String" value=""></Environment>
+<Environment name="smtp.username" type="java.lang.String" value="postgres"></Environment>
+<Environment name="smtp.password" type="java.lang.String" value="crypt:B11e5d7eAfDf3e7fF850BbE2B257B7Ef6b93537d237d8a42FcCe0cA3C0BaF219"></Environment>
+
+
+<!-- Param�tres de connexion � la base de donn�es -->
+<!-- JNDI -->
+<Environment name="db.use.jndi" type="java.lang.Boolean" value="false"></Environment>
+<Environment name="db.use.jndi.name" type="java.lang.String" value=""></Environment>
+
+<!-- Pool OpenAGE (vide si JNDI utilis�) -->
+<Resource name="jdbc/OpenAGE" auth="Container" type="javax.sql.DataSource" maxActive="50" maxIdle="10" maxWait="5000" username="postgres" password="crypt:FdE859E727Ab303e69E8A7D45b7385546928C036Ba4012F1D7BfC56840D1D4C6" driverClassName="org.postgresql.Driver" url="jdbc:postgresql://CONTAINER_NAME:5432/mydb" factory="org.apache.commons.dbcp.BasicDataSourceFactory" connectionProperties="currentSchema=openage"></Resource>
+
+<!-- Autres pools de connexion -->
+
+
+<!-- Param�tres SMTP de la messagerie... suite -->
+<Resource name="mail/OpenAGE" auth="Container" type="javax.mail.Session" mail.smtp.host="mail.server" mail.smtp.port="25" mail.smtp.starttls.enable="false" mail.smtp.auth="true"></Resource>
+
+<!-- Param�tres avanc�s -->
+<Environment name="ui.search.init" type="java.lang.String" value="FLAGS"></Environment>
+<Environment name="server.host" type="java.lang.String" value=""></Environment>
+<Environment name="server.port" type="java.lang.String" value="8080"></Environment>
+<Environment name="server.protocol" type="java.lang.String" value="http"></Environment>
+<Environment name="ui.view.record.multiple.tabs" type="java.lang.Boolean" value="true"></Environment>
+<Environment name="ui.view.list.update.confirm" type="java.lang.Boolean" value="true"></Environment>
+<Environment name="configuration.password" type="java.lang.String" value="admin"></Environment>
+
+
+<!-- Element de l'interface d�sactiv� -->
+<Environment name="toolbar" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.new" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.filter" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.customize" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.export" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.emailing" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.print" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.mass.print" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.mass.update" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.mass.deletion" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.crossover" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.merge" type="java.lang.String" value="true"></Environment>
+<Environment name="toolbar.duplicate" type="java.lang.String" value="true"></Environment>
+
+</Configuration>

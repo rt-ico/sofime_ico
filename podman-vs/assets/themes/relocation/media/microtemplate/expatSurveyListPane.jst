@@ -1,0 +1,45 @@
+<%
+if (!_.isEmpty(data.surveys)){
+	_.each(data.surveys, function(it){
+		var cardClasses = ["infocard", "survey", "pad-container"];
+		var iconClasses = [];
+		var iconImage = null;
+
+		if (it.locked){
+			cardClasses = cardClasses.concat(["locked", "dark-divider-color"]);
+			iconClasses.push("dark-text-color");
+			iconImage = data.images.lock;
+		}
+		else if (it.done){
+			cardClasses = cardClasses.concat(["done", "accent-border"]);
+			iconClasses.push("accent-ghost");
+			iconImage = data.images.done;
+		}
+		else if (it.response){
+			cardClasses = cardClasses.concat(["todo", "alt-accent-border"]);
+			iconClasses.push("alt-accent-ghost");
+			iconImage = data.images.todo;
+		}
+		else{
+			cardClasses = cardClasses.concat(["warn", "accent-border"]);
+			iconClasses = iconClasses.concat(["warn", "accent-ghost"]);
+			iconImage = data.images.warn;
+		}
+
+		var escName = _.escape(it.name);
+		%><article class="<%= cardClasses.join(" ") %>" data-response=<%= it.response ? 1:0 %> data-survey=<%= it.id %> title="<%= escName %>"><%
+		%><div class="survey-text ellipsis"><%
+		if (it.locked){
+			print(escName);
+		}
+		else {
+			%><a href="#expatSurveys/<%= data.user.id +"/"+ it.id %>"><%= escName %></a><%
+		}
+		%></div><% /* .survey-text */
+		%><div class="survey-icon <%= iconClasses.join(" ") %>"><%
+		print(iconImage);
+		%></div><% /* .survey-icon */
+		%></article><%
+	});
+}
+%>

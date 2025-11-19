@@ -1,0 +1,150 @@
+<div class="card flat staff sf add-visit-place with-header with-footer"><%
+
+var visit = data.current.visit;
+var place = data.current.place;
+var dt = (place && place.date) ? place.date : (visit && visit.date) ? visit.date : null;
+var vt = visit && _.isObject(visit.type) ? visit.type : null;
+
+%><div class="header"><%
+%><h2 class="primary"><%
+%><a href="#sfExpatView/<%= data.expat.id %>" class="underlined"><%- data.expat.cn %></a> &gt; <%
+%><a href="#sfExpatView/<%= data.expat.id %>/housing" class="underlined"><%- data.txt.sfExpatHome %></a> &gt; <%
+%><a href="#sfExpatVisitPlace/<%= data.expat.id %>" class="underlined"><%- data.txt.sfExpatVisitPlaces %></a> &gt; <%
+%><%- place ? vt ? vt.localeName || vt.name : data.txt.reloVisit : data.txt.addVisitPlace %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container secondary-text-color"><%
+
+%><div class="row-block"><%
+%><div class="field picker"><%
+%><label for="evpPlaceDate"><%- data.txt.colDateMandatory %> :</label><br><%
+%><div class="input"><%
+%><input  id="evpPlaceDate" type=text class="date" value="<% if(dt){ print(_.escape(data.cachedMoment(dt).format("L"))); } %>" maxlength=10 title="<%- data.txt.calendarDigitDateMask %>" placeholder="<%- data.txt.calendarDigitDateMask %>"><%
+%><img class="datepicker-icon pick-place-date" data-pick-date-for="evpPlaceDate" data-pick-date-title="<%- data.txt.colDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field picker"><%
+%><label for="evpPlaceTime"><%- data.txt.colTimeMandatory %> :</label><br><%
+%><input  id="evpPlaceTime" type=text class="time" value="<% if(place && place.time){ print(_.escape(place.time.substring(0,5))); } %>" maxlength=5 title="<%- data.txt.timeMask %>" placeholder="<%- data.txt.timeMask %>"><%
+%></div><%
+
+			%><div class="field extraPaddingLeft alignSelfBottom"><%
+				%><label for="isOffMarket" class="for-checkbox" title="<%- data.txt.sfExpatHomeSettle_horsMarche %>"><%
+					%><input  id="isOffMarket" type=checkbox <% if(place && place.isOffMarket){ print('checked'); } %> value=1><%
+					%><span class="field-title"><%- data.txt.sfExpatHomeSettle_horsMarche %></span><%
+					%></label><%
+				%></div><%
+%></div><% /* rowBlock */
+
+%><label class="required"><%- data.txt.sfExpatHomeSearchTransportation %></label><%
+%><div class="expatEditLocaleInput"><%
+
+_.each(data.transportations, function(g){
+	%><label class="for-radio secondary-text-color  <%= data.locked ? 'readonly':'' %> "><%
+	%><input  class="expatVisitTransportationCheckbox" <%= data.locked ? 'disabled':'' %> type="radio" name="transportation" value=<%= g.id %><% if(g.id===data.expat.refTransportation){ print(' checked'); } %>><%
+	%><span class="rightPadding"><%- g.label %></span><%
+	%></label><%
+});
+%></div><% /* .field */
+
+%><div class="field combo masked extraPaddingTop"><%
+%><label for="evpSupplier"><%- data.txt.colSupplier %> :</label><br><%
+%><input  id="evpSupplier" type=text class="combo" value=""><%
+%></div><%
+
+%><div class="row-block extraPaddingTop"><%
+%><div class="field "><%
+%><label for="evpRealEstateAgent"><%- data.txt.visitPlaceRealEstateAgent %> :</label><br><%
+%><input  id="evpRealEstateAgent" type=text value="<% if(place && place.realEstateAgent){ print(_.escape(place.realEstateAgent)); } %>"><%
+%></div><%
+
+%><div class="field extraPaddingLeft"><%
+%><label for="evpContactTel"><%- data.txt.visitPlaceContactTel %> :</label><br><%
+%><input  id="evpContactTel" type=text value="<% if(place && place.contactTel){ print(_.escape(place.contactTel)); } %>"><%
+%></div><%
+%></div><% /* rowBlock */
+
+%><div class="field"><%
+%><label for="evpSummary"><%- data.txt.colDescription %> :</label><br><%
+%><textarea  id="evpSummary" rows=4 ><% if(place && place.summary){ print(_.escape(place.summary)); } %></textarea><%
+
+%></div><%
+
+%><div class="field"><%
+%><label for="evpExpatRemarks"><%- data.txt.sfExpatVisitPlacesExpatRemarks %> :</label><br><%
+			%><input  id="evpExpatRemarks" type=text value="<% if(place && place.remarks){ print(_.escape(place.remarks)); } %>"><%
+%></div><%
+
+%><div class="field"><%
+%><label for="evpAddress"><%- data.txt.colAddress %> :</label><br><%
+%><input  id="evpAddress" type=text value="<% if(place && place.address){ print(_.escape(place.address)); } %>"><%
+%></div><%
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="evpCity"><%- data.txt.colCity %> :</label><br><%
+%><input  id="evpCity" type=text value="<% if(place && place.city){ print(_.escape(place.city)); } %>"><%
+%></div><%
+
+%><div class="field extraPaddingLeft"><%
+%><label for="evpPostcode"><%- data.txt.colPostcode %> :</label><br><%
+%><input  id="evpPostcode" type=text class="" value="<% if(place && place.postcode){ print(_.escape(place.postcode)); } %>" maxlength=5><%
+%></div><%
+%></div><% /* rowBlock */
+
+
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="evpSurface"><%- data.txt.colSurface %> :</label><br><%
+%><input  id="evpSurface" type=text class="numeric" value="<% if(place && place.surface){ print(data.fmt.formatDecimal(place.surface)); } %>" maxlength=8 data-unsigned=1 data-scale=2><%
+%></div><%
+%><div class="field extraPaddingLeft"><%
+%><label for="evpFloor"><%- data.txt.colFloor %> :</label><br><%
+%><input  id="evpFloor" type=text class="numeric" value="<% if(place && place.floor){ print(_.escape(place.floor)); } %>" maxlength=16><%
+%></div><%
+
+%><div class="field extraPaddingLeft alignSelfBottom"><%
+%><label for="evpHasElevator" class="for-checkbox" title="<%- data.txt.colHasElevator %>"><%
+%><input  id="evpHasElevator" type=checkbox <% if(place && place.hasElevator){ print('checked'); } %> value=1><%
+%><span class="field-title"><%- data.txt.colHasElevator %></span><%
+%></label><%
+%></div><%
+%></div><% /* rowBlock */
+
+%><div class="field"><%
+%><label for="evpUrlAd"><%- data.txt.colUrlAd %> :</label><br><%
+%><input  id="evpUrlAd" type=text class="http" value="<% if(place && place.urlAd){ print(_.escape(place.urlAd)); } %>"><%
+%></div><%
+
+		%><div class="row-block"><%
+
+%><div class="field"><%
+%><label for="evpPrice"><%- data.txt.colPrice %> :</label><br><%
+%><input  id="evpPrice" type=text class="numeric" value="<% if(place && place.price){ print(data.fmt.formatDecimal(place.price)); } %>" maxlength=8 data-unsigned=1 data-scale=2><%
+%></div><%
+
+
+
+			%></div><% /* rowBlock */
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+var escUpdateText =_.escape(place ? data.txt.actionUpdate : data.txt.actionAdd);
+
+%><a class="ellipsis accent-border accent-color update disabled"
+	 href="#sfExpatVisitPlace/<%= data.expatId %>" title="<%= escUpdateText %>"><%= escUpdateText %></a><%
+
+if (place){
+	%><a class="ellipsis secondaryFooter delete warn"
+		 href="#sfExpatVisitPlace/<%= data.expatId %>" title="<%- data.txt.actionDelete %>"><%- data.txt.actionDelete %></a><%
+}
+
+%></div><% /* .footer */
+
+%></div>

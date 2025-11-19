@@ -1,0 +1,104 @@
+<div class="card flat staff expat-edit with-header with-footer"><%
+
+%><div class="header"><%
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfSuppliers/" title="<%- data.txt.actionBack %>"><%- data.txt.actionBack %></a></div><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container"><%
+
+%><div class="form staff-field"><%
+
+/*%><h3 class="alt-accent"><%- data.txt.yourIdentity %></h3><%*/
+
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateGivenName%> <%- data.txt.expatriateSurName %></label><%
+%><div class="input"><%
+%><input  type=text maxlength=100 name="name" value="<%- data.supplierContact.name %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.sfSupplierLabel %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 class="combo" name="supplier"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field supplier-type-label"><%
+%><label><%- data.txt.sfSupplierType %></label><%
+%><div class="input"><%
+%><input class="readonly" type=text maxlength=100 readonly name="supplierTypeLabel"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+/*** supplier ***/
+%><div class="supplier"><%
+%><div class="field"><%
+%><label><%- data.txt.sfSupplierName %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 name="supplierName"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.sfSupplierTypeNew %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 class="combo" name="supplierType"><%
+%></div><% /* .input */
+%></div><% /* .field */
+%></div><% /* .supplier */
+
+/*** end supplier ***/
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.telephone %></label><%
+%><div class="input"><%
+%><input  type=text maxlength=100 name="tel" value="<%- data.supplierContact.tel %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.sfSupplierMail %></label><%
+%><div class="input "><%
+%><input  type=text maxlength=100 name="email" value="<%- data.supplierContact.email %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field" title="<%- data.txt.colRemarks %>"><%
+%><div class="field-label" ><%
+%><label for="emarks"><%- data.txt.colRemarks %></label><%
+%></div><% /* .field-label */
+
+%><div class="input"><%
+%><textarea id="expat-remarks" maxlength=255  rows=3><%- data.supplierContact.remarks %></textarea><%
+%></div><% /* .input */
+%></div><%/* .field */
+
+    let flags = data.supplierContact.flags;
+
+    _.each(data.flagGroup, function(group) {
+        %><div class="flag-group"><%
+        _.each(group, function(field) {
+
+            %><div class="secondary-text-color"><label class="for-checkbox" title="<%- data.txt["sfSupplierF" + field.substring(1)] %>"><%
+            %><input type="checkbox" name="<%- field %>"  <%= flags && flags[field] ? "checked" : "" %>><%
+            %><span class="field-title"><%- data.txt["sfSupplierF" + field.substring(1)]  %></span><%
+            %></label></div><%
+        });
+        %></div><% /* .flag-group */
+    });
+
+%></div><% /* .form */
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+%><a class="update ellipsis accent-border accent-color disabled"
+	 href="#sfSupplier" title="<%- data.txt.actionUpdate %>"><%- data.supplierContact.id == 0 ? data.txt.actionCreate : data.txt.actionUpdate %></a><%
+
+%></div><% /* .footer */
+
+%></div>

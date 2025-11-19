@@ -1,0 +1,142 @@
+<div class="card flat staff x-home x-search with-header  with-footer"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%
+%><a href="#sfExpatView/<%= data.expat.id %>" class="underlined"><%- data.expat.cn %>&nbsp;<%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a> &gt; <%
+%><a href="#sfExpatView/<%= data.expat.id %>/housing" class="underlined"><%- data.txt.sfExpatHome %></a> &gt; <%
+%><%- data.txt.sfExpatHomeSearch %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="row-block alignBottom"><%
+%><div class="field "><%
+%><label for="sfhs_yearlyincome"><%- data.txt.sfExpatHomeSearch_yearlyincome %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="sfhs_yearlyincome" class="numeric" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.yearlyIncome) ? _.escape(data.fmt.formatDecimal(data.fields.yearlyIncome)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+
+
+%><div class="field"><%
+%><label for="sfhs_trialperiod" class="for-checkbox" title="<%- data.txt.sfExpatHomeSearch_trialperiod %>"><%
+%><input id="sfhs_trialperiod" type=checkbox  <% if(data.fields.trialPeriod){ print('checked'); } %> value=1><%
+%><span class="field-title"><%- data.txt.sfExpatHomeSearch_trialperiod %></span><%
+%></label><%
+%></div><% /*field*/
+%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="sfhs_rentmode"><%- data.txt.sfExpatHomeSearch_rentmode %> :</label><%
+%><input  id="sfhs_rentmode" class="combo" type=text <%= data.locked ? 'disabled':'' %> value=""><%
+%></div><%
+
+
+%><div class="field"><%
+%><label for="sfhs_budget"><%- data.txt.sfExpatHomeSearch_budget %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="sfhs_budget" class="numeric" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.budget) ? _.escape(data.fmt.formatDecimal(data.fields.budget)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+%></div><% /*rowBlock*/
+
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="sfhs_companybudget"><%- data.txt.sfExpatHomeSearch_companybudget %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="sfhs_companybudget" class="numeric" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.companyBudget) ? _.escape(data.fmt.formatDecimal(data.fields.companyBudget)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+
+
+%><div class="field"><%
+%><label for="sfhs_grant"><%- data.txt.sfExpatHomeSearch_grant %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="sfhs_grant" class="numeric" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.grant) ? _.escape(data.fmt.formatDecimal(data.fields.grant)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+%></div><% /*rowBlock*/
+
+%><div class="field width262"><%
+%><label for="sfhs_agencypaidby"><%- data.txt.sfExpatHomeSearch_agencypaidby %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="sfhs_agencypaidby" class="combo" type=text <%= data.locked ? 'readonly':'' %> value=""><%
+%></div><%
+
+var dt = data.fields.tour;
+%><div class="field"><%
+%><label for="sfhs_VisitDate"><%- data.txt.sfExpatHomeSearch_visit %> :</label><%
+%><div class="alignCenter"><%
+%><input  <%= data.locked ? '':'' %> type=text maxlength=10 name="sfhs_VisitDate" id="sfhs_VisitDate" class="date" value="<% if(dt){ print(_.escape(data.cachedMoment(dt).format("L"))); } %>" title="<%- data.txt.calendarDigitDateMask %>" placeholder="<%- data.txt.calendarDigitDateMask %>" data-floor=0><%
+if (true) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="sfhs_VisitDate" data-pick-date-title="<%- data.txt.sfExpatHomeSearch_visit %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* alignBottom */
+%></div><% /* .field */
+
+if(data.tempHousingActivated){
+%><h3 class="alt-accent"><%- data.txt.sfExpatHomeSearchTemporaryHome %></h3><%
+%><div class="row-block"><%
+%><div class="field"><%
+%><label for="temporaryHomeBudget"><%- data.txt.sfExpatHomeSearchTemporaryHomeBudget %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="temporaryHomeBudget" class="numeric" type=text <%= data.locked ? 'readonly':'' %> value="<%= _.isNumber(data.fields.temporaryHomeBudget) ? _.escape(data.fmt.formatDecimal(data.fields.temporaryHomeBudget)) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+
+%><div class="field"><%
+%><label for="temporaryHomeDuration"><%- data.txt.sfExpatHomeSearchTemporaryHomeDuration %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="temporaryHomeDuration" class="numeric" type=text <%= data.locked ? 'readonly':'' %> value="<%= data.fields.temporaryHomeDuration ? _.escape(data.fields.temporaryHomeDuration) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+
+%><div class="field extraPaddingLeft"><%
+%><label class=""><%- data.txt.sfExpatHomeSearchDEoTH %></label><%
+%><div class="input alignItemsCenter <%= data.locked ? 'readonly':'' %> "><%
+%><input  <%= data.locked ? 'readonly':'' %> type=tel maxlength=10 name="dateEndOfTemporaryHome" id="dateEndOfTemporaryHome" class="date" value="<%- data.expat.dateEndOfTemporaryHome ? data.cachedMoment(data.expat.dateEndOfTemporaryHome).format("L"):"" %>" data-floor=0><%
+if (!data.locked) {
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="dateEndOfTemporaryHome" data-pick-date-title="<%- data.txt.sfExpatHomeSearchDEoTH %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+}
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /*rowBlock*/
+
+%><div class="field halfWidth"><%
+%><label for="temporaryHomeExpenses"><%- data.txt.sfExpatHomeSearchTemporaryHomeExpenses %> :</label><%
+%><input class="<%= data.locked ? 'readonly':'' %> " id="temporaryHomeExpenses" class="numeric" type=text <%= data.locked ? 'readonly':'' %> value="<%= data.fields.temporaryHomeExpenses ? _.escape(data.fields.temporaryHomeExpenses) : '' %>" data-unsigned=1 data-scale=2><%
+%></div><%
+} /* end  if */
+
+
+%><div class="field"><%
+%><label for="sfhs_remarks"><%- data.txt.sfExpatHomeSearch_remarks %> :</label><%
+%><textarea class=" <%= data.locked ? 'readonly':'' %> " id="sfhs_remarks" <%= data.locked ? 'readonly':'' %> rows=8 cols=40><%= _.isString(data.fields.remarks) ? _.escape(data.fields.remarks.trim()) : '' %></textarea><%
+%></div><% /* .field */
+
+
+var flags = data.expat.flags;
+console.log(JSON.stringify(data.user));
+_.each(data.flagGroup, function(group) {
+    %><div class="flag-group"><%
+    _.each(group, function(field) {
+        %><div class=""><label class="for-checkbox" title="<%- data.txt["sfSupplierF" + field.substring(1)] %>"><%
+        %><input type="checkbox" name="<%- field %>"  <%= flags && flags["housingSearch" + field.substring(4)] ? "checked" : "" %>><%
+        %><span class=""><%- data.txt["sfSupplierF" + field.substring(1)]  %></span><%
+        %></label></div><%
+    });
+    %></div><% /* .flag-group */
+});
+
+%></div><% /* .body */
+
+
+	var cancelUri = data.backPath || "#sfExpatView/"+data.expatId+"/housing";
+	var escCancel = data.backPath ? _.escape(data.txt.actionBack) : _.escape(data.txt.actionCancel);
+
+	%><div class="footer"><%
+
+	%><a class="ellipsis accent-border accent-color update disabled"
+		 href="#sfExpatView/<%= data.expatId %>/housing" title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+	if(true){
+     %><a class="ellipsis secondaryFooter update <%= data.expat.hasHousingSurvey ? '':'disabled'%>"
+             <%= data.expat.hasHousingSurvey ? 'href="#reviewSurveys/':''%><%= data.expatId %>/1" title="<%- data.txt.toSurvey %>"><%- data.txt.toSurvey %></a><%
+    }
+
+	%></div><% /* .footer */
+
+
+%></div>

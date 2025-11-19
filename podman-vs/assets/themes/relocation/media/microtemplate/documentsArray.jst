@@ -1,0 +1,78 @@
+<% if (_.isEmpty(data.documentBlocks)){
+	%><p><%- data.txt.emptyList %></p><%
+} else {
+	%><table class="expats done"><%
+	%><thead class="text-primary-color dark-primary-color"><%
+	%><tr><%
+	%><th class="sortable" data-col="expatCn"><%
+	if (data.sortDone.att === "expatCn"){
+		%><span class="sort-arrow"><%= data.sortDone.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.hrColRelo));
+	%></th><%
+	%><th class="sortable" data-col="name"><%
+	if (data.sortDone.att === "name"){
+		%><span class="sort-arrow"><%= data.sortDone.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.hrColDocument));
+	%></th><%
+	%></tr><%
+	%></thead><%
+	%><tbody class="secondary-text-color"><%
+	_.each(data.documentBlocks, function(block){
+		_.each(block.docs, function(p) {
+            if (!p.has_file) {
+                var docType = data.findDocumentTypeById(p.ref_type);
+                var title = !_.isEmpty(docType) ? docType.name : p.name;
+                if (title === null || title.length === 0) { title = block.emptyText;}
+
+                %><tr data-id=<%= p.id %> data-url=<%= block.url %>><%
+                %><td><%- p.expatCn %></td><%
+                %><td><%
+
+                %><span class="document-array-tools"><%
+                    %><div class="document-array-title " title="<%- title %>" ><%- title %> </div><%
+                    %><div class="document-array-tool filler"></div><%
+
+                if (docType !== null && !docType.expatVisible) {
+                    %><div class="document-array-tool"  title="<%- data.txt.expatExpatRhVisibilty  %>"><%= data.images.visibility %></div><%
+                    %><div class="document-array-title " title="<%- title %>" ><%- data.txt.expatDocumentExpatVisibility %> </div><%
+                }
+
+                if (p.has_thumb || p.has_file) {
+                    if (block.canDelete) {
+                        %><div class="document-array-tool " data-action="delete" title="<%- data.txt.actionDelete %>" class="icon alt-accent-ghost"><%= data.images.deleteFile %></div><%
+                    }
+
+                    if (block.canPrint) {
+                        %><div class="document-array-tool" data-action="print" title="<%- data.txt.expatDocumentPrint %>" class="icon alt-accent-ghost"><%= data.images.print %></div><%
+                        }
+                    if (block.canDownload) {
+                        %><div class="document-array-tool" data-action="download" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>" class="icon alt-accent-ghost"><%= data.images.download %></div><%
+                    }
+
+                    if (block.canOpen) {
+                        %><div class="document-array-tool" data-action="open" title="<%- data.txt.expatDocumentShowInfo %>" class="icon alt-accent-ghost"><%= data.images.showInfo %></div><%
+                    }
+
+                }
+                if (block.canUpload) {
+                    %><input type=file class="masked upload-document-file"><%
+                    %><div class="document-array-tool" data-action="upload" title="<%- data.txt.expatDocumentUpload %>" class="icon alt-accent-ghost"><%= data.images.upload %></div><%
+                }
+                %></span><%
+            %></td><%
+            %></tr><%
+		    }
+		});
+	});
+	%></tbody><%
+	%></table><%
+}
+
+
+
+%><p class="strong rgpd"><%- data.txt.gdpr.expatDocs %></p><%
+
+
+%></div>

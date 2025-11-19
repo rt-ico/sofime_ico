@@ -1,0 +1,26 @@
+<div class="card flat hr relo-track active"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navHrReloTrack %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="tabs"><%
+%><div class="tab active dark-text-color alt-accent-border" title="<%- data.txt.hrRelosCurrentList %>"><a href="#hrReloTrack"><%- data.txt.hrRelosCurrentList %></a></div><%
+%><div class="tab other dark-divider-color secondary-text-color" title="<%- data.txt.hrRelosDoneList %>"><a href="#hrReloTrack/done"><%- data.txt.hrRelosDoneList %></a></div><%
+%><div class="tab empty dark-divider-color secondary-text-color"> </div><%
+%></div><% /* .tabs */
+
+if (_.isEmpty(data.expats)){
+	%><p><%- data.txt.emptyList %></p><%
+}
+else{
+	%><div class="expats cards"><%
+	print(data.tpl.minicards(_.pick(data, ["expats", "service", "images", "cachedMoment", "txt", "fmt"])));
+	%></div><% /* .expats.cards */
+}
+
+%></div><% /* .body */
+
+%></div>

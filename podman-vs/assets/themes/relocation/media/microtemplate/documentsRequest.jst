@@ -1,0 +1,22 @@
+
+<div id="photoEdit" class="thumbDialog">
+
+<div class="thumbPane complementWidth">
+
+<img class="img-edit" src="<%= data.route.themeStyleUri %>media/white2x/form.png" width=<%= data.thumb.width %> height=<%= data.thumb.height %>>
+
+
+</div>
+
+<div class="fieldPane goldenWidth">
+<div class ="itemList">
+<label for="documentType" class="strong"><%- data.txt.dialogDocumentTypeForRequest %> :</label>
+<div class="row-block">
+<input  id="documentType" type=text  autocomplete="off">
+<div class = "width22" >&nbsp</div>
+</div> <% /*row-block*/  %>
+</div>
+<div class="addNewDocumentTypeRequest"  name="documentType" title="<%- data.txt.expatRequestDocument %>"><div class="sfExpatRelocationAddNewService-icon"></div><%= data.images.add %></div>
+</div>
+
+</div>

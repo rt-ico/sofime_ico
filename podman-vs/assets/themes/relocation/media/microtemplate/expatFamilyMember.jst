@@ -1,0 +1,60 @@
+<div class="family-member divider-color"<% if(data.familyMember){ print(' data-id='+data.familyMember.id); } %>><%
+
+var fm = data.familyMember; // nullable
+console.log("-> fm: %O", fm);
+
+var domId_fmRelation     = _.uniqueId("fmRelation");
+var domId_fmSurName      = _.uniqueId("fmSurName");
+var domId_fmGivenName    = _.uniqueId("fmGivenName");
+var domId_fmBirthDate    = _.uniqueId("fmBirthDate");
+var domId_fmRemarks      = _.uniqueId("fmRemarks");
+var domId_fmWorkInFrance = _.uniqueId("fmWorkInFrance");
+
+%><div class="fm-field familyRelation" title="<%- data.txt.familyRelation %>"><%
+%><label for="<%= domId_fmRelation %>" class="required"><%- data.txt.familyRelation %></label><%
+%><select size=1 id="<%= domId_fmRelation %>"><%
+if (!fm || !fm.familyRelation){
+	%><option> </option><%
+}
+_.each(data.familyRelation, function(fr){
+	var escName = _.escape(fr.localeName || fr.name);
+	%><option value=<%= fr.id %> title="<%= escName %>"<% if(fm && fm.familyRelation===fr.id){ print(' selected'); } %>><%= escName %></option><%
+});
+%></select><%
+%></div><%
+
+%><div class="fm-field surName" title="<%- data.txt.expatriateSurName %>"><%
+%><label for="<%= domId_fmSurName %>" class="required"><%- data.txt.expatriateSurName %></label><%
+%><input type=text id="<%= domId_fmSurName %>" value="<%- fm ? fm.sn : '' %>"><%
+%></div><%
+
+%><div class="fm-field givenName" title="<%- data.txt.expatriateGivenName %>"><%
+%><label for="<%= domId_fmGivenName %>" class="required"><%- data.txt.expatriateGivenName %></label><%
+%><input type=text id="<%= domId_fmGivenName %>" value="<%- fm ? fm.gn : '' %>"><%
+%></div><%
+
+%><div class="fm-field birthDate date" title="<%- data.txt.expatriateBirthDate %>"><%
+%><label for="<%= domId_fmBirthDate %>" class="required"><%- data.txt.expatriateBirthDate %></label><%
+%><div class="field"><%
+%><input type=text id="<%= domId_fmBirthDate %>" class="date" value="<%- fm && fm.birthDate ? data.cachedMoment(fm.birthDate).format("L") : '' %>" data-floor=0><%
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="<%= domId_fmBirthDate %>" data-pick-date-title="<%- data.txt.expatriateBirthDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .field */
+%></div><% /* .fm-field */
+
+%><div class="fm-field grow remarks" title="<%- data.txt.colRemarks %>"><%
+%><label for="<%= domId_fmRemarks %>" class="required"><%- data.txt.colRemarks %></label><%
+%><input type=text id="<%= domId_fmRemarks %>" value="<%- fm ? fm.remarks : '' %>"><%
+%></div><%
+
+%><div class="fm-field grow workingInFrance" title="<%- data.txt.workingInFrance %>"><%
+%><label for="<%= domId_fmWorkInFrance %>" class="for-checkbox"><%
+%><input type="checkbox" id="<%= domId_fmWorkInFrance %>"<% if(fm && fm.workingInFrance){ print(' checked'); } %>><%
+%><span class="field-title"><%- data.txt.workingInFrance %></span><%
+%></label><%
+%></div><%
+
+%><a href="#remove-family-member" class="text-primary-color dark-primary-color remove" title="<%- data.txt.removeFamilyRelation %>"><%= data.images.remove %></a><%
+
+%></div>

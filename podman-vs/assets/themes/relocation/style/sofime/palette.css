@@ -1,0 +1,289 @@
+.dark-primary-color {
+	background-color: hsl(197, 43%, 28%);
+}
+
+.dark-divider-color {
+	border-color: hsl(197, 43%, 28%);
+}
+
+.default-primary-color {
+	background-color: rgb(43, 90, 109);
+}
+
+.default-text-shadow {
+	text-shadow: 0 0 2px hsl(197, 43%, 26%), 0 0 3px hsl(197, 43%, 28%), 0 0 4px rgb(43, 90, 109);
+}
+
+h1.primary,
+h2.primary,
+h3.primary,
+h4.primary,
+.dark-text-color {
+	color: rgb(43, 90, 109);
+}
+
+.light-primary-color {
+	background-color: hsl(197, 43%, 75%);
+}
+
+.accent-color:not(:disabled) {
+	background-color: rgb(52, 186, 10);
+}
+
+.accent-ghost:not(:disabled) {
+	color: rgb(52, 186, 10);
+}
+
+.accent-ghost:not(:disabled):hover {
+	color: #def6de;
+}
+
+.accent-light:not(:disabled) {
+	background-color: #def6de;
+}
+
+.accent-light:not(:disabled):hover {
+	background-color: rgb(52, 186, 10);
+}
+
+.accent-border:not(:disabled) {
+	border-color: rgb(52, 186, 10);
+}
+
+.alt-accent-color:not(:disabled) {
+	background-color: rgb(219, 94, 12);
+}
+
+
+h1.alt-accent,
+h2.alt-accent,
+h3.alt-accent,
+h4.alt-accent,
+.alt-accent-ghost:not(:disabled) {
+	color: rgb(219, 94, 12);
+}
+
+.alt-accent-border:not(:disabled) {
+	border-color: rgb(219, 94, 12);
+}
+
+h1.accent,
+h2.accent,
+h3.accent,
+h4.accent,
+a.accent:link,
+a.accent:visited,
+a.accent:hover,
+a.accent:active,
+label.accent {
+	color: rgb(52, 186, 10);
+}
+
+.text-primary-color {
+	color: rgb(255, 255, 255);
+}
+
+.primary-text-color {
+	color: rgb(33, 33, 33);
+}
+
+.primary-text-color-with-hover {
+	color: rgb(33, 33, 33);
+}
+
+.primary-text-color-with-hover:hover {
+	color: #def6de;
+}
+
+.secondary-text-color-with-hover {
+	color: rgb(114, 114, 114);
+}
+
+.secondary-text-color-with-hover:hover {
+	color: #def6de;
+}
+
+.tertiary-text-color {
+	color: rgb(195, 195, 195);
+}
+
+.accent-border:disabled,
+.alt-accent-border:disabled,
+.divider-color {
+	border-color: rgb(182, 182, 182);
+}
+
+.divider-foreground {
+	color: rgb(182, 182, 182);
+}
+
+.divider-background {
+	background-color: rgb(182, 182, 182);
+}
+
+.inactive .dark-primary-color,
+.inactive.dark-primary-color {
+	background-color: rgb(69, 90, 100);
+}
+
+.inactive .dark-divider-color,
+.inactive.dark-divider-color {
+	border-color: rgb(69, 90, 100);
+}
+
+.inactive .default-primary-color,
+.inactive.default-primary-color {
+	background-color: rgb(96, 125, 139);
+}
+
+.inactive .datecell:hover,
+.inactive.datecell:hover {
+	background-color: rgba(207, 216, 220, 0.75);
+}
+
+.inactive .light-primary-color,
+.inactive.light-primary-color {
+	background-color: rgb(207, 216, 220);
+}
+
+.inactive .accent-color:not(:disabled),
+.inactive .alt-accent-color:not(:disabled),
+.inactive.alt-accent-color:not(:disabled),
+.inactive.accent-color:not(:disabled) {
+	background-color: rgb(96, 125, 139);
+}
+
+.inactive .text-primary-color,
+.inactive.text-primary-color {
+	color: rgb(255, 255, 255);
+}
+
+.inactive .primary-text-color,
+.inactive.primary-text-color {
+	color: rgb(33, 33, 33);
+}
+
+.inactive .secondary-text-color,
+.inactive.secondary-text-color {
+	color: rgb(114, 114, 114);
+}
+
+.inactive .divider-color,
+.inactive.divider-color {
+	border-color: rgb(182, 182, 182);
+}
+
+.warn .dark-primary-color,
+.warn.dark-primary-color {
+	background-color: rgb(194, 24, 91);
+}
+
+.warn .default-primary-color,
+.warn.default-primary-color {
+	background-color: rgb(233, 30, 99);
+}
+
+.warn .datecell:hover,
+.warn.datecell:hover {
+	background-color: rgba(248, 187, 208, 0.75);
+}
+
+.warn .light-primary-color,
+.warn.light-primary-color {
+	background-color: rgb(248, 187, 208);
+}
+
+.warn .accent-color:not(:disabled),
+.warn .alt-accent-color:not(:disabled),
+.warn.alt-accent-color:not(:disabled),
+.warn.accent-color:not(:disabled) {
+	background-color: rgb(255, 64, 129);
+}
+
+.warn .accent-ghost:not(:disabled),
+.warn.accent-ghost:not(:disabled) {
+	color: rgb(255, 64, 129);
+}
+
+.warn .accent-border:not(:disabled),
+.warn.accent-border:not(:disabled) {
+	border-color: rgb(255, 64, 129);
+}
+
+.warn .text-primary-color,
+.warn.text-primary-color {
+	color: rgb(255, 255, 255);
+}
+
+.warn .primary-text-color,
+.warn.primary-text-color {
+	color: rgb(33, 33, 33);
+}
+
+.warn .secondary-text-color,
+.warn.secondary-text-color {
+	color: rgb(114, 114, 114);
+}
+
+.warn .divider-color,
+.warn.divider-color {
+	border-color: rgb(182, 182, 182);
+}
+
+.cancel:not(:disabled),
+.terminate:not(:disabled),
+.remove .text-primary-color,
+.remove.text-primary-color {
+	background-color: rgb(170, 0, 0);
+}
+
+
+.remove .accent-color:not(:disabled),
+.remove .alt-accent-color:not(:disabled),
+.remove.alt-accent-color:not(:disabled),
+.remove.accent-color:not(:disabled) {
+	background-color: rgb(52, 186, 10);
+}
+
+
+.expatViewPalette{
+	background-color: #ffffff;
+	color: rgb(219, 94, 12);
+}
+
+.expatViewPaletteDisabled{
+	background-color: #666666;
+	color: rgb(255, 255, 255);
+}
+.expatViewPalette:hover{
+	background-color: rgb(52, 186, 10);
+	color: rgb(219, 94, 12);
+}
+
+.dividingBorder{
+	border-radius: 4px;
+	border-color: #c0c0c0;
+}
+
+.removeWithHover{
+	color: rgb(255, 255, 255);
+	background-color: rgb(170, 0, 0);
+}
+
+/*.removeWithHover:hover{
+	color: rgb(170, 0, 0);;
+	border: 2px solid rgb(170, 0, 0);
+	background-color: rgb(255, 255, 255);
+}*/
+
+
+.secondaryFooter{
+	color: rgb(114, 114, 114);
+	border-color: rgb(114, 114, 114);
+	background-color: rgb(207, 216, 220);
+}
+
+.tertiaryFooter{
+	color: #fff;
+	background-color: #D00B26;
+}

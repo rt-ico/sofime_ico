@@ -1,0 +1,163 @@
+<div class="card flat staff expat-places visits with-header"><%
+
+
+	%><div class="header"><%
+		%><h2 class="primary"><%
+			%><a href="#sfExpatView/<%= data.expat.id %>" class="underlined"><%- data.expat.cn %>&nbsp;<%=data.expat.client ? "(" + data.expat.client.name+")" : ""%></a> &gt; <%
+			%><a href="#sfExpatView/<%= data.expat.id %>/housing" class="underlined"><%- data.txt.sfExpatHome %></a> &gt; <%
+			%><%- data.txt.sfExpatVisitPlaces %></h2><%
+		%></div><% /* .header */
+
+%><div class="body fit-container"><%
+%><div class="map visits divider-color" id="map-visits-<%= data.expatId %>"></div><%
+
+%><div class="visitcards"><%
+
+
+%><article class="visitcard secondary-text-color pad-container downloadPlanning" title="<%- data.txt.downloadPlanning %>""><%
+%><h3 class="downloadPlanning-header"><%- data.txt.downloadPlanning %></h3><%
+%><div class="downloadPlanning-icon"><%= data.images.download %></div><%
+%></article><%
+
+
+%><article class="visitcard secondary-text-color pad-container add-card" title="<%- data.txt.addVisitPlace %>""><%
+%><h3 class="ellipsis"><%- data.txt.addVisitPlace %></h3><%
+%><div class="downloadPlanning-icon "><%= data.images.addVisitPlace %></div><%
+%></article><%
+
+var places = [];
+_.each(data.visits, function(v){
+	_.each(v.places, function(p){
+		if (!p.archived) places.push(p);
+	});
+});
+if (places.length > 1){
+	places.sort(function(a,b){
+		return a.datetime < b.datetime ? -1 : a.datetime > b.datetime ? 1 : a.id - b.id;
+	});
+}
+
+_.each(places, function(p){
+	var escSummary = p.summary ? _.escape(p.summary) : "";
+
+	if (!p.location) p.location = {};
+
+	var escAddress = "";
+	var escAddressTitle = "";
+	if (p.location.address){
+		escAddress = p.location.address;
+		escAddressTitle = p.location.address;
+	}
+	if (p.location.postCode){
+		escAddress += (escAddress ? ", " : "") + p.location.postCode;
+		escAddressTitle += (escAddressTitle ? "\n" : "") + p.location.postCode;
+	}
+	if (p.location.city){
+		escAddress += " " + p.location.city;
+		escAddressTitle += " " + p.location.city;
+	}
+	escAddress = escAddress ? _.escape(escAddress) : "-";
+	if (escAddressTitle) escAddressTitle = _.escape(escAddressTitle);
+
+	%><article class="visitcard dark-text-color pad-container <%= !p.time ? 'notScheduled':'' %>" data-v=<%= p.visitId %> data-p=<%= p.id %>><%
+	if (p.time){
+		%><p class="dark-text-color visit-time"><%- p.localizedTime || p.time %></p><%
+	}
+	if (p.date){
+		%><p class="dark-text-color visit-date"><%- data.txt.onDate %> <%- /*p.localizedDate ||*/ data.cachedMoment(p.date).format("L") %></p><%
+	}
+
+
+	%><p class="visit-address" title="<%= escAddressTitle %>"><span class="label"><%- data.txt.colAddress %> :</span> <%
+	if (p.location.coords){
+		%><a class="underlined" href="#"><%= escAddress %></a><%
+	}
+	else{
+		print(escAddress);
+	}
+	%></p><%
+
+	if (_.isNumber(p.surface)){
+		%><p class="visit-surface"><span class="label"><%- data.txt.colSurface %> :</span> <%
+		print(data.fmt.formatDecimal(p.surface));
+		%></p><%
+	}
+	if (_.isNumber(p.price)){
+		%><p class="visit-price"><span class="label"><%- data.txt.colPrice %> :</span> <%
+		print(data.fmt.formatDecimal(p.price));
+		%></p><%
+	}
+	if (p.floor){
+		%><p class="visit-floor"><span class="label"><%- data.txt.colFloor %> :</span> <%
+		print(_.escape(p.elevator ? p.floor+", "+data.txt.elevator : p.floor));
+		%></p><%
+	}
+	if (p.supplier && false){
+		%><p class="visit-supplier"><span class="label"><%- data.txt.sfExpatHomeSettle_supplier %> :</span> <%
+		print(_.escape(p.supplier.name));
+		%></p><%
+	}
+	if (p.realEstateAgent){
+		%><p class="visit-agent"><span class="label"><%- data.txt.visitPlaceRealEstateAgent %> :</span> <%
+		print(_.escape(p.realEstateAgent));
+		%></p><%
+	}
+
+	if (p.contactTel){
+	    %><p class="contact visit-contactTel"><%
+	    %><a class="contactTel-icon" href="tel:<%- p.contactTel %>"><%= data.images.phone %></a><%
+	    %><span class="column-block" ><%
+	    %><span class = "label" ><a href="tel:<%- p.contactTel %>"><%- data.txt.visitPlaceContactTel %> &nbsp:&nbsp </a></span><%
+	    %><a href="tel:<%- p.contactTel %>"><%print(_.escape(p.contactTel)); %></a><%
+	    %></span><%
+	    %></p><%
+	}
+
+
+	if (p.summary){
+    		%><p class="visit-remarks"><span class="label"><%- data.txt.colRemarks %> :</span> <%
+            print(_.escape(p.summary));
+            %></p><%
+    }
+
+    if (p.remarks){
+            var remarks = p.remarks;
+            if (remarks.length > 80) {
+                remarks = remarks.substring(0, 80) + " ...";
+            }
+
+      		%><p class="visit-remarks"><span class="label"><%- data.txt.sfExpatVisitPlacesExpatRemarks %> :</span> <%
+            print(_.escape(remarks));
+            %></p><%
+    }
+
+	if (p.url){
+		%><p class="visit-url"><span class="label"><%- data.txt.colUrl %> :</span> <%
+		%><a class="underlined ellipsis" href="<%- p.url %>" target="expat_visit_place('+p.id+')" title="<%- p.url %>"><%- p.url %></a><%
+		%></p><%
+	}
+
+	%><div class="action-box"><%
+	%><a class="visit-modify dark-primary-color dark-divider-color text-primary-color" title="<%- data.txt.actionModify %>"><%
+	print(_.escape(data.txt.actionModify));
+	%></a><%
+	%></div><% /* .action-box */
+
+	%><div class="action-box"><%
+	var selectClasses = ["visit-select", "alt-accent-border"];
+	if (p.selected){
+		selectClasses = selectClasses.concat(["alt-accent-color", "text-primary-color", "selected"]);
+	}
+	else{
+		selectClasses = selectClasses.concat(["alt-accent-ghost", "unselected"]);
+	}
+	%><a class="<%= selectClasses.join(" ") %>" title="<%- data.txt.actionSelect %>"><%
+	print(_.escape(p.selected ? data.txt.sfVisitPlaceSelected : data.txt.actionSelect));
+	%></a><%
+	%></div><% /* .action-box */
+
+	%></article><%
+});
+%></div><% /* .visitcards */
+%></div><% /* .body */
+%></div>

@@ -1,0 +1,49 @@
+<div class="card flat expat relocation"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navExpatRelocation %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><h3 class="primary"><%- data.txt.expatriateArrivalDate %></h3><%
+
+%><div class="field"><%
+%><div class="input"><%
+%><input type=text maxlength=10 name="arrivalDate" id="accountArrivalDate" class="date divider-color" value="<%- data.expat.arrivalDate ? data.cachedMoment(data.expat.arrivalDate).format("L"):"" %>"><%
+%><img class="datepicker-icon" data-pick-date-for="accountArrivalDate" data-pick-date-title="<%- data.txt.expatriateArrivalDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+if (!_.isEmpty(data.status.reports)){
+	%><h3 class="primary"><%- data.txt.projectUsefulInfo %></h3><%
+	%><div class="relocation-status-cards"><%
+	_.each(data.status.reports, function(report) {
+		%><div class="relocation-status-card relocation-status-card-closed"><%
+		%><div class="icon alt-accent-ghost relocation-status-card-expand"><%= data.images.expand %></div><%
+		%><h3 class="relocation-status-card-title"><%- report.title %></h3><%
+		_.each(report.messages, function(it) {
+			%><div class="item"><%
+			%><span class="label"><%= it.label %></span><%
+			%><span class="value"><%= it.value %></span><%
+			%></div><%
+		});
+		if (!_.isEmpty(report.navigation)){
+		%><div class="relocation-status-nav" data-nav="<%= report.navigation.target %>" data-nav-option=""><a><%= report.navMessage %></a></div><%
+		}
+		%></div><%
+	});
+	%></div><%
+}
+
+if (!_.isEmpty(data.surveys)){
+	%><h3 class="primary"><%- data.txt.navExpatSurveys %></h3><%
+	print(data.tpl.surveyListPane(data));
+}
+
+%></div><% /* .body */
+
+%></div>

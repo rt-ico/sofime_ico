@@ -1,0 +1,47 @@
+<div class="card tagged" id="ExpatGuidesCard"><%
+
+%><div class="header text-primary-color default-primary-color"><%
+%><h2><%- data.txt.navExpatGuides %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container thumbs"><%
+
+	var files = data.documents.files;
+
+	if (files.length > 0) {
+	    %><div class="document-cards dark-text-color"><%
+	    _.each(files, function(p) {
+	            var docType = data.findDocumentTypeById(p.ref_type);
+                var title = (docType !== null) ? docType.name : p.name;
+                %><div class="thumb document-card" data-file="<%- p.id %>" data-uuid="<%= p.uuid %>" ><%
+
+                %><span class="thumb-tools" title=""><%
+                if (p.has_thumb || p.has_file) {
+                    %><div class="thumb-tool filler"></div><%
+                   /* %><div class="thumb-tool" data-action="print" title="<%- data.txt.expatDocumentPrint %>" class="icon alt-accent-ghost"><%= data.images.print %></div><%*/
+                    %><div class="thumb-tool" data-action="download" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>" class="icon alt-accent-ghost"><%= data.images.download %></div><%
+                    %><div class="thumb-tool" data-action="open" title="<%- data.txt.expatDocumentShowInfo %>" class="icon alt-accent-ghost"><%= data.images.showInfo %></div><%
+                }
+                %></span><%
+
+
+                if (p.has_file) {
+                    if (p.has_thumb) {
+                        %><img data-action="showinfo" class="card-img alt-accent-ghost" src="<%= data.route.genericsDocuments + p.id %>/thumb?mtime=<%= p.mtime %>" ><%
+                    } else {
+                        %><div data-action="showinfo" class="card-img alt-accent-ghost" title="<%- data.fmt.sprintf(data.txt.expatDocumentDownloadWithSizeHint,  data.fmt.formatDecimal(p.thumb.size_s)) %>"><%= data.images.file %></div><%
+                    }
+                } else {
+                    %><div class="card-img-empty alt-accent-ghost"><%= data.images.empty_file %></div><%
+                }
+
+                %></span><%
+                %><span class="thumb-label-1"><%- p.name %></span><%
+                %></div><%
+        });
+        %></div><%
+	}
+
+%></div><% /* .body */
+
+%></div>

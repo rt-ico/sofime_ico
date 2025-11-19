@@ -1,0 +1,61 @@
+<div class="card flat hr contacts"><%
+
+var contacts = _.filter(data.contacts.SF, function(c){
+	return !!c.visibleToClients;
+});
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navContacts %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="contact-cards"><%
+_.each(contacts, function(c){
+	%><article class="minicard contact" title="<%- c.cn %>"><%
+
+	%><div class="avatar default-primary-color text-primary-color"><%
+	%><img class="avatar" src="<%= data.route.staffAvatar + c.id %>"><%
+	%></div><% /* .avatar */
+
+	%><div class="detail"><%
+	%><h3 class="cn ellipsis"><%- c.cn %></h3><%
+
+	if (c.address){
+		%><p class="contact ellipsis"><span class="tertiary-text-color"><%- data.txt.colAddress %></span><br><%- c.address %></p><%
+	}
+	if (c.mail){
+		%><p class="contact ellipsis"><span class="tertiary-text-color"><%- data.txt.colMail %></span><br><a href="mailto:<%- c.mail %>"><%- c.mail %></a></p><%
+	}
+	if (c.tel){
+		%><p class="contact ellipsis"><span class="tertiary-text-color"><%- data.txt.colTelWhatsapp %></span><br><a href="tel:<%- c.tel %>"><%- c.tel %></a></p><%
+	}
+
+	%></div><% /* .detail */
+
+	%></article><% /* .minicard */
+});
+%></div><% /* .contact-cards */
+
+%><div class="resources dark-text-color"><%
+%><h2 class="primary"><%- data.txt.onlineResources %></h2><%
+%><ul class="links"><%
+_.each(["http://www.sofime.com/","http://www.sofime.com/blog/"], function(url, i){
+	var label = url.substring(url.indexOf("://")+3);
+	if (label.charAt(label.length-1) === "/"){
+		label = label.substring(0,label.length-1);
+	}
+	%><li><a target="sfurl<%= i %>" href="<%= url %>"><%= label %></a></li><%
+});
+%></ul><%
+
+if (data.legalNotice){
+	%><h2 class="primary"><%- data.txt.legalNotice %></h2><%
+	%><p><%= data.fmt.nl2br(_.escape(data.legalNotice.text)) %></p><%
+}
+
+%></div><% /* .resources */
+
+%></div><% /* .body */
+
+%></div>

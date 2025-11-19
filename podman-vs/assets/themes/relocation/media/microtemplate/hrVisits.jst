@@ -1,0 +1,105 @@
+<div class="flat card hr visits with-header"><%
+
+
+%><div class="hr-visit-header "><%
+var navMsg = data.fmt.sprintf(data.txt.hrVisitsBackNav, data.expat.cn)
+/*%><h2 class="primary hr-visit-item"> <%-data.txt.homecard_hr_visits%> <%- data.expat.cn %></h2><%*/
+%><div class="hr-visit-item alt-accent-border ellipsis"><a href="#hrReloTrack/<%- data.expatId %>" title="<%- navMsg %>"><%- navMsg %></a></div><%
+%></div><% /* .header */
+
+
+
+%><div class="body fit-container"><%
+%><div class="map visits divider-color" id="map-visits-<%= data.expatId %>"></div><%
+
+%><div class="visitcards"><%
+_.each(data.visits, function(v){
+	_.each(v.places, function(p){
+		var escSummary = p.summary ? _.escape(p.summary) : "";
+
+		if (!p.location) p.location = {};
+
+		var escAddress = "";
+		var escAddressTitle = "";
+		if (p.location.address){
+			escAddress = p.location.address;
+			escAddressTitle = p.location.address;
+		}
+		if (p.location.postCode){
+			escAddress += (escAddress ? ", " : "") + p.location.postCode;
+			escAddressTitle += (escAddressTitle ? "\n" : "") + p.location.postCode;
+		}
+		if (p.location.city){
+			escAddress += " " + p.location.city;
+			escAddressTitle += " " + p.location.city;
+		}
+		escAddress = escAddress ? _.escape(escAddress) : "-";
+		if (escAddressTitle) escAddressTitle = _.escape(escAddressTitle);
+
+		%><article class="visitcard secondary-text-color pad-container" data-v=<%= v.id %> data-p=<%= p.id %>><%
+		if (p.time){
+			%><p class="dark-text-color visit-time"><%- p.localizedTime || p.time %></p><%
+		}
+		if (p.date){
+			%><p class="dark-text-color visit-date"><%- data.txt.onDate %> <%- /*p.localizedDate ||*/ data.cachedMoment(p.date).format("L") %></p><%
+		}
+
+		%><p class="visit-address" title="<%= escAddressTitle %>"><span class="label"><%- data.txt.colAddress %> :</span> <%
+		if (p.location.coords){
+			%><a class="underlined" href="#"><%= escAddress %></a><%
+		}
+		else{
+			print(escAddress);
+		}
+		%></p><%
+
+		if (data.user.expat || true){
+			if (_.isNumber(p.surface)){
+				%><p class="visit-surface"><span class="label"><%- data.txt.colSurface %> :</span> <%
+				print(data.fmt.formatDecimal(p.surface));
+				%></p><%
+			}
+			if (_.isNumber(p.price)){
+				%><p class="visit-price"><span class="label"><%- data.txt.colPrice %> :</span> <%
+				print(data.fmt.formatDecimal(p.price));
+				%></p><%
+			}
+			if (p.floor){
+				%><p class="visit-floor"><span class="label"><%- data.txt.colFloor %> :</span> <%
+				print(_.escape(p.elevator ? p.floor+", "+data.txt.elevator : p.floor));
+				%></p><%
+			}
+		}
+		if (p.url){
+			%><p class="visit-url"><span class="label"><%- data.txt.colUrl %> :</span> <%
+			%><a class="underlined ellipsis" href="<%- p.url %>" target="expat_visit_place('+p.id+')" title="<%- p.url %>"><%- p.url %></a><%
+			%></p><%
+		}
+
+
+		%><div class="action-box"><%
+		%><p class="text-primary-color alt-accent-color visit-choice" title="<%- data.txt.colChoice %>"><%
+		if (p.choice1){
+			print('1');
+		}
+		else if (p.choice2){
+			print('2');
+		}
+		else if (p.choice3){
+			print('3');
+		}
+		else {
+			print(_.escape(data.txt.hrVisitsNotSelected));
+		}
+		%></p><%
+		%></div><% /* .action-box */
+
+
+		%></article><%
+	});
+});
+%></div><% /* .visitcards */
+
+%></div><% /* .body */
+
+%></div>

@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  postgres-builder:
+    build: .
+    container_name: postgres-builder
+    environment:
+      POSTGRES_PASSWORD: not24get
+      POSTGRES_DB: oa_prod
+      POSTGRES_INITDB_ARGS: "--data-checksums"
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - bdd_builder:/var/lib/postgresql/data
+      - /dev/shm:/dev/shm
+    command: >
+      bash -c '
+        if [ -f "/docker-entrypoint-initdb.d/mydb.sql" ] && [ ! -f "/var/lib/postgresql/data/.initialized" ]; then
+          echo "Custom dump file detected, will be processed by entrypoint script";
+        fi
+        docker-entrypoint.sh postgres
+      '
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  bdd_builder:
+

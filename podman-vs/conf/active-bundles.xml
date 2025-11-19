@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Enable or disable automatic start-up of bundles (does not override OSGi dependency resolution). Unlisted bundles are enabled by default.</comment>
+<entry key="com.fasterxml.jackson">true</entry>
+<entry key="gnu.trove">true</entry>
+<entry key="org.apache.commons.io">true</entry>
+<entry key="org.apache.http">true</entry>
+<entry key="relocation.api">true</entry>
+<entry key="relocation.app">true</entry>
+<entry key="relocation.automail">true</entry>
+<entry key="relocation.datacleaner">true</entry>
+<entry key="relocation.directory">true</entry>
+<entry key="relocation.documents">true</entry>
+<entry key="relocation.filecache">true</entry>
+<entry key="relocation.gdpr">true</entry>
+<entry key="relocation.geotag">true</entry>
+<entry key="relocation.imagemagick">true</entry>
+<entry key="relocation.monitoring">true</entry>
+<entry key="relocation.photo">true</entry>
+<entry key="relocation.reports">true</entry>
+<entry key="relocation.statistics">true</entry>
+<entry key="relocation.status">true</entry>
+<entry key="relocation.tracking">true</entry>
+<entry key="relocation.web">true</entry>
+<entry key="system.activation">true</entry>
+<entry key="system.admin">true</entry>
+<entry key="system.api">true</entry>
+<entry key="system.config">true</entry>
+<entry key="system.connector">false</entry>
+<entry key="system.defaultdesign">true</entry>
+<entry key="system.design">true</entry>
+<entry key="system.formatting">true</entry>
+<entry key="system.framework">false</entry>
+<entry key="system.freemarker">true</entry>
+<entry key="system.fs">true</entry>
+<entry key="system.http">true</entry>
+<entry key="system.jmx">true</entry>
+<entry key="system.locale">true</entry>
+<entry key="system.themes">true</entry>
+<entry key="system.views">true</entry>
+</properties>

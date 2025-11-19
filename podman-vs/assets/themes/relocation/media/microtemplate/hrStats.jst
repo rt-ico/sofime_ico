@@ -1,0 +1,66 @@
+<div class="card flat hr stats"><%
+
+var kpi = data.stats.relocation;
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navStats %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="kpi"><%
+//
+%><div class="indicator"><%
+%><div class="value dark-divider-color alt-accent-ghost"><%= data.roundIndicator(kpi.meanTotal) %></div><%
+%><div class="label dark-text-color"><%- data.txt.statsRelosPerYear %></div><%
+%></div><% /* .indicator */
+//
+%><div class="indicator"><%
+%><div class="value dark-divider-color alt-accent-ghost"><%= data.roundIndicator(kpi.meanTotal) %></div><%
+%><div class="label dark-text-color"><%- data.fmt.sprintf(data.txt.statsRelosCurrentYear, kpi.currentYear) %></div><%
+%></div><% /* .indicator */
+//
+%><div class="indicator"><%
+%><div class="value dark-divider-color accent-ghost"><%= data.roundIndicator(kpi.meanSatisfaction) %><span style="font-size: 66%">/<%= kpi.maxSatisfaction %></span></div><%
+%><div class="label dark-text-color"><%- data.txt.statsRelosSatisfaction %></div><%
+%></div><% /* .indicator */
+//
+%></div><% /* .kpi */
+
+if (!_.isEmpty(data.stats.services.selection)){
+	%><div class="plaincard pad-container"><%
+	%><h2 class="primary no-margin"><%- data.txt.hrStatsServicesUsed %></h2><%
+	%><div class="gfx-chartbox"><canvas id="gfx-canvas" width="100%" height="100%"/></div><%
+	%></div><% /* .plaincard */
+
+	%><table class="services"><%
+	%><thead class="text-primary-color dark-primary-color"><%
+	%><tr><%
+	%><th class="sortable" data-col="service"><%
+	if (data.sort.att === "service"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.colService));
+	%></th><%
+	%><th class="sortable projects" data-col="projects"><%
+	if (data.sort.att === "projects"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.statsRelosCounted));
+	%></th><%
+	%></tr><%
+	%></thead><%
+	%><tbody class="secondary-text-color"><%
+	_.each(data.stats.services.selection, function(svc){
+		%><tr data-id=<%= svc.id %>><%
+		%><td><%- svc.localeName || svc.name %></td><%
+		%><td class="projects"><%= data.stats.services.totalByService[svc.id] || 0 %></td><%
+		%></tr><%
+	});
+	%></tbody><%
+	%></table><%
+}
+
+%></div><% /* .body */
+
+%></div>

@@ -1,0 +1,27 @@
+
+<tr class="sfToDoTableRow newServiceRow<%-data.newServiceId%>" data-id=<%= data.id %>><%
+
+%><td class="centered" ><input class="expatRelocationClientField" type=text maxlength=100 name=<%-'nameOfNewService'+data.newServiceId %>></td><%
+
+%><td class="centered" ><%
+%><input type=text maxlength=100 name=<%-'managerOfNewService'+data.newServiceId %>><%
+%></td><%
+
+%><td class="centered"><%
+%><div class="row-block"><%
+%><div class = "width82" >&nbsp</div><%
+%><div class="secondary-text-color"><label class="for-checkbox"><%
+%><input type="checkbox" name=<%-'validateNewService'+data.newServiceId %>  <%= "" %>><%
+%></label></div><%
+%></div><%
+%></td><%
+
+%><td class="removeNewService row-block"><%
+%><div class = "width10" >&nbsp</div><div><div class = "tinyHeightDiv" ></div><div class = "removeNewService-icon" data-action="<%-'remove'+data.newServiceId %>" ><%=data.images.delete%></div><div class = "tinyHeightDiv" ></div></div><%
+%><%
+%></td><%
+
+
+
+%></tr>
+

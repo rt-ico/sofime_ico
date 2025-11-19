@@ -1,0 +1,37 @@
+<div class="fit-container pad-container staff todo-list-popup"><%
+
+var escSubtitle = _.escape(data.task.localeName || data.task.name);
+
+%><div class="subheader"><%
+%><h2><%= escSubtitle %></h2><%
+%></div><% /* .subheader */
+
+%><label for="todo-deadline"><%- data.txt.colTaskDeadline %> :</label><%
+
+%><div class="field"><%
+%><input type=text size=10 maxlength=10 id="todo-deadline" class="date" value="<%- data.expatTask.deadline ? data.cachedMoment(data.expatTask.deadline).format("L"):"" %>"><%
+%><img class="datepicker-icon todo-deadline" data-pick-date-for="todo-deadline" data-pick-date-title="<%- data.txt.colTaskDeadline %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+if (!_.isEmpty(data.expatTask.outboxmailId)) {
+%><div class="buttons"><button type=button id="mail" class="accent-color"><div class="btn-text-wth-icon"><span><%- data.txt[data.compact ? "actionViewAutomailAbbrev" : "actionViewAutomail"] %></span><div class="btn-icon "><%= data.images.mail %></div></div></button></div><%
+}
+%><div class="buttons"><button type=button id="view" class="accent-color"><div class="btn-text-wth-icon"><span><%- data.txt[data.compact ? "actionViewExpatAbbrev" : "actionViewExpat"] %></span><div class="btn-icon "><%= data.images.user %></div></div></button></div><%
+%></div><% /* .field */
+
+if( data.expatTask.rdvTypeId != null ){
+%><label for="rdv_date"><%- data.txt.colTaskRdv %> :</label><%
+%><div class="field"><%
+%><input type=text size=10 maxlength=10 id="rdv_date" class="date" value="<%- data.expatTask.rdv_date ? data.cachedMoment(data.expatTask.rdv_date).format("L"):"" %>"><%
+%><img class="datepicker-icon rdv_date" data-pick-date-for="rdv_date" data-pick-date-title="<%- data.txt.colTaskRdv %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%><input  id="todo-rdv_time" type=text class="time extraPaddingLeft todoRdvTime" value="<%- data.expatTask.rdv_time  %>" maxlength=5  title="<%- data.txt.timeMask %>" placeholder="<%- data.txt.timeMask %>" ><%
+%></div><%
+%><%
+}
+
+%><label   for="todo-remarks"><%- data.txt.colRemarks %> :</label><%
+%><textarea id="todo-remarks" cols=40 rows=8><%- data.expatTask.remarks %></textarea><%
+
+%></div>

@@ -1,0 +1,14 @@
+<%
+var a = data.attachment;
+var escTitle = _.escape(a.name)+"\n"+_.escape(a.doctype);
+%><div class="attached-doc alignCenter justifyTextJustified fullWidth" data-mail-id="<%= data.item.id %>" data-source="<%=_.escape(a.source) %>" data-doc-id="<%=a.sourceId %>"  data-doc-name="<%=a.name %>" data-attachment-id="<%=a.id %>"><%
+    %><div class="row-block alignItemsCenter"><%
+        %><a data-action="open" class="attachment default-primary-color text-primary-color underlined inactive" title="<%= escTitle %>"><%- a.doctype %></a><%
+        if(a.source === 'expat'){
+            %><div data-action="open" class="actionButton attachment default-primary-color open-document text-primary-color underlined <%a.dateSent ?'disabled':''%> row-block" title="<%= data.txt.actionView %>"><div class="width26">&nbsp</div><div class="width26"><%= data.images.view %></div><div class="width26">&nbsp</div></div><%
+        }
+    %></div><%
+    if(!a.dateSent){
+    %><div class="attachment sfMailItemButton removeWithHover remove remove-document underlined <%a.dateSent ?'disabled':''%>" title="<%= data.txt.actionDelete %>"><%= data.images.remove %></div><%
+    }
+    %></div>

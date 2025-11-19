@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="Content-Security-Policy.home">default-src 'self' data: unpkg.com *.openstreetmap.org *.w3.org; frame-ancestors 'self'; frame-src 'self' *.openstreetmap.org; img-src 'self' data: *.openstreetmap.org; script-src 'self' 'unsafe-inline' 'unsafe-eval' unpkg.com</entry>
+<entry key="Content-Security-Policy.report-uri"/>
+<entry key="js.cache-control.filter.enable">false</entry>
+<entry key="upload.size-limit-mib">32</entry>
+<entry key="welcome.enable-reset">true</entry>
+</properties>

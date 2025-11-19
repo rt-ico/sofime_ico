@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="7z">application/x-7z-compressed</entry>
+<entry key="appcache">text/cache-manifest</entry>
+<entry key="atom">application/atom+xml</entry>
+<entry key="bson">application/x-jackson-smile</entry>
+<entry key="bz2">application/x-bzip</entry>
+<entry key="css">text/css</entry>
+<entry key="doc">application/msword</entry>
+<entry key="docx">application/vnd.openxmlformats-officedocument.wordprocessingml.document</entry>
+<entry key="dotx">application/vnd.openxmlformats-officedocument.wordprocessingml.template</entry>
+<entry key="eot">application/vnd.ms-fontobject</entry>
+<entry key="gif">image/gif</entry>
+<entry key="gz">application/x-gzip</entry>
+<entry key="gzip">application/x-gzip</entry>
+<entry key="htm">text/html</entry>
+<entry key="html">text/html</entry>
+<entry key="ico">image/x-icon</entry>
+<entry key="jpeg">image/jpeg</entry>
+<entry key="jpg">image/jpeg</entry>
+<entry key="js">application/javascript</entry>
+<entry key="json">application/json</entry>
+<entry key="jst">text/template</entry>
+<entry key="otf">application/font-sfnt</entry>
+<entry key="pdf">application/pdf</entry>
+<entry key="png">image/png</entry>
+<entry key="potx">application/vnd.openxmlformats-officedocument.presentationml.template</entry>
+<entry key="pps">application/vnd.ms-powerpoint</entry>
+<entry key="ppsx">application/vnd.openxmlformats-officedocument.presentationml.slideshow</entry>
+<entry key="ppt">application/vnd.ms-powerpoint</entry>
+<entry key="pptx">application/vnd.openxmlformats-officedocument.presentationml.presentation</entry>
+<entry key="rss">application/rss+xml</entry>
+<entry key="sldx">application/vnd.openxmlformats-officedocument.presentationml.slide</entry>
+<entry key="svg">image/svg+xml</entry>
+<entry key="swf">application/x-shockwave-flash</entry>
+<entry key="tar">application/x-tar</entry>
+<entry key="tgz">application/x-compressed-tar</entry>
+<entry key="ttf">application/font-sfnt</entry>
+<entry key="txt">text/plain</entry>
+<entry key="woff">application/font-woff</entry>
+<entry key="woff2">application/font-woff2</entry>
+<entry key="xls">application/vnd.ms-excel</entry>
+<entry key="xlsx">application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</entry>
+<entry key="xltx">application/vnd.openxmlformats-officedocument.spreadsheetml.template</entry>
+<entry key="xml">application/xml</entry>
+<entry key="xsl">text/xsl</entry>
+<entry key="zip">application/zip</entry>
+</properties>

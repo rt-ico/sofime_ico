@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="dashboardTitle">DRIVE OVERVIEW - %1$s</entry>
+	<entry key="dashboardEventTitle">SHOP</entry>
+	<entry key="dashboardSpecialOfferTitle">SPECIAL OFFER</entry>
+	<entry key="dashboardTicketTitle">TICKET PRIORITIES</entry>
+	<entry key="dashboardMedia3list">SALES ACTIVITIES</entry>
+
+	<entry key="dashboardOk">OK</entry>
+	<entry key="dashboardKo">KO</entry>
+	<entry key="dashboardWatch">Watch</entry>
+	<entry key="dashboardNoSummaries">No dashboard indicators at this time.</entry>
+	<entry key="dashboardNoStores">No store data loaded at this time.</entry>
+	<entry key="dashboardNoEvent">No associated events</entry>
+	<entry key="dashboardDownloading">Downloading dashboard...</entry>
+
+</properties>

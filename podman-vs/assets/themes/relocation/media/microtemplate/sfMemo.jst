@@ -1,0 +1,50 @@
+<div class="card flat staff memo with-header with-footer"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navSfMemo %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container"><%
+
+if (data.delegate.task){
+	%><div class="staff-field combo"><%
+	%><label for="memo-staff"><%- data.txt.colMemoStaff %> :</label><%
+	%><input  id="memo-staff" type=text autocomplete="off"><%
+	%></div><%
+}
+
+%><div class="staff-field combo"><%
+%><label for="memo-task"><%- data.txt.colTaskLabel %> :</label><%
+%><input  id="memo-task" type=text autocomplete="off"><%
+%></div><%
+
+%><div class="staff-field combo"><%
+%><label for="memo-expat"><%- data.txt.colExpatName %> :</label><%
+%><input  id="memo-expat" type=text autocomplete="off"><%
+%></div><%
+
+%><div class="staff-field deadline"><%
+%><label for="memo-deadline"><%- data.txt.colTaskDeadline %> :</label><%
+%><div class="input"><%
+%><input type=text maxlength=10 id="memo-deadline" class="date outlined" placeholder="<%- data.txt.calendarDigitDateMask %>"><%
+%><img class="datepicker-icon" data-pick-date-for="memo-deadline" data-pick-date-title="<%- data.txt.colTaskDeadline %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%></div><%
+
+%><div class="staff-field remarks"><%
+%><label for="memo-remarks"><%- data.txt.colRemarks %> :</label><%
+%><input  id="memo-remarks" type=text name="remarks"><%
+%></div><%
+
+%></div><% /* .body */
+
+%><div class="footer"><%
+
+%><a class="ellipsis accent-border accent-color disabled"
+	 href="#createMemo" title="<%- data.txt.actionCreate %>"><%- data.txt.actionCreate %></a><%
+
+%></div><% /* .footer */
+
+%></div>

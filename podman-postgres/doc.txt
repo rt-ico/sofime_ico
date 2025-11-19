@@ -1,0 +1,34 @@
+
+podman volume create pgdata
+podman network create oa7_postgres_sofime
+podman build --tag oa7_postgres_sofime_img .
+podman run -d -p 5437:5432 \
+	--network=oa7_postgres_sofime \
+	--name oa7_sofime \
+        -v pgdata:/var/lib/postgresql/data:Z \
+	oa7_postgres_sofime_img
+
+#connexion
+psql -h localhost -p 5437 -U postgres
+bzcat /tmp/vm50-pgsql-oa_prod.20250701.sql.bz2 | pg_restore -h localhost -p 5437 -U postgres -d sofime
+
+
+
+# 1. Arrêt du service
+podman build
+
+podman stop postgres || true
+
+# 2. Export du volume
+podman volume export pgdata |  bzip2 -c > postgres-data-$(date +%Y%m%d).tar
+
+# 3. Livraison ou archivage de l’archive tar
+
+podman volume create pgdata
+podman volume import pgdata < postgres-data-20250701.tar
+podman run -d --name postgres \
+  -e POSTGRES_PASSWORD=mypass \
+  -v pgdata:/var/lib/postgresql/data:Z \
+  postgres
+
+

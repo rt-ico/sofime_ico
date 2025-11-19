@@ -1,0 +1,13 @@
+<div class="fit-container pad-container sf x-set-v-attr x-set-v-datetime secondary-text-color"><%
+
+%><div class="field stretch"><%
+%><label class="strong"><span class="label"><%- data.txt.colDate %> :</span> <input type=text name=date size=10 maxlength=10 value="<%- data.appointment.date ? data.cachedMoment(data.appointment.date).format("L") : "" %>" placeholder="<%- data.txt.calendarDigitDateMask %>" title="<%- data.txt.calendarDigitDateMask %>"></label><%
+%></div><%
+
+%><div class="field stretch"><%
+%><label class="strong"><span class="label"><%- data.txt.colTime %> :</span> <input type=text name=time size=10 maxlength=5 value="<%- data.appointment.time ? data.appointment.time.substring(0,5) : "" %>" placeholder="<%- data.txt.timeMask %>" title="<%- data.txt.timeMask %>"></label><%
+%></div><%
+
+%><div class="field vp-other"><%- data.appointment.localeDesc || data.appointment.subject %></div><%
+
+%></div>

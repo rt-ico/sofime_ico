@@ -1,0 +1,7 @@
+<div class="documentTypeItem" data-id=<%= data.id %>>
+<label for="documentType" class="strong"><%- data.txt.dialogDocumentTypeForRequest %> :</label>
+<div class="row-block">
+<input  name=<%-'documentType'+data.id %> type=text  autocomplete="off">
+<div class = "width22 removeDocumentType" data-action="<%-'remove'+data.id %>" ><%=data.images.delete%></div>
+</div>
+</div>

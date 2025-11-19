@@ -1,0 +1,88 @@
+<div class="card flat staff expats with-header"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navSofimeExpats %></h2><%
+%></div><% /* .header */
+
+
+%><div class="body fit-container"><%
+
+%><div class="filter"><%
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colCustomerName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-client combo"><input class="combo" type=text></div><%
+%><div class="pick-client icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colExpatName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-expat combo"><input class="combo" type=text></div><%
+%><div class="pick-expat icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%></div><% /* .filter */
+
+%><div class="expat-list"><%
+
+if(true){
+%><article class="minicard addRelocation accent-light accent-ghost secondary-text-color" title="data.txt.actionCreateNewRelocation"><%
+    %><div class="addRelocationHeader extraPaddingTop"><%
+    	%><span class="ellipsis cn primary dark-text-color"><%- data.txt.actionCreateNewRelocation %></span><%
+    %></div><%
+    %><div class="width80" href="#sfExpatRelocationCreate" title="<%- data.txt.actionCreate %>"><%=data.images.addRelo%></div><%
+
+%></article><%
+}
+
+_.each(data.expats, function(xp){
+    let infoCount = xp.uncheckDocument;
+    let warnCount = 4;
+	%><article class="minicard expat secondary-text-color <%= xp.relocationStatusTemp.isFinishedStatus ? 'completed':''%> <%= xp.relocationStatusTemp.isAbandonedStatus ? 'completed':'' %>" title="<%= _.escape(xp.cn) + (xp.atime ? "":" ✪") %>" data-xp=<%= xp.id %>><%
+    %><div class="minicard-header"><%
+	%><h3 class="ellipsis cn primary"><%- xp.cn %></h3><%
+	%><div class="indicator info <%= infoCount > 0 ? "accent-color text-primary-color":"light-primary-color" %>"><span class="value"><%= infoCount %></span></div><%
+	%></div><%
+	%><h4 class="ellipsis client"><%= xp.client && xp.client.name ? _.escape(xp.client.name) : " " %></h4><%
+
+
+	if (xp.arrivalDate ) {
+	    %><div class="date-label"><%
+	    %><span class="card-label"><%-  data.txt.expatriateArrivalDate %></span><%
+		%><span class="ellipsis"><%=  _.escape(data.cachedMoment(xp.arrivalDate).format("L")) %></span><%
+		%></div><%
+	}
+	if (!xp.arrivalDate){
+	    %><div class="date-label"><%
+        %><span class="card-label">&nbsp;</span><%
+        %><span class="ellipsis">&nbsp;</span><%
+        %></div><%
+	}
+
+	if (xp.visitDate && !xp.relocationStatusTemp.isAbandonedStatus && !xp.relocationStatusTemp.isFinishedStatus) {
+	    %><div class="date-label"><%
+	    %><span class="card-label"><%- data.txt.expatriateVisits %></span><%
+		%><span class="ellipsis"><%= _.escape(data.cachedMoment(xp.visitDate).format("L")) %></span><%
+		%></div><%
+	}
+
+	if (xp.relocationStatusTemp.isFinishedStatus){
+      	%><span class="card-label sofimeExpat-finished-text"><%- data.txt.relocationFinished %></span><%
+
+	}
+
+	if (xp.relocationStatusTemp.isAbandonedStatus){
+        %><span class="card-label sofimeExpat-aborted-text"><%- data.txt.relocationAbandoned %></span><%
+    }
+
+	%></article><% /* .minicard */
+});
+
+%></div><% /* .expat-list */
+%></div><% /* .body */
+
+%></div>

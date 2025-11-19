@@ -1,0 +1,185 @@
+<div class="card account with-footer"><%
+
+%><div class="header text-primary-color default-primary-color"><%
+%><h2><%- data.user.cn %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container pad-container"><%
+
+%><div class="form"><%
+
+%><h3 class="alt-accent"><%- data.txt.yourIdentity %></h3><%
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateGender %></label><%
+_.each(data.gender, function(g){
+	%><label class="for-radio secondary-text-color"><%
+	%><input type="radio" name="gender" value=<%= g.id %><% if(g.id===data.expat.gender){ print(' checked'); } %>><%
+	%><span class="field-title"><%- g.name %></span><%
+	%></label><%
+});
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateSurName %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 name="sn" value="<%- data.expat.sn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateGivenName %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 name="gn" value="<%- data.expat.gn %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateBirthDate %></label><%
+%><div class="input"><%
+%><input type=text maxlength=10 name="birthDate" id="accountBirthDate" class="date" value="<%- data.expat.birthDate ? data.cachedMoment(data.expat.birthDate).format("L"):"" %>" data-floor=1><%
+%><img class="datepicker-icon pick-birth-date" data-pick-date-for="accountBirthDate" data-pick-date-title="<%- data.txt.expatriateBirthDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.expatriateBirthPlace %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 name="birthPlace" value="<%- data.expat.birthPlace %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateNationalityUsed %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 class="combo" name="birthCountry" value=""><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><h3 class="alt-accent"><%- data.txt.yourFamily %></h3><%
+
+%><div class="family-members"><%
+_.each(data.expat.familyMembers, function(fm){
+	print(data.tpl.familyMember(data.defineFamilyMemberTemplateData(fm)));
+});
+
+%><a href="#add-family-member" class="text-primary-color dark-primary-color add" title="<%- data.txt.addFamilyRelation %>"><%= data.images.add %></a><%
+
+%></div><%
+
+
+%><h3 class="alt-accent"><%- data.txt.yourProject %></h3><%
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateArrivalDate %></label><%
+%><div class="input"><%
+%><input type=text maxlength=10 name="arrivalDate" id="accountArrivalDate" class="date" value="<%- data.expat.arrivalDate ? data.cachedMoment(data.expat.arrivalDate).format("L"):"" %>"><%
+%><img class="datepicker-icon pick-arrival-date" data-pick-date-for="accountArrivalDate" data-pick-date-title="<%- data.txt.expatriateArrivalDate %>"
+		 src="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png"
+	  srcset="<%= data.route.themeStyleUri %>media/form1x/window_dialog.png 1x, <%= data.route.themeStyleUri %>media/form2x/window_dialog.png 2x"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.newJobAddress %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 name="newJobAddress" value="<%= data.expat.job.location.address ? _.escape(data.expat.job.location.address) : '' %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.newJobCity %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 name="newJobCity" value="<%= data.expat.job.location.city ? _.escape(data.expat.job.location.city) : '' %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.newJobPostCode %></label><%
+%><div class="input"><%
+%><input type=text maxlength=5 name="newJobPostCode" value="<%= data.expat.job.location.postCode ? _.escape(data.expat.job.location.postCode) : '' %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+
+%><h3 class="alt-accent"><%- data.txt.yourContactDetails %></h3><%
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateOldAddress %></label><%
+%><div class="input"><%
+%><textarea name="oldAddress" rows=3 cols=40 placeholder="<%- data.txt.expatriateOldAddress %>"><%- data.expat.oldAddress %></textarea><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateWorkMail %></label><%
+%><div class="input"><%
+%><input type=email maxlength=100 name="workMail" value="<%- data.expat.workMail %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.expatriateHomeMail %></label><%
+%><div class="input"><%
+%><input type=email maxlength=100 name="homeMail" value="<%- data.expat.homeMail %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateTelZone1 %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 class="combo" name="telZone1"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label class="required"><%- data.txt.expatriateTel1 %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=20 name="tel1" value="<%- data.expat.tel1 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.expatriateTelZone2 %></label><%
+%><div class="input"><%
+%><input type=text maxlength=100 class="combo" name="telZone2"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%><div class="field"><%
+%><label><%- data.txt.expatriateTel2 %></label><%
+%><div class="input"><%
+%><input type=tel maxlength=20 name="tel2" value="<%- data.expat.tel2 %>"><%
+%></div><% /* .input */
+%></div><% /* .field */
+
+%></div><% /* .form */
+%></div><% /* .body */
+
+%><div class="footer"><%
+let gdprActionText = "";
+let status = data.expat.relocationStatus;
+//let disabled = status.isFinishedStatus || status.isAbandonedStatus ? '' : 'disabled';
+let disabled = true;
+
+
+if (data.expat.gdpr.gdprDtClearedLabel !== null) {  /*  */
+    gdprActionText = data.fmt.sprintf(data.txt.actionGdprDeleteRequestDone, data.expat.gdpr.gdprDtClearedLabel);
+} else if (data.expat.gdpr.gdprDtClearRequestLabel !== null) {
+    gdprActionText = data.fmt.sprintf(data.txt.actionGdprDeleteRequested, data.expat.gdpr.gdprDtClearRequestLabel);
+} else {
+    gdprActionText = data.txt.actionGdprDeleteRequest;
+}
+
+%><a class="gdpr-delete-request ellipsis accent-border accent-color warn <%- disabled %>"
+	 href="#expatAccount/gdprDeleteRequest" title="<%- gdprActionText %>"><%- gdprActionText %></a><%
+
+%><a class="update ellipsis accent-border accent-color disabled"
+	 href="#expatAccount" title="<%- data.txt.actionUpdate %>"><%- data.txt.actionUpdate %></a><%
+
+%></div><% /* .footer */
+
+%></div>

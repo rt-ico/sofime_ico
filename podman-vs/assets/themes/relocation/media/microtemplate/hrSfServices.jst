@@ -1,0 +1,43 @@
+<div class="card flat hr sf-services"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.navHrSfServices %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+
+
+
+    _.each(data.serviceCategory, function(serviceCategory) {
+        %><h3 class="primary"><%- serviceCategory.localeName %></h3><%
+
+        %><div class="relocation-desc-cards"><%
+        _.each(data.service, function(service) {
+            if (service.showPrestation && serviceCategory.id === service.category) {
+                %><div class="relocation-desc-card relocation-desc-card-closed"><%
+                %><div class="icon alt-accent-ghost relocation-desc-card-expand"><%= data.images.expand %></div><%
+                %><h3 class="relocation-desc-card-title"><%- service.localeName %></h3><%
+
+                    %><div class="desc"><%
+                    _.each(service.htmlDesc, function (line) {
+                        if (_.isEmpty(line)) {
+                            %></br><%
+                        } else {
+                            %><%= line %><%
+                        }
+                    });
+                    %></div><%
+                %></div><%
+            }
+        });
+        %></div><%
+    });
+
+
+
+
+
+%></div><% /* .body */
+
+%></div>

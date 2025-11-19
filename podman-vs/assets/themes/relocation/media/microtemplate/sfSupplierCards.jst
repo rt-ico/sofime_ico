@@ -1,0 +1,31 @@
+
+<article class="minicard contact" title="<%-  data.txt.sfSupplierContactAdd %>" data-contact=0><%
+    %><h3 class="cn ellipsis"><%- data.txt.sfSupplierContactAdd %></h3><%
+    %><div data-action="add" class="suppliers-card-img alt-accent-ghost"><%= data.images.add_file %></div><%
+%></article><%
+
+_.each(data.supplierContacts, function(c){
+	%><article class="minicard contact" title="<%- c.cn %>" data-contact=<%= c.id %>><%
+
+	%><div class="detail"><%
+	%><h3 class="cn ellipsis"><%- c.name %></h3><%
+
+    if (c.supplier && c.supplier.name){
+        /*<span class="tertiary-text-color">< % - data.txt.colSupplier % ></span><br>*/
+		%><p class="contact ellipsis"> <span><%- c.supplier.name %></span></p><%
+	}
+
+	if (c.email){
+	    /*<span class="tertiary-text-color">< % - data.txt.colMail % ></span><br>*/
+		%><p class="contact ellipsis"><a href="mailto:<%- c.email %>"><%- c.email %></a></p><%
+	}
+	if (c.tel){
+	    /*<span class="tertiary-text-color">< % - data.txt.colTelWhatsapp % ></span><br>*/
+		%><div class="contact ellipsis row-block alignItemCenter"><div class="width22" href="tel:<%- c.tel %>"><%= data.images.phone %></div><div class= "extraPaddingLeft" href="tel:<%- c.tel %>"><%- c.tel %></div></div><%
+	}
+
+	%></div><% /* .detail */
+
+	%></article><% /* .minicard */
+});
+%>

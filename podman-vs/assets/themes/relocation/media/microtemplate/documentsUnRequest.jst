@@ -1,0 +1,40 @@
+
+<div id="photoEdit" class="thumbDialog">
+
+<div class="thumbPane complementWidth">
+
+<div class="halfWidth"><%= data.images.multipleDelete %></div>
+
+</div>
+
+<div class="fieldPane goldenWidth">
+<div class ="itemList">
+<div class="row-block default-primary-color text-primary-color alignItemsCenter" >
+    <div class = "width328">
+        <label class="strong">&nbsp<%- data.txt.dialogDocumentTypeForUnRequest %> :</label>
+    </div>
+
+
+    <div class = "width26 flex-right"  ><%=data.images.delete%></div>
+
+</div><% /*row-block*/  %>
+<div class="withScroll">
+<% _.each(data.currentDocumentsList, function(it){%>
+<div class="row-block alignItemsCenter ">
+    <div class = "width328 dividingBorder">
+        <%= it.name %>
+    </div>
+
+    <div class = " ">
+        <div class="secondary-text-color flex-right"><label class="for-checkbox">
+        <input type="checkbox" name=<%-'remove'+it.id %>  <% if(it.checked){ print(' checked'); }%>>
+        </label></div>
+    </div>
+</div><% /*row-block*/  %>
+<%});%>
+</div>
+
+</div>
+
+</div>
+</div>

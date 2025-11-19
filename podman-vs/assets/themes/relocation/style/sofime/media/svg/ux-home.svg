@@ -1,0 +1,8 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0,0,59,59">
+	<g fill="none" fill-rule="nonzero" class="mix-blend-normal"
+	   stroke="currentColor" stroke-width="4" stroke-linecap="round"  stroke-linejoin="round">
+		<path fill-rule="evenodd" clip-rule="evenodd"
+			  d="M7.375 22.1248L29.5 4.9165L51.625 22.1248V49.1665C51.625 51.8819 49.4237 54.0832 46.7083 54.0832H12.2917C9.57627 54.0832 7.375 51.8819 7.375 49.1665V22.1248Z"/>
+		<path d="M22.125 54.0833V29.5H36.875V54.0833"/>
+	</g>
+</svg>

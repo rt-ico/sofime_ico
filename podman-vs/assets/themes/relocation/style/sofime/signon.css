@@ -1,0 +1,61 @@
+body,
+header {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+header > section,
+main {
+	padding: 8px 10%;
+}
+
+header > section:first-of-type {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+
+	line-height: 48px;
+	min-height: 132px;
+	background-size: 284px 116px;
+	background-image: url("media/signon-logo.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+header > section:not(:first-of-type) {
+	line-height: 24px;
+}
+
+header,
+header > section:first-of-type {
+	flex-grow: 1;
+}
+
+header h1 {
+	font-size: 42px;
+}
+
+header h2 {
+	font-size: 28px;
+	font-weight: normal;
+}
+
+main {
+	flex-grow: 2;
+}
+
+label,
+input {
+	display: block;
+}
+
+input {
+	min-width: 50%;
+	margin: 4px 0 12px;
+}
+
+p.iforgot {
+	margin-top: 40px;
+}

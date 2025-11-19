@@ -1,0 +1,75 @@
+<div class="card flat staff mail outbox send with-header"><%
+
+if(data.filter.expat != null ){
+%><div class="header"><%
+let navMsg = data.fmt.sprintf(data.txt.sfExpatViewBackNav, data.md.expat[data.filter.expat].cn);
+%><div class="sf-nav-btn alt-accent-border ellipsis"><a href="#sfExpatView/<%- data.filter.expat %>" title="<%- navMsg %>"><%- navMsg %> <%=data.md.expat[data.filter.expat].client ? "(" + data.md.expat[data.filter.expat].client.name+")" : ""%></a></div><%
+
+%></div><% /* .header */
+%><div class="body fit-container"><%
+        %><h2 class="sfToDoWithExpatSelected"><%
+            %><a href="#sfMessages/" class="underlined"><%- data.txt.navSfMessages %></a> > <%
+            %><%- data.txt.navMailSend %><%
+            %></h2><%
+}else{
+%><div class="header"><%
+            %><h2 class="primary"><%
+                %><a href="#sfMessages/" class="underlined"><%- data.txt.navSfMessages %></a> > <%
+                %><%- data.txt.navMailSend %><%
+                %></h2><%
+%></div><% /* .header */
+%><div class="body fit-container"><%
+}
+
+%><div class="body fit-container"><%
+
+%><div class="filter"><%
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colStaffName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-staff combo"><input class="combo" type=text></div><%
+%><div class="pick-staff icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colExpatName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-expat combo"><input class="combo" type=text></div><%
+%><div class="pick-expat icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+
+%></div><% /* .filter */
+
+if (_.isEmpty(data.outbox)){
+	%><p><%- data.txt.outboxSendEmpty %></p><%
+}
+else {
+    %><div class="sf-tiles"><%
+
+    _.each(data.outbox, function(it) {
+        var escSubjectName = _.escape(it.subject ? it.subject : '-');
+        var escTypeName = _.escape(it.type.name ? it.type.name : '-');
+        var escExpatName  = _.escape(it.expat.cn);
+
+        %><article class="mail minicard secondary-text-color" data-xt=<%= it.id %>><%
+        %><h3 class="primary" title="<%= escExpatName %>"><%= escExpatName %></h3><br><%
+        %><p class="" title="<%= escSubjectName %>"><%= escSubjectName %></p><%
+        var tag = data.txt.colMissingTag + ": " + (it.missingTag ? data.txt.yes : data.txt.no);
+        %><span class="ellipsis"><%- tag %></span><%
+
+        if (data.displayModel) {
+            %><span class="ellipsis"><%= escTypeName %></span><%
+        }
+        %></article><%
+    });
+
+    %></div><%
+}
+
+%></div><% /* .body */
+
+%></div>

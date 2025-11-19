@@ -1,0 +1,113 @@
+<div class="card flat hr relo-track one"><%
+
+var xp = data.expat;
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.hrRelosTrackOne %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="pick-expat"><%
+%><div class="picker"><%
+%><p class="label dark-text-color"><%- data.txt.hrColExpat %></p><%
+%><div class="picker-box dark-divider-color"><%
+%><div class="combo"><input id="pick-hr-expat" class="combo" type=text></div><%
+%><div class="icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .picker-box */
+%></div><% /* .picker */
+if (data.welcomer){
+	%><div class="welcomer"><%
+	%><p class="label dark-text-color"><%- data.txt.expatWelcomer %></p><%
+	%><div class="welcomer-box alt-accent-border ellipsis"><a href="#hrContacts" title="<%- data.welcomer.cn %>"><%- data.welcomer.cn %></a></div><%
+	%></div><% /* .welcomer */
+}
+if (data.hasVisits) {
+    %><div class="welcomer"><%
+    %><p class="label dark-text-color"><%- data.txt.hrVisitsLink %></p><%
+    %><div class="welcomer-box alt-accent-border ellipsis"><a href="#hrVisits/<%- xp.id %>" title="<%- data.txt.hrVisitsLinkLabel %>"><%- data.txt.hrVisitsLinkLabel %></a></div><%
+    %></div><% /* .welcomer */
+}
+%></div><% /* .pick-expat */
+
+%><h3 class="primary"><%- data.txt.hrRelosInfoExpat %></h3><%
+%><article class="infocard pad-container dark-text-color dark-divider-color"><%
+%><h4 class="primary"><%- data.txt.hrColExpat %></h4><%
+%><div class="field-boxes"><%
+//
+%><div class="field-box"><%
+if (xp.sn){
+	%><span class="label"><%- data.txt.expatriateSurName %> :</span> <span class="strong"><%- xp.sn %></span><br><%
+}
+if (xp.gn){
+	%><span class="label"><%- data.txt.expatriateGivenName %> :</span> <span class="strong"><%- xp.gn %></span><br><%
+}
+var birthCountry = xp.birthCountry ? data.country[xp.birthCountry]:null;
+%><span class="label"><%- data.txt.expatriateNationality %> :</span> <span class="strong"><%- birthCountry ? birthCountry.localeName || birthCountry.name || '-':'-' %></span><br><%
+if (xp.workMail){
+	%><span class="label"><%- data.txt.expatriateWorkMail %> :</span> <a class="strong" href="mailto:<%- xp.workMail %>"><%- xp.workMail %></a><br><%
+}
+if (xp.tel1){
+	var tel = xp.telZone1 ? data.callCode[xp.telZone1].callPrefix+' '+xp.tel1: xp.tel1;
+	%><span class="label"><%- data.txt.expatriateTel1 %> :</span> <span class="strong"><%- tel %></span><br><%
+}
+%></div><% /* .field-box */
+//
+%><div class="field-box"><%
+var fromCountry = xp.fromCountry ? data.country[xp.fromCountry]:null;
+%><span class="label"><%- data.txt.hrOldCountry %> :</span> <span class="strong"><%- fromCountry ? fromCountry.localeName || fromCountry.name || '-':'-' %></span><br><%
+%><span class="label"><%- data.txt.newJobAddress %> :</span> <span class="strong"><%- xp.job && xp.job.location ? data.toLocationText(xp.job.location) || '-':'-' %></span><br><%
+%><span class="label"><%- data.txt.expatriateArrivalDate %> :</span> <span class="strong"><%- xp.arrivalDate ? data.cachedMoment(xp.arrivalDate).format("L") : '-' %></span><br><%
+console.log(JSON.stringify(xp));
+%></div><% /* .field-box */
+%></div><% /* .field-boxes */
+//
+if (!_.isEmpty(xp.familyMembers)){
+	%><h4 class="primary"><%- data.txt.hrFamilyMembers %></h4><%
+	%><div class="field-boxes"><%
+	_.each(xp.familyMembers, function(m){
+		%><div class="field-box"><%
+		var r = data.familyRelation[m.familyRelation];
+		%><span class="label family-relation"><%- r ? r.localeName || r.name || '-':'-' %></span><br><%
+		if (m.sn){
+			%><span class="label"><%- data.txt.expatriateSurName %> :</span> <span class="strong"><%- m.sn %></span><br><%
+		}
+		if (m.gn){
+			%><span class="label"><%- data.txt.expatriateGivenName %> :</span> <span class="strong"><%- m.gn %></span><br><%
+		}
+		%></div><% /* .field-box */
+	});
+	%></div><% /* .field-boxes */
+}
+%></article><%
+
+%><h3 class="primary"><%- data.txt.hrRelosActiveServices %></h3><%
+
+%><div class="relocation-status-cards"><%
+    _.each(data.status.reports, function(report) {
+        %><div class="relocation-status-card relocation-status-card-closed"><%
+        %><div class="icon alt-accent-ghost relocation-status-card-expand"><%= data.images.expand %></div><%
+        %><h3 class="relocation-status-card-title"><%- report.title %></h3><%
+
+        _.each(report.messages, function(it) {
+            %><div class="item"><%
+            %><span class="label"><%= it.label %></span><%
+            %><span class="value"><%= it.value %></span><%
+            %></div><%
+        });
+        /*
+        if (!_.isEmpty(report.navigation)){
+        %><div class="relocation-status-nav" data-nav="<%= report.navigation.target %>" data-nav-option=""><a>Voir mes documents associés</a></div><%
+        }*/
+        %></div><%
+    });
+
+%></div><%
+
+%><h3 class="primary"><%- data.txt.hrRelosDocuments %></h3><%
+
+%><div class="documents-pane" id="documents-pane"><%
+
+%></div><% /* .body */
+
+%></div>

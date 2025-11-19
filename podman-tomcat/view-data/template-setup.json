@@ -1,0 +1,40 @@
+[ {
+  "name" : "view",
+  "data" : {
+    "eprotocol" : "http",
+    "ename" : "localhost",
+    "eport" : "EXPOSED_PORT",
+    "eappname" : "WAR_NAMEFront",
+    "iprotocol" : "http",
+    "iname" : "localhost",
+    "iport" : "8080",
+    "iappname" : "WAR_NAMEFront",
+    "undefined" : "on"
+  }
+}, {
+  "name" : "connector",
+  "data" : {
+    "eprotocol" : "http",
+    "ename" : "localhost",
+    "eport" : "EXPOSED_PORT",
+    "eappname" : "WAR_NAMEConnector",
+    "iprotocol" : "http",
+    "iname" : "localhost",
+    "iport" : "8080",
+    "iappname" : "WAR_NAMEConnector",
+    "undefined" : "on"
+  }
+}, {
+  "name" : "data",
+  "data" : {
+    "eprotocol" : "http",
+    "ename" : "localhost",
+    "eport" : "EXPOSED_PORT",
+    "eappname" : "WAR_NAMECore",
+    "iprotocol" : "http",
+    "iname" : "localhost",
+    "iport" : "8080",
+    "iappname" : "WAR_NAMECore",
+    "undefined" : "on"
+  }
+} ]

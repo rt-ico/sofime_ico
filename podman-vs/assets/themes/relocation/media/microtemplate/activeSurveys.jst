@@ -1,0 +1,114 @@
+<div class="card flat staff surveys with-header"><%
+
+%><div class="header"><%
+%><h2 class="primary"><%- data.txt.surveysAvailable %></h2><%
+%></div><% /* .header */
+
+%><div class="body fit-container"><%
+
+%><div class="filter"><%
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colSurveyName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-survey combo"><input class="combo" type=text></div><%
+%><div class="pick-survey icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colCustomerName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-client combo"><input class="combo" type=text></div><%
+%><div class="pick-client icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%><div class="field"><%
+%><p class="label dark-text-color"><%- data.txt.colExpatName %></p><%
+%><div class="input-box dark-divider-color"><%
+%><div class="pick-expat combo"><input class="combo" type=text></div><%
+%><div class="pick-expat icon dark-text-color"><%= data.images.expand %></div><%
+%></div><% /* .input-box */
+%></div><% /* .field */
+//
+%></div><% /* .filter */
+
+if (_.isArray(data.handles) && data.handles.length){
+	%><table class="surveys"><%
+	%><thead class="text-primary-color dark-primary-color"><%
+	%><tr><%
+	%><th class="sortable survey-name" data-col="survey"><%
+	if (data.sort.att === "survey"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.colSurveyName));
+	%></th><%
+	%><th class="sortable customer-name" data-col="client"><%
+	if (data.sort.att === "client"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.colCustomerName));
+	%></th><%
+	%><th class="sortable expat-name" data-col="expat"><%
+	if (data.sort.att === "expat"){
+		%><span class="sort-arrow"><%= data.sort.asc ? '↓':'↑' %></span> <%
+	}
+	print(_.escape(data.txt.colExpatName));
+	%></th><%
+	%><th class="review-status centered"><%- data.txt.colLockStatus %></th><%
+	%><th class="review-status centered"><%- data.txt.colHideStatus %></th><%
+	%><th class="review-status centered"><%- data.txt.colStartStatus %></th><%
+	%><th class="review-status centered"><%- data.txt.colFinishStatus %></th><%
+	%><th class="review-status centered"><%- data.txt.colReviewed %></th><%
+	%></tr><%
+	%></thead><%
+	%><tbody class=""><%
+	_.each(data.handles, function(it){
+		var escSurveyName = _.escape(it.localeName || it.name);
+		var escClientName = _.escape((it.expat != null && it.expat.client) ? it.expat.client.name : '-');
+		var escExpatName  = _.escape((it.expat != null) ? it.expat.cn : '-');
+
+		var canUndo   = it.response && it.done;
+		var canReview = it.response /* && it.done*/;
+		var reviewUri = canReview ? "#reviewSurveys/" + ((it.expat != null) ? it.expat.id : 0) + "/" + it.id : null;
+
+		%><tr class="survey secondary-text-color" data-survey=<%= it.id %> data-expat=<%=  (it.expat != null) ? it.expat.id : 0 %>><%
+
+		%><td class="ellipsis survey-name" title="<%= escSurveyName  %>"><%
+		if (canReview){
+			%><a class="underlined" href="<%= reviewUri %>"><%= escSurveyName %></a><%
+		}
+		else {
+			print(escSurveyName);
+		}
+		%></td><%
+
+		%><td class="ellipsis customer-name" title="<%= escClientName %>"><%= escClientName %></td><%
+		%><td class="ellipsis expat-name" title="<%= escExpatName %>"><%= escExpatName %></td><%
+		%><td class="centered"><a class="lock underlined" href="#lock/<%= it.lockId %>"><%- it.locked ? data.txt.yes : data.txt.no %></a></td><%
+		%><td class="centered"><a class="hide underlined" href="#hide/<%= it.hideId %>"><%- it.hidden ? data.txt.yes : data.txt.no %></a></td><%
+		%><td class="centered"><%- it.response ? data.txt.yes : data.txt.no %></td><%
+		if (canUndo){
+			%><td class="centered"><a class="undo underlined" href="#undo/<%= it.response %>"><%- data.txt.yes %></a></td><%
+		}
+		else{
+			%><td class="centered inactive"><%- data.txt.no %></td><%
+		}
+		if (canReview){
+			%><td class="centered"><a class="underlined review" href="<%= reviewUri %>"><%- it.reviewed ? data.txt.yes : data.txt.no %></a></td><%
+		}
+		else{
+			%><td class="centered inactive"><%- it.reviewed ? data.txt.yes : data.txt.no %></td><%
+		}
+		%></tr><%
+	});
+	%></tbody><%
+	%></table><%
+}
+else{
+	%><p><%- data.txt.noSurveysAvailable %></p><%
+}
+%></div><% /* .body */
+
+%></div>
